@@ -9,12 +9,7 @@ export default function MovieDetail() {
       <NavBar />
       <div className="flex w-4/5 mx-auto mt-20 justify-center mb-20 bg-slate-900 p-5 pt-10 rounded text-white">
         <div>
-          <Image
-            src="/images/revue.jpg"
-            alt="Revue Starlight"
-            width={500}
-            height={500}
-          />
+          <Image src="/images/revue.jpg" alt="Revue Starlight" width={500} height={500} />
         </div>
 
         <div className="max-w-2xl px-4 pb-16 sm:px-6 lg:col-span-2 flex flex-col">
@@ -26,14 +21,12 @@ export default function MovieDetail() {
             <h3 className="font-bold text-xl">Description</h3>
 
             <p className="text-base text-gray-200 text-justify mt-2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi
-              dolore eaque cumque blanditiis minima exercitationem enim ratione
-              nulla cupiditate nobis, at libero molestias reprehenderit ut neque
-              adipisci! Hic, voluptatibus consectetur. Lorem ipsum dolor sit
-              amet consectetur, adipisicing elit. Saepe enim voluptate corrupti
-              nulla deserunt repudiandae, magnam, vero fugiat nemo quasi
-              accusantium totam obcaecati quaerat, dolor quod explicabo. Amet, a
-              atque!
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi dolore eaque cumque
+              blanditiis minima exercitationem enim ratione nulla cupiditate nobis, at libero
+              molestias reprehenderit ut neque adipisci! Hic, voluptatibus consectetur. Lorem ipsum
+              dolor sit amet consectetur, adipisicing elit. Saepe enim voluptate corrupti nulla
+              deserunt repudiandae, magnam, vero fugiat nemo quasi accusantium totam obcaecati
+              quaerat, dolor quod explicabo. Amet, a atque!
             </p>
 
             <div className="h-fit flex mt-8 gap-x-52">
@@ -44,8 +37,7 @@ export default function MovieDetail() {
               <div className="h-10">
                 <p className="font-bold">Cast</p>
                 <p className="text-justify">
-                  Momoko Koyama, Suzuko Mimori, Moeka Koizumi, Maho Tomita, Aina
-                  Aiba
+                  Momoko Koyama, Suzuko Mimori, Moeka Koizumi, Maho Tomita, Aina Aiba
                 </p>
               </div>
             </div>
