@@ -1,7 +1,7 @@
 import ChooseCinema from "@/components/ChooseCinema";
 import ScheduleItem from "@/components/movie-detail/ScheduleItem";
-import WeekDayTabs from "@/components/movie-detail/WeekDayTabs";
 import MovieCard, { Movie } from "@/components/MovieCard";
+import WeekDayTabs from "@/components/WeekDayTabs";
 const movies: Movie[] = [
   {
     name: "The Marvels",

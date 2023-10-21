@@ -2,7 +2,12 @@ export function OrderSummary() {
   return (
     <div className="relative h-full p-4 shadow-lg rounded-md bg-white/10 ">
       <div>
-        <h3 className="text-xl tracking-wider p-3 text-center text-primary">Order Summary</h3>
+        <h3
+          style={{ fontFamily: "isonorm" }}
+          className="text-xl tracking-wider p-3 text-center uppercase text-primary"
+        >
+          Order Summary
+        </h3>
 
         <hr className="mt-3 border-primary"></hr>
       </div>
@@ -30,17 +35,42 @@ export function OrderSummary() {
         <hr className="mt-2 border-primary" />
 
         <div className="mt-4">
-          <h4>ADD A VOUCHER</h4>
+          <h4 style={{ fontFamily: "isonorm" }}>
+            <span className="bg-primary-linear bg-clip-text text-lg text-transparent ">
+              ADD A VOUCHER
+            </span>
+          </h4>
 
           <div className="mt-4 flex gap-6">
-            <div>
+            <div className="flex-1">
               <input
                 type="text"
-                className="bg-transparent rounded text-white uppercase"
+                className="bg-transparent w-full rounded py-3 text-white uppercase"
                 placeholder="Enter a code"
               />
             </div>
             <button className="border px-4 rounded">ADD</button>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h4 style={{ fontFamily: "isonorm" }}>
+            <span className="bg-primary-linear bg-clip-text text-lg text-transparent uppercase">
+              Contact details
+            </span>
+          </h4>
+
+          <div className="mt-4">
+            <div>
+              <input
+                type="text"
+                className="bg-transparent w-full py-3 rounded text-white uppercase"
+                placeholder="Your email address"
+              />
+            </div>
+            <p className="mt-4">
+              We&#39;ll use your email address to send you your tickets after checkout.
+            </p>
           </div>
         </div>
       </div>
@@ -52,9 +82,10 @@ export function OrderSummary() {
 
         <button
           type="button"
-          className="w-full mt-6 py-3 px-5 mr-2 mb-2 text-sm focus:outline-none  rounded-lg bg-white/40 shadow-md border-2 border-transparent  hover:border-primary hover:bg-white hover:text-primary focus:z-10 focus:ring-4 focus:ring-gray-200  tracking-widest  duration-200"
+          style={{ fontFamily: "isonorm" }}
+          className="w-full mt-6 py-3 px-5 mr-2 mb-2 uppercase  text-xl focus:outline-none  rounded-lg bg-white/40 shadow-md border-2 border-transparent  hover:border-primary hover:bg-white hover:text-primary focus:z-10 focus:ring-4 focus:ring-gray-200  tracking-widest  duration-200"
         >
-          CHECK OUT
+          Review and pay
         </button>
       </div>
     </div>

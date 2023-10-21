@@ -20,12 +20,12 @@ function App() {
   return (
     <div className="h-[630px] relative">
       <Carousel>
-        <img alt="..." src="images/anh1.jpg" />
-        <img alt="..." src="images/anh2.jpg" />
-        <img alt="..." src="images/anh2.jpg" />
-        <img alt="..." src="images/anh2.jpg" />
-        <img alt="..." src="images/anh2.jpg" />
-        <img alt="..." src="images/anh2.jpg" />
+        <img alt="..." src="/images/anh1.jpg" />
+        <img alt="..." src="/images/anh2.jpg" />
+        <img alt="..." src="/images/anh2.jpg" />
+        <img alt="..." src="/images/anh2.jpg" />
+        <img alt="..." src="/images/anh2.jpg" />
+        <img alt="..." src="/images/anh2.jpg" />
       </Carousel>
 
       <div className="absolute top-0 left-0  w-full h-full bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
