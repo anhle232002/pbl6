@@ -1,6 +1,7 @@
 "use client";
 import { MoviePreview } from "@/components/book-tickets/MoviePreview";
 import { OrderSummary } from "@/components/book-tickets/OrderSummary";
+import { TSeat } from "@/components/book-tickets/Seat";
 import { Seats, SeatStatusNotes } from "@/components/book-tickets/Seats";
 import NavBar from "@/components/NavBar";
 import Image from "@/node_modules/next/image";
@@ -21,21 +22,37 @@ export default function BookTickets() {
 }
 
 function BookSeatSection() {
+  const [selectedSeats, setSelectedSeats] = useState<TSeat[]>([]);
+
+  const onSelectSeat = (seat: TSeat) => {
+    if (seat.status === "reserved") {
+      // notify
+      return;
+    }
+
+    if (!isSelectedSeat(seat.id)) {
+      setSelectedSeats([...selectedSeats, seat]);
+    } else {
+      setSelectedSeats(selectedSeats.filter((s) => s.id !== seat.id));
+    }
+  };
+
+  const isSelectedSeat = (seatId: number) => selectedSeats.findIndex((s) => s.id === seatId) !== -1;
   return (
-    <div className="grid grid-cols-12">
+    <div className="lg:grid lg:grid-cols-12 px-4">
       <div className="col-span-9 p-4">
-        <div className="wrapper m-auto">
-          <div className="max-w-5xl m-auto">
+        <div className="wrapper m-auto w-full ">
+          <div className="max-w-5xl m-auto md:overflow-auto overflow-x-scroll md:px-0">
             <ScreenSVG />
             <div className="text-center text-white">SCREEN 4</div>
-            <Seats />
+            <Seats onSelectSeat={onSelectSeat} selectedSeats={selectedSeats} />
           </div>
 
           <SeatStatusNotes />
         </div>
       </div>
-      <div className=" col-span-3  text-white min-h-[700px]">
-        <OrderSummary />
+      <div className=" col-span-3  text-white min-h-[700px] md:mt-0 mt-20">
+        <OrderSummary selectedSeats={selectedSeats} />
       </div>
     </div>
   );

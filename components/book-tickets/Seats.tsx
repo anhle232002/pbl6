@@ -2,22 +2,15 @@ import { mockRows } from "@/app/book-tickets/mock-seats";
 import { useState } from "react";
 import { Seat, TSeat } from "./Seat";
 
-export function Seats() {
+// TODO: rewrite this component, lift rows state up
+export function Seats({
+  onSelectSeat,
+  selectedSeats,
+}: {
+  selectedSeats: TSeat[];
+  onSelectSeat: (seat: TSeat) => void;
+}) {
   const [rows, setRows] = useState(mockRows);
-  const [selectedSeats, setSelectedSeats] = useState<TSeat[]>([]);
-
-  const onSelectSeat = (seat: TSeat) => {
-    if (seat.status === "reserved") {
-      // notify
-      return;
-    }
-
-    if (!isSelectedSeat(seat.id)) {
-      setSelectedSeats([...selectedSeats, seat]);
-    } else {
-      setSelectedSeats(selectedSeats.filter((s) => s.id !== seat.id));
-    }
-  };
 
   const isSelectedSeat = (seatId: number) => selectedSeats.findIndex((s) => s.id === seatId) !== -1;
   return (

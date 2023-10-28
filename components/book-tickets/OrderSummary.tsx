@@ -1,4 +1,6 @@
-export function OrderSummary() {
+import { TSeat } from "./Seat";
+
+export function OrderSummary({ selectedSeats }: { selectedSeats: TSeat[] }) {
   return (
     <div className="relative h-full p-4 shadow-lg rounded-md bg-white/10 ">
       <div>
@@ -15,16 +17,21 @@ export function OrderSummary() {
       <div className="mt-6">
         <div>
           <ul className="flex gap-4">
-            <li>
-              <div className="w-8 h-8 rounded-b-xl bg-green-300 text-black flex justify-center items-center">
-                <span>F4</span>
-              </div>
-            </li>
-            <li>
-              <div className="w-8 h-8 rounded-b-xl bg-green-300 text-black flex justify-center items-center font-semibold ">
-                <span>F3</span>
-              </div>
-            </li>
+            {selectedSeats.length > 0 ? (
+              selectedSeats.map((seat: TSeat) => {
+                return (
+                  <li key={seat.id}>
+                    <div className="w-8 h-8 rounded-b-xl bg-green-300 text-black flex justify-center items-center">
+                      <span>{seat.name}</span>
+                    </div>
+                  </li>
+                );
+              })
+            ) : (
+              <p>You haven't chose any seats</p>
+            )}
+
+            {}
           </ul>
 
           <div className="mt-4 flex justify-between">

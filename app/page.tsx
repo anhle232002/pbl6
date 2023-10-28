@@ -7,6 +7,11 @@ import TrailerCard, { Trailer } from "@/components/TrailerCard";
 import Footer from "@/components/Footer";
 import Trailers from "@/components/Trailers";
 
+async function getFilms() {
+  const res = await fetch(`http://cinemawebapi.ddns.net:8001/api/v1/film`);
+
+  return res.json();
+}
 const movies: Movie[] = [
   {
     name: "The Marvels",
@@ -92,14 +97,18 @@ const trailers: Trailer[] = [
     src: "https://www.youtube.com/watch?v=t3PzUo4P21c",
   },
 ];
-export default function Home() {
+
+export default async function Home() {
+  const { data } = await getFilms();
+  console.log(data);
+
   return (
     <div className="mb-20">
       <NavBar />
 
       <MovieCarousel />
 
-      <div className="max-w-6xl m-auto mt-4">
+      <div className="max-w-6xl m-auto mt-4 lg:px-0 px-8">
         <NavigateToWhatsOn />
 
         <div className="h-[2px] bg-primary-linear mt-8 rounded-full"></div>
@@ -112,23 +121,26 @@ export default function Home() {
           </div>
 
           <div className="mt-10">
-            <div className="grid grid-cols-5 gap-10">
+            <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-10">
               {movies.map((movie) => {
                 return <MovieCard key={movie.name} movie={movie}></MovieCard>;
+              })}
+              {data.map((movie: any) => {
+                return <MovieCard key={movie.id} movie={movie}></MovieCard>;
               })}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-20">
+      <div className="mt-20 md:px-0 px-8">
         <div className="max-w-6xl m-auto">
           <h4 className="relative text-2xl text-white before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">
             <span className="ml-4">FEATURED TRAILERS</span>
           </h4>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 ">
           {/* <div className="grid grid-cols-7 gap-4 px-10">
             {trailers.map((trailer) => {
               return <TrailerCard trailer={trailer} key={trailer.name} />;

@@ -1,30 +1,43 @@
 import ChooseCinema from "@/components/ChooseCinema";
-import ScheduleItem from "@/components/movie-detail/ScheduleItem";
 import MovieCard, { Movie } from "@/components/MovieCard";
+import ScheduleItem from "@/components/ScheduleItem";
 import WeekDayTabs from "@/components/WeekDayTabs";
 const movies: Movie[] = [
   {
+    id: 1,
     name: "The Marvels",
     image:
       "https://www.myvue.com/-/jssmedia/vuecinemas/img/import/66198bd0-d7e6-4f57-badb-5af4fbf7003d_the-marvels_posters_the_marvels_payoff_united_kingdom_1_712px.jpg?mw=240&rev=65caf8b1e3fb40298362b5af94ecc898",
   },
   {
+    id: 1,
     name: "Saw X",
     image:
       "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/aug-2023/1-sheet-thumbnail-min.jpg?mw=240&rev=e88150aa78d043da90588eaf60726a49",
   },
   {
+    id: 1,
     name: "The Creator",
     image:
       "https://www.myvue.com/-/jssmedia/vuecinemas/img/import/true-love_posters_the-creator_payoff_1sht_712px.jpg?mw=240&rev=0cf131d721764309a26720ecff83012c",
   },
   {
+    id: 1,
     name: "Saw X",
     image:
       "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/aug-2023/1-sheet-thumbnail-min.jpg?mw=240&rev=e88150aa78d043da90588eaf60726a49",
   },
 ];
-export default function MovieDetail() {
+async function getFilm(id: number) {
+  const res = await fetch(`http://cinemawebapi.ddns.net:8001/api/v1/film/${id}`);
+
+  return res.json();
+}
+
+export default async function MovieDetail({ params }: { params: { id: string } }) {
+  const film = await getFilm(Number(params.id));
+  console.log(film);
+
   return (
     <div className="relative">
       <div className="top-0 left-0 w-full absolute h-[675px]">
