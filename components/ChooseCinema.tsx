@@ -1,5 +1,6 @@
 "use client";
 import { Modal } from "flowbite-react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function ChooseCinema() {
@@ -27,15 +28,16 @@ export default function ChooseCinema() {
           </Modal.Header>
           <Modal.Body className="bg-black ">
             <ul className="space-y-4">
-              <li role="button" className="border-b pb-2 border-accent">
-                CGV Đà Nẵng
-              </li>
-              <li role="button" className="border-b pb-2 border-accent">
-                Starlight
-              </li>
-              <li role="button" className="border-b pb-2 border-accent">
-                CGV Vĩnh Trung{" "}
-              </li>
+              <Link href={`/cinema/${"cgv"}`} className="block border-b pb-2 border-accent">
+                <li role="button">CGV Đà Nẵng</li>
+              </Link>
+              <Link href={`/cinema/${"cgv"}`} className="block border-b pb-2 border-accent">
+                <li role="button">Starlight</li>
+              </Link>
+
+              <Link href={`/cinema/${"cgv"}`} className="block border-b pb-2 border-accent">
+                <li role="button">CGV Vĩnh Trung </li>
+              </Link>
             </ul>
           </Modal.Body>
         </div>
