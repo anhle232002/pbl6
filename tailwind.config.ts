@@ -9,7 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors:{
+        primary:"#f7941e",
+        background:"#000000",
+        secondary: "#007700",
+        accent:"#777"
+      },
       backgroundImage: {
+       "primary-linear":"linear-gradient(90deg,#de6a00 4.14%,#ec9100 59.46%,#f7b100 94.28%)",
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',

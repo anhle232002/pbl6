@@ -1,41 +1,45 @@
+"use client";
 import { Dropdown, Navbar, Avatar } from "flowbite-react";
 import Image from "next/image";
-import { PiFilmReelBold } from "react-icons/pi";
+import Link from "next/link";
+import { useState } from "react";
+import { RiSearch2Line, RiUser3Line } from "react-icons/ri";
+import SearchModal from "./SearchModal";
 
 export default function NavBar() {
-  return (
-    <Navbar
-      fluid
-      rounded
-      className="sticky top-0 z-10 rounded-none bg-slate-900"
-    >
-      <Navbar.Brand href="/">
-        <PiFilmReelBold className="h-10 w-10 text-white" />
-        <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold text-white">
-          Cinema
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2 text-white">
-        <Dropdown
-          inline
-          label={<h1>Hello, Quy</h1>}
-          className="bg-slate-900 border-current"
-        >
-          <Dropdown.Header>
-            <span className="block text-sm text-white">Phan Phu Quy</span>
-            <span className="block truncate text-sm font-medium text-white">
-              quy@gmail.com
-            </span>
-          </Dropdown.Header>
-          <Dropdown.Item className="text-white">Details</Dropdown.Item>
-          <Dropdown.Item className="text-white">Manage</Dropdown.Item>
+  const [showNavbar, setShowNavbar] = useState(false);
 
-          <Dropdown.Divider />
-          <Dropdown.Item className="text-white">Sign out</Dropdown.Item>
-        </Dropdown>
-        <Navbar.Toggle />
+  return (
+    <nav className="max-w-5xl m-auto p-8">
+      <div className="flex items-center gap-12">
+        <div className="text-primary font-semibold text-xl">CINEPILATY</div>
+
+        <div className="flex-1">
+          <ul className="text-accent flex gap-4">
+            <li className="hover:bg-primary-linear bg-transparent bg-clip-text hover:text-transparent">
+              <Link href={"/"}>WHAT&#39;S ON</Link>
+            </li>
+            <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent">
+              <Link href={"/"}>TRAILERS</Link>
+            </li>
+            <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent ">
+              <Link href={"/"}>COMING SOON</Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex gap-4">
+          <div role="button">
+            <RiUser3Line className="text-accent text-3xl" />
+          </div>
+
+          <div role="button" onClick={() => setShowNavbar(true)}>
+            <RiSearch2Line className="text-accent text-3xl" />
+          </div>
+
+          {showNavbar && <SearchModal onClose={() => setShowNavbar(false)} />}
+        </div>
       </div>
-      <Navbar.Collapse></Navbar.Collapse>
-    </Navbar>
+    </nav>
   );
 }
