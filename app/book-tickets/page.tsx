@@ -5,12 +5,14 @@ import { TSeat } from "@/components/book-tickets/Seat";
 import { Seats, SeatStatusNotes } from "@/components/book-tickets/Seats";
 import NavBar from "@/components/NavBar";
 import Image from "@/node_modules/next/image";
+import { Roboto_Condensed } from "next/font/google";
 import { useState } from "react";
 import { generateMockRows, mockRows } from "./mock-seats";
+const robo = Roboto_Condensed({ weight: ["300", "400", "700"], subsets: ["latin"] });
 
 export default function BookTickets() {
   return (
-    <div>
+    <div className={`${robo.className} min-h-screen bg-background text-accent`}>
       <NavBar />
       <div>
         <MoviePreview />
@@ -61,12 +63,7 @@ function BookSeatSection() {
 function ScreenSVG() {
   return (
     <svg width="100%" height="100%" viewBox="0 0 552 100" className="seat-map__screen-image">
-      <g opacity="0.91" filter="url(#filter0_f_2284_34995)">
-        <path
-          d="M276.5 88.5347C375.116 88.5347 441 71.2976 441 50.0347C441 28.7717 375.116 11.5347 276.5 11.5347C177.884 11.5347 112 28.7717 112 50.0347C112 71.2976 177.884 88.5347 276.5 88.5347Z"
-          fill="#F3EBE8"
-        ></path>
-      </g>
+      <g opacity="0.91" filter="url(#filter0_f_2284_34995)"></g>
       <path d="M64 15H488V17H64V15Z" fill="white"></path>
       <path
         d="M91.6985 45H458.171L488 18H64L91.6985 45Z"

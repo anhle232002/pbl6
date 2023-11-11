@@ -1,9 +1,10 @@
 "use client";
+import { Cinema } from "@/types/Cinema";
 import { Modal } from "flowbite-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function ChooseCinema() {
+export default function ChooseCinema({ cinemas }: { cinemas: Cinema[] }) {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const props = { openModal, setOpenModal };
 
@@ -26,18 +27,21 @@ export default function ChooseCinema() {
               CHOOSE CINEMA YOU WANT TO GO
             </div>
           </Modal.Header>
-          <Modal.Body className="bg-black ">
+          <Modal.Body className="bg-black text-accent ">
             <ul className="space-y-4">
-              <Link href={`/cinema/${"cgv"}`} className="block border-b pb-2 border-accent">
-                <li role="button">CGV Đà Nẵng</li>
-              </Link>
-              <Link href={`/cinema/${"cgv"}`} className="block border-b pb-2 border-accent">
-                <li role="button">Starlight</li>
-              </Link>
-
-              <Link href={`/cinema/${"cgv"}`} className="block border-b pb-2 border-accent">
-                <li role="button">CGV Vĩnh Trung </li>
-              </Link>
+              {cinemas.map((cinema) => {
+                return (
+                  <Link
+                    key={cinema.id}
+                    href={`/cinema/${cinema.id}`}
+                    className="block border-b pb-2 border-accent hover:text-primary"
+                  >
+                    <li role="button">
+                      {cinema.name} - {cinema.city}
+                    </li>
+                  </Link>
+                );
+              })}
             </ul>
           </Modal.Body>
         </div>

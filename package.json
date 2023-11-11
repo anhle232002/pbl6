@@ -9,11 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
+    "axios": "^1.6.0",
+    "date-fns": "^2.30.0",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.1",
+    "joi": "^17.11.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
     "swiper": "^10.3.1"
   },

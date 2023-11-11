@@ -1,12 +1,37 @@
+import getFilms from "@/api/getFilms";
+import { Film } from "@/types/Film";
+import { useState } from "react";
 import { RiSearch2Line } from "react-icons/ri";
 
 export default function SearchModal({ onClose }: { onClose: () => void }) {
+  const [results, setResults] = useState([]);
+  const [searchStr, setSearchStr] = useState("");
+  const [err, setErr] = useState("");
+
+  const onClickSearch = async () => {
+    try {
+      if (!searchStr) {
+        return;
+      }
+      const resp = await getFilms({ Keyword: searchStr });
+
+      setResults(resp.data);
+    } catch (error: any) {
+      setErr(error.response.message[0]);
+    }
+  };
+
   return (
     <div className="fixed w-full h-full top-0 left-0 z-50">
       <div className="relative h-full flex justify-end">
-        <div onClick={onClose} className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
         <div
-          style={{ backgroundImage: "linear-gradient(110deg,#171717 47%,#0e0e0e 0)" }}
+          onClick={onClose}
+          className="absolute top-0 left-0 w-full h-full bg-black/50"
+        ></div>
+        <div
+          style={{
+            backgroundImage: "linear-gradient(110deg,#171717 47%,#0e0e0e 0)",
+          }}
           className="relative h-full p-14 w-[550px]"
         >
           <h3 className="text-3xl underline font-[isonorm] tracking-widest bg-primary-linear bg-clip-text text-transparent uppercase">
@@ -15,16 +40,31 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
 
           <div className="mt-10 flex gap-4 border-b-accent border-b pb-2">
             <input
+              value={searchStr}
+              onChange={(e) => setSearchStr(e.target.value)}
               type="text"
               name=""
-              className="bg-transparent border-none outline-none flex-1"
+              className="bg-transparent border-none outline-none flex-1 text-white focus:ring-0"
               placeholder="Start typing the name you want to watch..."
               id=""
             />
 
-            <button>
+            <button onClick={onClickSearch}>
               <RiSearch2Line className="text-accent text-3xl" />
             </button>
+          </div>
+
+          {err && <div className="text-red-500 mt-4">{err}</div>}
+
+          <div className="p-6">
+            {results &&
+              results.map((film: Film) => {
+                return (
+                  <div className="text-white " key={film.id}>
+                    {film.name}
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
