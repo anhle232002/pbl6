@@ -9,6 +9,7 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import { signup } from "@/api/signup";
 import { useRouter } from "next/navigation";
+import { login } from "@/api/login";
 
 const schema = Joi.object({
   email: Joi.string().email({ tlds: false }).required(),
@@ -19,7 +20,10 @@ const schema = Joi.object({
     .required(),
   address: Joi.string().required(),
   dateOfBirth: Joi.date().required(),
-  password: Joi.string().min(6).message("Password must be atleast 6 characters long").required(),
+  password: Joi.string()
+    .min(6)
+    .message("Password must be atleast 6 characters long")
+    .required(),
   repassword: Joi.any()
     .equal(Joi.ref("password"))
     .required()
@@ -50,7 +54,9 @@ export default function Signup() {
         phoneNumber: data.phoneNumber,
       });
 
-      router.push("/login");
+      const userData = await login(data.email, data.password);
+
+      router.push("/");
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
@@ -62,7 +68,10 @@ export default function Signup() {
 
   return (
     <div className="bg-background flex flex-col items-center justify-center px-8 mx-auto lg:py-10">
-      <Link href="/" className="flex items-center mb-6 text-2xl font-semibold text-white">
+      <Link
+        href="/"
+        className="flex items-center mb-6 text-2xl font-semibold text-white"
+      >
         <PiFilmReelBold className="h-10 w-10" />
         <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold text-white">
           Cinema
@@ -74,7 +83,11 @@ export default function Signup() {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Create an account
           </h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6" action="#">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 md:space-y-6"
+            action="#"
+          >
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your email

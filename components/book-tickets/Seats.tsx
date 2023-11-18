@@ -1,33 +1,62 @@
-import { mockRows } from "@/app/book-tickets/mock-seats";
+import { mockRows } from "@/app/book-tickets/[filmId]/[scheduleId]/mock-seats";
 import { useState } from "react";
-import { Seat, TSeat } from "./Seat";
+import { Seat } from "./Seat";
+import { TSeat } from "@/types/TSeat";
 
-// TODO: rewrite this component, lift rows state up
+const constructRows = (seats: TSeat[]) => {
+  const rows: Record<string, TSeat[]> = {};
+
+  seats.forEach((seat) => {
+    if (!rows[seat.seatCode[0]]) {
+      rows[seat.seatCode[0]] = [];
+    }
+    rows[seat.seatCode[0]].push(seat);
+  });
+
+  return rows;
+};
+
 export function Seats({
   onSelectSeat,
   selectedSeats,
+  seats,
+  ncols,
+  nrows,
 }: {
+  nrows: number;
+  ncols: number;
+  seats: TSeat[];
   selectedSeats: TSeat[];
   onSelectSeat: (seat: TSeat) => void;
 }) {
-  const [rows, setRows] = useState(mockRows);
+  const [rows, setRows] = useState(constructRows(seats));
 
-  const isSelectedSeat = (seatId: number) => selectedSeats.findIndex((s) => s.id === seatId) !== -1;
+  const isSelectedSeat = (seatId: number) =>
+    selectedSeats.findIndex((s) => s.id === seatId) !== -1;
+
+  console.log("row", rows);
+
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-center mt-4 ">
       <div className="px-10 space-y-2">
-        {rows.map((row) => {
+        {Object.keys(rows).map((row) => {
           if (!row) {
             return <div key={"empty_row"} className="h-[20px]"></div>;
           }
-          return (
-            <div className="flex gap-8 mt-2" key={row.name}>
-              <span className="text-white w-[20px]">{row.name}</span>
 
-              <div className="flex gap-3">
-                {row.seats.map((seat) => {
+          return (
+            <div className="flex gap-8 mt-2" key={row}>
+              <span className="text-black w-[20px]">{row}</span>
+
+              <div className="flex gap-4">
+                {rows[row].map((seat: TSeat) => {
                   if (!seat) {
-                    return <div key={"empty_seat"} className="w-[20px] h-[20px]"></div>;
+                    return (
+                      <div
+                        key={"empty_seat"}
+                        className="w-[20px] h-[20px]"
+                      ></div>
+                    );
                   }
                   return (
                     <Seat
@@ -47,14 +76,14 @@ export function Seats({
   );
 }
 
-export function SeatStatusNotes() {
+export function SeatStatusNotes({ price }: { price: number }) {
   return (
-    <div className="text-white text-center mt-8">
+    <div className="text-black text-center mt-8">
       <div className="flex gap-8 text-sm justify-center">
         <div className="flex gap-3">
           <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2"></div>
           <div>
-            Standard <strong>75.000đ</strong>
+            Standard <strong>{price}đ</strong>
           </div>
         </div>
 
@@ -63,11 +92,11 @@ export function SeatStatusNotes() {
           <div>Available</div>
         </div>
         <div className="flex gap-3">
-          <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2 bg-red-300 border-red-300"></div>
+          <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2 bg-red-600 border-red-600"></div>
           <div>Reserved</div>
         </div>
         <div className="flex gap-3">
-          <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2 bg-green-300 border-green-300"></div>
+          <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2 bg-green-600 border-green-600"></div>
           <div>Selected</div>
         </div>
       </div>

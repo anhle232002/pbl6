@@ -1,7 +1,8 @@
 import getFilms from "@/api/getFilms";
 import { Film } from "@/types/Film";
+import Link from "next/link";
 import { useState } from "react";
-import { RiSearch2Line } from "react-icons/ri";
+import { RiSearch2Line, RiTicketLine } from "react-icons/ri";
 
 export default function SearchModal({ onClose }: { onClose: () => void }) {
   const [results, setResults] = useState([]);
@@ -56,13 +57,21 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
 
           {err && <div className="text-red-500 mt-4">{err}</div>}
 
-          <div className="p-6">
+          <div className="py-6 space-y-4">
             {results &&
               results.map((film: Film) => {
                 return (
-                  <div className="text-white " key={film.id}>
-                    {film.name}
-                  </div>
+                  <Link
+                    href={`/movies/${film.id}`}
+                    role="button"
+                    className="text-white text-lg flex justify-between hover:text-primary duration-150"
+                    key={film.id}
+                  >
+                    <div>{film.name}</div>
+                    <span>
+                      <RiTicketLine />
+                    </span>
+                  </Link>
                 );
               })}
           </div>

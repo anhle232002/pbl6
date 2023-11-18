@@ -18,6 +18,8 @@ export default function LoginPage() {
     try {
       await login(username, password);
 
+      console.log(history.state.prev);
+
       router.replace("/");
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -25,6 +27,7 @@ export default function LoginPage() {
 
         setErr(error.response?.data.messages[0] as string);
       }
+      console.log(error);
     }
   };
 
@@ -35,14 +38,20 @@ export default function LoginPage() {
         className="flex items-center mb-6 text-2xl font-semibold text-primary text-tr "
       >
         <PiFilmReelBold className="h-10 w-10" />
-        <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold ">Cinema</span>
+        <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold ">
+          Cinema
+        </span>
       </Link>
       <div className="w-full bg-white rounded-lg  dark:border md:mt-0 sm:max-w-md shadow-[0px_0px_100px_10px_#777]  xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Login to your account
           </h1>
-          <form onSubmit={(e) => onSubmit(e)} className="space-y-4 md:space-y-6" action="#">
+          <form
+            onSubmit={(e) => onSubmit(e)}
+            className="space-y-4 md:space-y-6"
+            action="#"
+          >
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your email

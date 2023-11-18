@@ -1,25 +1,24 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 const apiClient: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-  
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  timeout: 60 * 60,
 });
 
-// TODO / change temp token to access token when successful testing api
 // apiClient.interceptors.request.use(
-//     (config: InternalAxiosRequestConfig) => {
-//         const accessToken = sessionService.loggedInUser?.token;
-//         if (accessToken) {
-//             config.headers.Authorization = `Bearer ${accessToken}`;
-//         } else {
-//             globalRouter.navigate.push("/auth/login");
-//         }
-
-//         return config;
-//     },
-//     (error) => {
-//         return Promise.reject(error);
-//     },
+//   (config: InternalAxiosRequestConfig) => {
+//     if (localStorage) {
+//       const accessToken = localStorage.getItem("access-token");
+//       if (accessToken) {
+//         config.headers.Authorization = `Bearer ${accessToken}`;
+//       }
+//     }
+//
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   },
 // );
-
+//
 export default apiClient;

@@ -1,26 +1,31 @@
 "use client";
 import { getCinemas } from "@/api/getCinemas";
 import getFilms from "@/api/getFilms";
+import getSchedulesByCinema from "@/api/getSchedulesByCinema";
 import getSchedulesByFilmId from "@/api/getSchedulesByFilmId";
 import { Cinema } from "@/types/Cinema";
 import { Film } from "@/types/Film";
 import createDays from "@/utils/create-weekdays";
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function BottomBar() {
+  const [days, setDays] = useState(createDays());
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [films, setFilms] = useState<Film[]>([]);
-  const [schedules, setSchedules] = useState();
-  const [availableTimes, setAvailableTimes] = useState([]);
+  const [schedules, setSchedules] = useState<any[]>();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [selectedCinema, setSelectedCinema] = useState("");
+  const [selectedCinema, setSelectedCinema] = useState<number>();
   const [selectedFilm, setSelectedFilm] = useState(-1);
-  const days = createDays();
+  const [selectedSchedule, setSelectedSchedule] = useState<number>();
+  const [availableTimes, setAvailableTimes] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     getCinemas().then((data) => {
       setCinemas(data);
+      setSelectedCinema(Number(data[0].id));
     });
   }, []);
 
@@ -32,19 +37,36 @@ export default function BottomBar() {
 
   useEffect(() => {
     if (selectedFilm == -1) return;
+    if (!selectedCinema) return;
 
-    getSchedulesByFilmId(selectedFilm).then((data) => {
+    getSchedulesByCinema(selectedCinema).then((data) => {
       setSchedules(data);
     });
-  }, [selectedFilm]);
+  }, [selectedFilm, selectedCinema]);
 
   useEffect(() => {
-    if (selectedFilm === -1 || selectedCinema === "") {
+    if (selectedFilm === -1 || !selectedCinema) {
       return;
     }
+    if (!schedules || schedules.length <= 0) return;
 
-    if (!schedules || !schedules[selectedCinema]) return;
+    const times = schedules.filter((s) => {
+      let film = films.find((f) => f.id === selectedFilm);
+      return (
+        s.film === film?.name && isSameDay(new Date(s.startTime), selectedDate)
+      );
+    });
+
+    setAvailableTimes(times);
   }, [selectedFilm, selectedCinema, selectedDate, schedules]);
+
+  const onSubmit = () => {
+    if (!selectedSchedule || !selectedFilm) return;
+
+    router.push(`/book-tickets/${selectedFilm}/${selectedSchedule}`);
+
+    return;
+  };
 
   return (
     <div
@@ -69,7 +91,7 @@ export default function BottomBar() {
             </label>
             <select
               value={selectedCinema}
-              onChange={(e) => setSelectedCinema(e.target.value)}
+              onChange={(e) => setSelectedCinema(Number(e.target.value))}
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
@@ -79,7 +101,7 @@ export default function BottomBar() {
               {cinemas.length === 0 && "loading..."}
               {cinemas.map((cinema) => {
                 return (
-                  <option key={cinema.id} value={cinema.name}>
+                  <option key={cinema.id} value={cinema.id}>
                     {cinema.name} - {cinema.city}
                   </option>
                 );
@@ -122,7 +144,9 @@ export default function BottomBar() {
             </label>
             <select
               value={selectedDate.getTime()}
-              onChange={(e) => setSelectedDate(new Date(e.target.value))}
+              onChange={(e) => {
+                setSelectedDate(new Date(Number(e.target.value)));
+              }}
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
@@ -144,19 +168,31 @@ export default function BottomBar() {
               Time
             </label>
             <select
+              value={selectedSchedule}
+              onChange={(e) => setSelectedSchedule(Number(e.target.value))}
               id="countries"
-              defaultValue={""}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option value={""} selected>
+              <option value={""} selected disabled>
                 Choose a time
               </option>
+
+              {availableTimes.map((schedule) => {
+                return (
+                  <option key={schedule.id} value={schedule.id}>
+                    {format(new Date(schedule.startTime), "HH:mm")}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
 
-        <button className="uppercase border-2 rounded px-4 py-4 text-black font-semibold border-primary tracking-widest">
-          Search
+        <button
+          onClick={onSubmit}
+          className="uppercase border-2 rounded px-4 py-4 text-black font-semibold border-primary tracking-widest"
+        >
+          {selectedSchedule ? "Book" : "Search"}
         </button>
       </div>
     </div>

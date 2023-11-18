@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import NavBar from "@/components/NavBar";
 import MovieCard, { Movie } from "@/components/MovieCard";
 import MovieCarousel from "@/components/MovieCarousel";
@@ -58,18 +57,12 @@ export default async function Home() {
         <div className="mt-8 mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div>
             <h4 className="relative text-2xl text-white before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">
-              <span className="ml-4">TOP FILMS</span>
+              <span className="ml-4 font-[isonorm]">TOP FILMS</span>
             </h4>
           </div>
 
           <div className="mt-10">
-            {/* <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-10"> */}
-            {/*   {data && */}
-            {/*     data.map((movie: any) => { */}
-            {/*       return <MovieCard key={movie.id} movie={movie}></MovieCard>; */}
-            {/*     })} */}
-            {/* </div> */}
-            <MovieCards />
+            <MovieCards />{" "}
           </div>
         </div>
       </div>
@@ -77,7 +70,7 @@ export default async function Home() {
       <div className="mt-20 md:px-0 px-8">
         <div className="max-w-6xl m-auto">
           <h4 className="relative text-2xl text-white before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">
-            <span className="ml-4">FEATURED TRAILERS</span>
+            <span className="ml-4 font-[isonorm]">FEATURED TRAILERS</span>
           </h4>
         </div>
 

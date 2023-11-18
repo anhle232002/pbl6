@@ -1,8 +1,4 @@
-export type TSeat = {
-  id: number;
-  name: string;
-  status: string;
-};
+import { TSeat } from "@/types/TSeat";
 
 export function Seat({
   seat,
@@ -18,14 +14,15 @@ export function Seat({
       <div
         onClick={onSelectSeat}
         role={"button"}
-        className={`w-[20px] h-[20px]  rounded-b-xl rounded-t border-2 
-        hover:bg-green-200
-        ${seat.status === "reserved" && "bg-red-300 border-red-300 hover:bg-red-300"}
+        className={`w-[20px] h-[20px]  rounded-b-xl rounded-t border-2  
+        hover:bg-green-300
+        ${seat.status === 2 && "bg-red-500 border-red-500 hover:bg-red-500"}
         ${
           isSelected &&
-          seat.status === "available" &&
-          "bg-green-300 border-green-300 hover:bg-green-300"
+          seat.status === 1 &&
+          "bg-green-500 border-green-500 hover:bg-green-400"
         }
+        border-black/30
       `}
       ></div>
     </div>

@@ -1,13 +1,20 @@
 "use client";
-import { Dropdown, Navbar, Avatar } from "flowbite-react";
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiSearch2Line, RiUser3Line } from "react-icons/ri";
 import SearchModal from "./SearchModal";
+import { storage } from "@/utils/storage";
 
 export default function NavBar() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [user, setUser] = useState<any>();
+  const isLoggedIn = user;
+
+  useEffect(() => {
+    if (localStorage) {
+      setUser(JSON.parse(storage.get("user") || "{}"));
+    }
+  }, []);
 
   return (
     <nav className="bg-background">
@@ -31,11 +38,15 @@ export default function NavBar() {
             </ul>
           </div>
 
-          <div className="flex gap-4">
-            <Link href={"/login"} className="block" role="button">
-              <RiUser3Line className="text-accent text-3xl" />
-            </Link>
-
+          <div className="flex gap-4 items-center">
+            {!isLoggedIn && (
+              <Link href={"/login"} className="block" role="button">
+                <RiUser3Line className="text-accent text-3xl" />
+              </Link>
+            )}
+            {isLoggedIn && (
+              <div className="text-white">Hello {user?.employeeNo}</div>
+            )}
             <div role="button" onClick={() => setShowNavbar(true)}>
               <RiSearch2Line className="text-accent text-3xl" />
             </div>

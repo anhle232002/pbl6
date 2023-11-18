@@ -47,6 +47,7 @@ export default async function MovieDetail({
   return (
     <div className="relative bg-background text-accent pb-4">
       <MovieInfo film={film} cinemas={cinemas} schedules={schedules} />
+
       <div className="mt-10 max-w-6xl m-auto ">
         <div className="mt-20 text-2xl">
           <div className="relative text-2xl text-white before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">

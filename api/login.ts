@@ -1,13 +1,15 @@
+import { storage } from "@/utils/storage";
 import apiClient from "./api";
 
-export async function login(username: string , password: string){
-    const resp = await apiClient.post("/identity/token", {
-        employeeNo:username,
-        password: password
-    })
+export async function login(username: string, password: string) {
+  const resp = await apiClient.post("/identity/token", {
+    employeeNo: username,
+    password: password,
+  });
 
-    console.log(resp.data);
-    
+  storage.set("user", JSON.stringify(resp.data.data));
+  storage.set("access-token", resp.data.data.token);
+  storage.set("logged_in", "true");
 
-    return resp.data
+  return resp.data;
 }

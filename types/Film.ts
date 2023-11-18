@@ -13,6 +13,7 @@ export interface Film {
   endDate: Date;
   category: string;
   image: string;
+  poster: string;
   createdOn: Date;
   lastModifiedOn: Date;
 }

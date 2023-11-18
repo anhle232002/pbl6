@@ -19,7 +19,7 @@ export default function MovieInfo({
   schedules: any;
 }) {
   const [showTrailer, setShowTrailer] = useState(false);
-  const [selectedCinema, setSelectedCinema] = useState(cinemas[0].name);
+  const [selectedCinema, setSelectedCinema] = useState(cinemas[0].id);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const onSelectDate = (date: Date) => {
@@ -35,7 +35,6 @@ export default function MovieInfo({
       return [];
     }
 
-    console.log(selectedCinema);
     return schedules["Đà Nẵng"][selectedCinema].filter((schedule: any) => {
       return isSameDay(new Date(schedule.startTime), selectedDate);
     });
@@ -48,7 +47,8 @@ export default function MovieInfo({
       <div className="top-0 left-0 w-full absolute h-[675px]">
         <img
           className=" w-full h-full blur-sm"
-          src="https://www.myvue.com/-/media/vuecinemas/img/import/true-love_stills_tlov_trl_f_int_ov_v19_txt_scp_709_e02_cc01_20230630_00000-copy-5.jpg?rev=11f38676bd8e4ac1be7fa8ddd59cce02"
+          src={film.image && film.image[1]}
+          // src="https://www.myvue.com/-/media/vuecinemas/img/import/true-love_stills_tlov_trl_f_int_ov_v19_txt_scp_709_e02_cc01_20230630_00000-copy-5.jpg?rev=11f38676bd8e4ac1be7fa8ddd59cce02"
           alt="background"
         />
         <div className="absolute -bottom-10 left-0  w-full h-full bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
@@ -115,7 +115,7 @@ export default function MovieInfo({
                 id="countries"
                 value={selectedCinema}
                 onChange={(e) => {
-                  setSelectedCinema(e.target.value);
+                  setSelectedCinema(Number(e.target.value));
                 }}
                 className="text-white font-semibold border-none  text-sm rounded-lg  block w-full p-2.5  bg-transparent focus:outline-none focus:ring-0 "
               >
@@ -124,7 +124,7 @@ export default function MovieInfo({
                     <option
                       key={cinema.id}
                       className="text-black"
-                      value={cinema.name}
+                      value={cinema.id}
                     >
                       {cinema.name} - {cinema.city}
                     </option>
@@ -152,9 +152,11 @@ export default function MovieInfo({
                 {availableSchedules.map((schedule: any) => {
                   return (
                     <ScheduleItem
+                      scheduleId={schedule.id}
+                      filmId={film.id}
                       startTime={new Date(schedule.startTime)}
-                      price={65000}
-                      duration={150}
+                      price={schedule.price}
+                      endTime={new Date(schedule.endTime)}
                       key={schedule.id}
                     />
                   );

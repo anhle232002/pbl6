@@ -18,7 +18,7 @@ export default function NavigateToWhatsOn() {
 
   return (
     <div className="flex gap-10 items-center">
-      <p className="text-white text-3xl">SEE WHAT&#39;S ON AT</p>
+      <p className="text-white text-3xl font-[isonorm]">SEE WHAT&#39;S ON AT</p>
 
       <ChooseCinema cinemas={cinemas} />
 
