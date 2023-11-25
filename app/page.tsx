@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import Trailers from "@/components/Trailers";
 import { Roboto_Condensed } from "next/font/google";
 import BottomBar from "@/components/BottomBar";
-import getFilms from "@/api/getFilms";
+import getFilms from "@/services/getFilms";
 export default async function Home() {
   return (
     <div className={`relative min-h-screen bg-background text-accent`}>
