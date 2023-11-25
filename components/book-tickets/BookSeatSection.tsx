@@ -1,31 +1,40 @@
 "use client";
-import { MoviePreview } from "@/components/book-tickets/MoviePreview";
-import { OrderSummary } from "@/components/book-tickets/OrderSummary";
-import { TSeat } from "@/components/book-tickets/Seat";
-import { Seats, SeatStatusNotes } from "@/components/book-tickets/Seats";
-import NavBar from "@/components/NavBar";
-import Image from "@/node_modules/next/image";
-import { useState } from "react";
-import { generateMockRows, mockRows } from "./mock-seats";
-
-export default function BookTickets() {
-  return (
-    <div>
-      <NavBar />
-      <div>
-        <MoviePreview />
-
-        <BookSeatSection />
-      </div>
-    </div>
-  );
-}
-
-function BookSeatSection() {
+import { useEffect, useState } from "react";
+import { SeatStatusNotes, Seats } from "./Seats";
+import { OrderSummary } from "./OrderSummary";
+import Payment from "./Payment";
+import getRoomById from "@/api/getRoomById";
+import { Room } from "@/types/Room";
+import { TSeat } from "@/types/TSeat";
+import reserveSeats from "@/api/reserveSeats";
+import { useUser } from "@/hooks/useUser";
+import { Button, Modal, Toast } from "flowbite-react";
+import { HiOutlineExclamationCircle, HiX } from "react-icons/hi";
+export default function BookSeatSection({
+  scheduleId,
+  roomId,
+  seats,
+  price,
+}: {
+  scheduleId: number;
+  roomId: number;
+  seats: TSeat[];
+  price: number;
+}) {
+  const [room, setRoom] = useState<Room>();
+  const [step, setStep] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState<TSeat[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const { user } = useUser();
+
+  useEffect(() => {
+    getRoomById(roomId).then((data) => {
+      setRoom(data);
+    });
+  }, [roomId]);
 
   const onSelectSeat = (seat: TSeat) => {
-    if (seat.status === "reserved") {
+    if (seat.status === 2) {
       // notify
       return;
     }
@@ -37,43 +46,114 @@ function BookSeatSection() {
     }
   };
 
-  const isSelectedSeat = (seatId: number) => selectedSeats.findIndex((s) => s.id === seatId) !== -1;
+  const onClickReviewAndPay = async () => {
+    try {
+      const numberSeats = selectedSeats.map((seat) => {
+        return seat.numberSeat;
+      });
+      await reserveSeats({
+        scheduleId: scheduleId,
+        customerId: user.userId,
+        numberSeats: numberSeats,
+      });
+
+      setStep(step + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const isSelectedSeat = (seatId: number) =>
+    selectedSeats.findIndex((s) => s.id === seatId) !== -1;
   return (
     <div className="lg:grid lg:grid-cols-12 px-4">
       <div className="col-span-9 p-4">
-        <div className="wrapper m-auto w-full ">
+        <div
+          className={`wrapper m-auto w-full ${
+            step === 1 && "opacity-30 pointer-events-none"
+          } `}
+        >
           <div className="max-w-5xl m-auto md:overflow-auto overflow-x-scroll md:px-0">
             <ScreenSVG />
-            <div className="text-center text-white">SCREEN 4</div>
-            <Seats onSelectSeat={onSelectSeat} selectedSeats={selectedSeats} />
+            {room && (
+              <>
+                <div className="text-center text-black">{room?.name}</div>
+                <Seats
+                  seats={seats}
+                  nrows={room.numberRow}
+                  ncols={room.numberColumn}
+                  onSelectSeat={onSelectSeat}
+                  selectedSeats={selectedSeats}
+                />
+              </>
+            )}
           </div>
 
-          <SeatStatusNotes />
+          <SeatStatusNotes price={price} />
         </div>
       </div>
       <div className=" col-span-3  text-white min-h-[700px] md:mt-0 mt-20">
-        <OrderSummary selectedSeats={selectedSeats} />
+        {step === 0 && (
+          <OrderSummary
+            nextStep={onClickReviewAndPay}
+            price={price}
+            selectedSeats={selectedSeats}
+          />
+        )}
+        {step === 1 && (
+          <Payment
+            goBack={() => setStep(step - 1)}
+            selectedSeats={selectedSeats}
+            total={selectedSeats.length * price}
+          />
+        )}
       </div>
+
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              The selected seats are already reserved. Please choose different
+              seats.
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="gray" onClick={() => setOpenModal(false)}>
+                Go back
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
 
 function ScreenSVG() {
   return (
-    <svg width="100%" height="100%" viewBox="0 0 552 100" className="seat-map__screen-image">
-      <g opacity="0.91" filter="url(#filter0_f_2284_34995)">
-        <path
-          d="M276.5 88.5347C375.116 88.5347 441 71.2976 441 50.0347C441 28.7717 375.116 11.5347 276.5 11.5347C177.884 11.5347 112 28.7717 112 50.0347C112 71.2976 177.884 88.5347 276.5 88.5347Z"
-          fill="#F3EBE8"
-        ></path>
-      </g>
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 552 100"
+      className="seat-map__screen-image"
+    >
+      <g opacity="0.91" filter="url(#filter0_f_2284_34995)"></g>
       <path d="M64 15H488V17H64V15Z" fill="white"></path>
       <path
         d="M91.6985 45H458.171L488 18H64L91.6985 45Z"
         fill="url(#paint0_linear_2284_34995)"
       ></path>
       <g filter="url(#filter1_i_2284_34995)">
-        <path d="M91.6985 45H458.171L488 18H64L91.6985 45Z" fill="#D8D8D8"></path>
+        <path
+          d="M91.6985 45H458.171L488 18H64L91.6985 45Z"
+          fill="#D8D8D8"
+        ></path>
       </g>
       <g opacity="0.95" filter="url(#filter2_f_2284_34995)">
         <path
@@ -106,9 +186,9 @@ function ScreenSVG() {
           width="424"
           height="28"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -123,12 +203,21 @@ function ScreenSVG() {
           ></feColorMatrix>
           <feOffset dy="-1"></feOffset>
           <feGaussianBlur stdDeviation="1.5"></feGaussianBlur>
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
+          <feComposite
+            in2="hardAlpha"
+            operator="arithmetic"
+            k2="-1"
+            k3="1"
+          ></feComposite>
           <feColorMatrix
             type="matrix"
             values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0681612 0"
           ></feColorMatrix>
-          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_2284_34995"></feBlend>
+          <feBlend
+            mode="normal"
+            in2="shape"
+            result="effect1_innerShadow_2284_34995"
+          ></feBlend>
         </filter>
         <filter
           id="filter2_f_2284_34995"
@@ -137,9 +226,9 @@ function ScreenSVG() {
           width="466.2"
           height="32.2"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -158,9 +247,9 @@ function ScreenSVG() {
           width="550.2"
           height="32.2"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -179,9 +268,9 @@ function ScreenSVG() {
           width="424.2"
           height="32.2"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+          <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -201,8 +290,8 @@ function ScreenSVG() {
           y2="18"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#9C9898"></stop>
-          <stop offset="1" stop-color="#D0CCCB"></stop>
+          <stop stopColor="#9C9898"></stop>
+          <stop offset="1" stopColor="#D0CCCB"></stop>
         </linearGradient>
         <linearGradient
           id="paint1_linear_2284_34995"
@@ -212,8 +301,8 @@ function ScreenSVG() {
           y2="45.8095"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#D3D0D0" stop-opacity="0"></stop>
-          <stop offset="1" stop-color="#C5C1C0" stop-opacity="0.340636"></stop>
+          <stop stopColor="#D3D0D0" stopOpacity="0"></stop>
+          <stop offset="1" stopColor="#C5C1C0" stopOpacity="0.340636"></stop>
         </linearGradient>
         <linearGradient
           id="paint2_linear_2284_34995"
@@ -223,8 +312,8 @@ function ScreenSVG() {
           y2="45.8095"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#D3D0D0" stop-opacity="0"></stop>
-          <stop offset="1" stop-color="#C5C1C0" stop-opacity="0.340636"></stop>
+          <stop stopColor="#D3D0D0" stopOpacity="0"></stop>
+          <stop offset="1" stopColor="#C5C1C0" stopOpacity="0.340636"></stop>
         </linearGradient>
       </defs>
     </svg>

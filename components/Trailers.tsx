@@ -7,6 +7,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "./Trailers.style.css";
+import { useEffect, useState } from "react";
+import { Film } from "@/types/Film";
+import getFilms from "@/api/getFilms";
 const trailers: Trailer[] = [
   {
     image:
@@ -100,6 +103,12 @@ const trailers: Trailer[] = [
   },
 ];
 export default function Trailers() {
+  const [films, setFilms] = useState<Film[]>([]);
+  useEffect(() => {
+    getFilms().then((resp) => {
+      setFilms(resp.data);
+    });
+  }, []);
   return (
     <div>
       <Swiper
@@ -113,10 +122,17 @@ export default function Trailers() {
         <span slot="wrapper-start">
           <div className="w-72"></div>
         </span>
-        {trailers.map((trailer) => {
+
+        {films.map((film) => {
           return (
-            <SwiperSlide key={trailer.name}>
-              <TrailerCard trailer={trailer} />
+            <SwiperSlide key={film.id}>
+              <TrailerCard
+                trailer={{
+                  name: film.name,
+                  src: film.trailer,
+                  image: film.image,
+                }}
+              />
             </SwiperSlide>
           );
         })}

@@ -1,9 +1,11 @@
 import NavBar from "@/components/NavBar";
+import { Roboto_Condensed } from "next/font/google";
 import Image from "next/image";
+const robo = Roboto_Condensed({ weight: ["300", "400", "700"], subsets: ["latin"] });
 
 export default function MovieDetail() {
   return (
-    <>
+    <div className={` min-h-screen bg-background text-accent`}>
       <NavBar />
       <div className="flex w-4/5 mx-auto mt-20 justify-center mb-20 bg-slate-900 p-5 pt-10 rounded text-white">
         <div>
@@ -45,6 +47,6 @@ export default function MovieDetail() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

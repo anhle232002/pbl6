@@ -2,21 +2,27 @@
 import { Modal } from "flowbite-react";
 import { useState } from "react";
 import { RiPlayCircleLine } from "react-icons/ri";
+
 export interface Trailer {
   image: string;
   src: string;
   name: string;
 }
+
 export default function TrailerCard({ trailer }: { trailer: Trailer }) {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const props = { openModal, setOpenModal };
 
   return (
     <>
-      <div role="button" onClick={() => props.setOpenModal("dismissible")} className="group">
+      <div
+        role="button"
+        onClick={() => props.setOpenModal("dismissible")}
+        className="group"
+      >
         <div className="relative">
           <img
-            className="rounded h-32 w-full object-cover  "
+            className="rounded h-32 w-full object-cover"
             src={trailer.image}
             alt="trailer-preview"
           />
@@ -39,7 +45,7 @@ export default function TrailerCard({ trailer }: { trailer: Trailer }) {
         <Modal.Body className="bg-black border-none outline-none">
           <iframe
             className="w-full h-96"
-            src="https://www.youtube.com/embed/t3PzUo4P21c"
+            src={trailer.src}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

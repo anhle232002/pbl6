@@ -1,29 +1,57 @@
+"use client";
+import { login } from "@/api/login";
+import { AxiosError } from "axios";
 import { Metadata } from "next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 import { PiFilmReelBold } from "react-icons/pi";
-export const metadata: Metadata = {
-  title: "Login",
-  description: "Login Page",
-};
 
 export default function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const router = useRouter();
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      await login(username, password);
+
+      console.log(history.state.prev);
+
+      router.replace("/");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+
+        setErr(error.response?.data.messages[0] as string);
+      }
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-background">
       <Link
         href="/"
-        className="flex items-center mb-6 text-2xl font-semibold text-white "
+        className="flex items-center mb-6 text-2xl font-semibold text-primary text-tr "
       >
         <PiFilmReelBold className="h-10 w-10" />
-        <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold text-white">
+        <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold ">
           Cinema
         </span>
       </Link>
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full bg-white rounded-lg  dark:border md:mt-0 sm:max-w-md shadow-[0px_0px_100px_10px_#777]  xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Login to your account
           </h1>
-          <form className="space-y-4 md:space-y-6" action="#">
+          <form
+            onSubmit={(e) => onSubmit(e)}
+            className="space-y-4 md:space-y-6"
+            action="#"
+          >
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your email
@@ -32,6 +60,8 @@ export default function LoginPage() {
                 type="email"
                 name="email"
                 id="email"
+                value={username}
+                onChange={(el) => setUsername(el.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@company.com"
                 required
@@ -45,6 +75,8 @@ export default function LoginPage() {
                 type="password"
                 name="password"
                 id="password"
+                value={password}
+                onChange={(el) => setPassword(el.target.value)}
                 placeholder="••••••••"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
@@ -59,6 +91,9 @@ export default function LoginPage() {
             >
               Sign in
             </button>
+
+            {err && <div className="mt-2 text-red-500 text-center">{err}</div>}
+
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?{" "}
               <Link
