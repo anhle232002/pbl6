@@ -1,4 +1,4 @@
-import reserveSeats from "@/api/reserveSeats";
+import reserveSeats from "@/services/reserveSeats";
 import { TSeat } from "@/types/TSeat";
 import { storage } from "@/utils/storage";
 import { useEffect, useMemo, useState } from "react";

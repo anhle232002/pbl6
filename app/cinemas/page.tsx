@@ -1,6 +1,6 @@
 "use client";
-import { getCinemas } from "@/api/getCinemas";
-import getSchedules from "@/api/getFilmByCinema";
+import { getCinemas } from "@/services/getCinemas";
+import getSchedules from "@/services/getFilmByCinema";
 import MovieCarousel from "@/components/MovieCarousel";
 import MovieDetailsCard from "@/components/MovieDetailsCard";
 import NavBar from "@/components/NavBar";

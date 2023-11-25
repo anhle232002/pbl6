@@ -1,7 +1,6 @@
-import { getCinemas } from "@/api/getCinemas";
-import getFilmById from "@/api/getFilm";
-import getSchedulesByFilmId from "@/api/getSchedulesByFilmId";
-import ChooseCinema from "@/components/ChooseCinema";
+import { getCinemas } from "@/services/getCinemas";
+import getFilmById from "@/services/getFilm";
+import getSchedulesByFilmId from "@/services/getSchedulesByFilmId";
 import MovieInfo from "@/components/movie-detail/MovieInfo";
 import MovieCard, { Movie } from "@/components/MovieCard";
 

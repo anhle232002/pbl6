@@ -1,5 +1,5 @@
-import getFilmById from "@/api/getFilm";
-import getScheduleById from "@/api/getScheduleById";
+import getFilmById from "@/services/getFilm";
+import getScheduleById from "@/services/getScheduleById";
 import BookSeatSection from "@/components/book-tickets/BookSeatSection";
 import { MoviePreview } from "@/components/book-tickets/MoviePreview";
 import NavBar from "@/components/NavBar";
