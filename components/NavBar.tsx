@@ -8,11 +8,11 @@ import { storage } from "@/utils/storage";
 export default function NavBar() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [user, setUser] = useState<any>();
-  const isLoggedIn = user;
+  const isLoggedIn = !!user;
 
   useEffect(() => {
     if (localStorage) {
-      setUser(JSON.parse(storage.get("user") || "{}"));
+      setUser(JSON.parse(storage.get("user") || "null"));
     }
   }, []);
 
