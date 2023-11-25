@@ -12,7 +12,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <Link href={`/movies/${movie.id}`}>
         <div>
           <img
-            className="w-full h-72 object-cover group-hover:shadow-[0px_0px_100px_10px_#777] duration-200 rounded"
+            className="w-full h-80 object-cover group-hover:shadow-[0px_0px_100px_10px_#777] duration-200 rounded"
             src={movie.image}
             alt="movie-image"
           />

@@ -8,40 +8,6 @@ import Trailers from "@/components/Trailers";
 import { Roboto_Condensed } from "next/font/google";
 import BottomBar from "@/components/BottomBar";
 import getFilms from "@/api/getFilms";
-
-const trailers: Trailer[] = [
-  {
-    image:
-      "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/sep-2023/saw-x-bd.jpg?mw=260&rev=881be3699c454412ad5c621d12068351",
-    name: "Saw X",
-    src: "https://www.youtube.com/watch?v=t3PzUo4P21c",
-  },
-  {
-    image:
-      "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/sep-2023/saw-x-bd.jpg?mw=260&rev=881be3699c454412ad5c621d12068351",
-    name: "Saw X",
-    src: "https://www.youtube.com/watch?v=t3PzUo4P21c",
-  },
-  {
-    image:
-      "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/sep-2023/saw-x-bd.jpg?mw=260&rev=881be3699c454412ad5c621d12068351",
-    name: "Saw X",
-    src: "https://www.youtube.com/watch?v=t3PzUo4P21c",
-  },
-  {
-    image:
-      "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/sep-2023/saw-x-bd.jpg?mw=260&rev=881be3699c454412ad5c621d12068351",
-    name: "Saw X",
-    src: "https://www.youtube.com/watch?v=t3PzUo4P21c",
-  },
-  {
-    image:
-      "https://www.myvue.com/-/jssmedia/vuecinemas/film-and-events/sep-2023/saw-x-bd.jpg?mw=260&rev=881be3699c454412ad5c621d12068351",
-    name: "Saw X",
-    src: "https://www.youtube.com/watch?v=t3PzUo4P21c",
-  },
-];
-
 export default async function Home() {
   return (
     <div className={`relative min-h-screen bg-background text-accent`}>
@@ -108,7 +74,7 @@ async function MovieCards() {
     console.log(data);
 
     return (
-      <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-10">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-20">
         {data &&
           data.map((movie: any) => {
             return <MovieCard key={movie.id} movie={movie}></MovieCard>;
