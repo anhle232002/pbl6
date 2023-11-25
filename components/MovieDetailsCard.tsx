@@ -49,18 +49,20 @@ export default function MovieDetailsCard({ film }: { film: Film }) {
 
         <div className="mt-10">
           <div className="grid grid-cols-5 gap-5">
-            {film.schedules.map((schedule) => {
-              return (
-                <ScheduleItem
-                  key={schedule.id}
-                  price={schedule.price}
-                  startTime={schedule.startTime}
-                  scheduleId={schedule.id}
-                  filmId={film.id}
-                  endTime={schedule.startTime}
-                />
-              );
-            })}
+            {film &&
+              film.schedules &&
+              film.schedules.map((schedule) => {
+                return (
+                  <ScheduleItem
+                    key={schedule.id}
+                    price={schedule.price}
+                    startTime={schedule.startTime}
+                    scheduleId={schedule.id}
+                    filmId={film.id}
+                    endTime={schedule.startTime}
+                  />
+                );
+              })}
           </div>
 
           <div
