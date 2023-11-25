@@ -1,5 +1,5 @@
 "use client";
-import { login } from "@/api/login";
+import { login } from "@/services/login";
 import { AxiosError } from "axios";
 import { Metadata } from "next";
 import Link from "next/link";

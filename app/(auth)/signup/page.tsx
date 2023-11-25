@@ -7,9 +7,9 @@ import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { signup } from "@/api/signup";
+import { signup } from "@/services/signup";
 import { useRouter } from "next/navigation";
-import { login } from "@/api/login";
+import { login } from "@/services/login";
 
 const schema = Joi.object({
   email: Joi.string().email({ tlds: false }).required(),

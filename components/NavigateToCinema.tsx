@@ -1,9 +1,9 @@
 "use client";
 
-import { getCinemas } from "@/api/getCinemas";
 import { Cinema } from "@/types/Cinema";
 import { useEffect, useState } from "react";
 import ChooseCinema from "./ChooseCinema";
+import { getCinemas } from "@/services/getCinemas";
 
 export default function NavigateToWhatsOn() {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);

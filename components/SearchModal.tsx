@@ -1,4 +1,4 @@
-import getFilms from "@/api/getFilms";
+import getFilms from "@/services/getFilms";
 import { Film } from "@/types/Film";
 import Link from "next/link";
 import { useState } from "react";
