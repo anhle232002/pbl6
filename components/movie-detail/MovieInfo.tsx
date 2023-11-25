@@ -112,7 +112,6 @@ export default function MovieInfo({
 
             <div className="mt-10 border-b border-accent">
               <select
-                id="countries"
                 value={selectedCinema}
                 onChange={(e) => {
                   setSelectedCinema(Number(e.target.value));

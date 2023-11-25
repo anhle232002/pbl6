@@ -2,14 +2,12 @@
 
 import { getCinemas } from "@/api/getCinemas";
 import { Cinema } from "@/types/Cinema";
-import { Button, Modal } from "flowbite-react";
 import { useEffect, useState } from "react";
 import ChooseCinema from "./ChooseCinema";
 
 export default function NavigateToWhatsOn() {
-  const [openModal, setOpenModal] = useState<string | undefined>();
-  const props = { openModal, setOpenModal };
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
+
   useEffect(() => {
     getCinemas().then((data) => {
       setCinemas(data);

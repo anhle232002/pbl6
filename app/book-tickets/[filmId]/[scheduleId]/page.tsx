@@ -17,7 +17,6 @@ export default async function BookTickets({
   try {
     const film = await getFilmById(Number(params.filmId));
     const schedule = await getScheduleById(Number(params.scheduleId));
-    console.log(schedule.price);
 
     return (
       <div
@@ -28,6 +27,7 @@ export default async function BookTickets({
           <MoviePreview film={film} schedule={schedule} />
 
           <BookSeatSection
+            scheduleId={schedule.id}
             price={schedule.price}
             seats={schedule.scheduleSeats}
             roomId={schedule.roomId}

@@ -6,12 +6,17 @@ import Payment from "./Payment";
 import getRoomById from "@/api/getRoomById";
 import { Room } from "@/types/Room";
 import { TSeat } from "@/types/TSeat";
-
+import reserveSeats from "@/api/reserveSeats";
+import { useUser } from "@/hooks/useUser";
+import { Button, Modal, Toast } from "flowbite-react";
+import { HiOutlineExclamationCircle, HiX } from "react-icons/hi";
 export default function BookSeatSection({
+  scheduleId,
   roomId,
   seats,
   price,
 }: {
+  scheduleId: number;
   roomId: number;
   seats: TSeat[];
   price: number;
@@ -19,6 +24,8 @@ export default function BookSeatSection({
   const [room, setRoom] = useState<Room>();
   const [step, setStep] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState<TSeat[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     getRoomById(roomId).then((data) => {
@@ -36,6 +43,23 @@ export default function BookSeatSection({
       setSelectedSeats([...selectedSeats, seat]);
     } else {
       setSelectedSeats(selectedSeats.filter((s) => s.id !== seat.id));
+    }
+  };
+
+  const onClickReviewAndPay = async () => {
+    try {
+      const numberSeats = selectedSeats.map((seat) => {
+        return seat.numberSeat;
+      });
+      await reserveSeats({
+        scheduleId: scheduleId,
+        customerId: user.userId,
+        numberSeats: numberSeats,
+      });
+
+      setStep(step + 1);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -71,7 +95,7 @@ export default function BookSeatSection({
       <div className=" col-span-3  text-white min-h-[700px] md:mt-0 mt-20">
         {step === 0 && (
           <OrderSummary
-            nextStep={() => setStep(step + 1)}
+            nextStep={onClickReviewAndPay}
             price={price}
             selectedSeats={selectedSeats}
           />
@@ -84,6 +108,29 @@ export default function BookSeatSection({
           />
         )}
       </div>
+
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              The selected seats are already reserved. Please choose different
+              seats.
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="gray" onClick={() => setOpenModal(false)}>
+                Go back
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

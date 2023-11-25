@@ -52,7 +52,7 @@ export default async function MovieDetail({
         <div className="mt-20 text-2xl">
           <div className="relative text-2xl text-white before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">
             <span className="ml-4">
-              ALSO SHOWINGS AT <span className="text-primary">CGV DA NANG</span>{" "}
+              ALSO SHOWINGS AT <span className="text-primary">CGV DA NANG</span>
             </span>
           </div>
 

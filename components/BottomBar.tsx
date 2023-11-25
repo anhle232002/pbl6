@@ -1,5 +1,6 @@
 "use client";
 import { getCinemas } from "@/api/getCinemas";
+import getSchedules from "@/api/getFilmByCinema";
 import getFilms from "@/api/getFilms";
 import getSchedulesByCinema from "@/api/getSchedulesByCinema";
 import getSchedulesByFilmId from "@/api/getSchedulesByFilmId";
@@ -15,50 +16,36 @@ export default function BottomBar() {
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [films, setFilms] = useState<Film[]>([]);
   const [schedules, setSchedules] = useState<any[]>();
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedCinema, setSelectedCinema] = useState<number>();
-  const [selectedFilm, setSelectedFilm] = useState(-1);
+  const [selectedFilm, setSelectedFilm] = useState<number>();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedSchedule, setSelectedSchedule] = useState<number>();
   const [availableTimes, setAvailableTimes] = useState<any[]>([]);
   const router = useRouter();
 
   useEffect(() => {
+    getSchedules().then((data) => {
+      setSchedules(data);
+    });
     getCinemas().then((data) => {
       setCinemas(data);
-      setSelectedCinema(Number(data[0].id));
     });
-  }, []);
-
-  useEffect(() => {
     getFilms().then((data) => {
       setFilms(data.data);
     });
   }, []);
 
   useEffect(() => {
-    if (selectedFilm == -1) return;
-    if (!selectedCinema) return;
+    if (!schedules || !selectedCinema || !selectedFilm) return;
+    console.log(schedules[selectedCinema].films[selectedFilm].schedules);
 
-    getSchedulesByCinema(selectedCinema).then((data) => {
-      setSchedules(data);
-    });
-  }, [selectedFilm, selectedCinema]);
-
-  useEffect(() => {
-    if (selectedFilm === -1 || !selectedCinema) {
-      return;
-    }
-    if (!schedules || schedules.length <= 0) return;
-
-    const times = schedules.filter((s) => {
-      let film = films.find((f) => f.id === selectedFilm);
-      return (
-        s.film === film?.name && isSameDay(new Date(s.startTime), selectedDate)
-      );
-    });
-
-    setAvailableTimes(times);
-  }, [selectedFilm, selectedCinema, selectedDate, schedules]);
+    setAvailableTimes(
+      schedules[selectedCinema].films[selectedFilm].schedules.filter(
+        (schedule: any) =>
+          isSameDay(selectedDate, new Date(schedule.startTime)),
+      ),
+    );
+  }, [selectedDate]);
 
   const onSubmit = () => {
     if (!selectedSchedule || !selectedFilm) return;
@@ -119,6 +106,7 @@ export default function BottomBar() {
               value={selectedFilm}
               onChange={(e) => setSelectedFilm(Number(e.target.value))}
               id="countries"
+              disabled={!selectedCinema}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="-1" disabled>
@@ -148,6 +136,7 @@ export default function BottomBar() {
                 setSelectedDate(new Date(Number(e.target.value)));
               }}
               id="countries"
+              disabled={!selectedCinema || !selectedFilm}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               {days.map((day) => {
@@ -168,12 +157,14 @@ export default function BottomBar() {
               Time
             </label>
             <select
+              disabled={!selectedCinema || !selectedFilm || !selectedDate}
               value={selectedSchedule}
               onChange={(e) => setSelectedSchedule(Number(e.target.value))}
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              defaultValue={""}
             >
-              <option value={""} selected disabled>
+              <option value={""} disabled>
                 Choose a time
               </option>
 

@@ -16,4 +16,5 @@ export interface Film {
   poster: string;
   createdOn: Date;
   lastModifiedOn: Date;
+  schedules?: Schedule[];
 }

@@ -1,3 +1,4 @@
+import reserveSeats from "@/api/reserveSeats";
 import { TSeat } from "@/types/TSeat";
 import { storage } from "@/utils/storage";
 import { useEffect, useMemo, useState } from "react";
@@ -11,6 +12,7 @@ export function OrderSummary({
   price: number;
   nextStep: () => void;
 }) {
+  const [user, setUser] = useState<any>();
   const totalPrice = useMemo(() => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -18,14 +20,14 @@ export function OrderSummary({
     }).format(price * selectedSeats.length);
   }, [price, selectedSeats]);
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     if (selectedSeats.length <= 0) {
       return;
     }
+
     nextStep();
   };
-  const [user, setUser] = useState<any>();
 
   useEffect(() => {
     if (localStorage) {
@@ -65,8 +67,6 @@ export function OrderSummary({
             ) : (
               <p>You havent chose any seats</p>
             )}
-
-            {}
           </ul>
 
           {selectedSeats.length > 0 && (

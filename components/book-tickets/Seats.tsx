@@ -34,11 +34,25 @@ export function Seats({
   const isSelectedSeat = (seatId: number) =>
     selectedSeats.findIndex((s) => s.id === seatId) !== -1;
 
-  console.log("row", rows);
-
   return (
     <div className="flex justify-center mt-4 ">
       <div className="px-10 space-y-2">
+        <div className="flex gap-8 mt-2">
+          <span className="text-black w-[20px] h-[20px]"></span>
+
+          <div className="flex gap-4">
+            {Array(Object.keys(rows).length)
+              .fill(0)
+              .map((v, index) => {
+                return (
+                  <span className="w-[20px] h-[20px] text-center" key={index}>
+                    {index + 1}
+                  </span>
+                );
+              })}
+          </div>
+        </div>
+
         {Object.keys(rows).map((row) => {
           if (!row) {
             return <div key={"empty_row"} className="h-[20px]"></div>;

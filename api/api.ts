@@ -2,7 +2,7 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 60 * 60,
+  timeout: 60 * 60 * 1000,
 });
 
 // apiClient.interceptors.request.use(

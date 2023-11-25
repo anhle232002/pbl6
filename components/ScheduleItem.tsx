@@ -44,7 +44,7 @@ export default function ScheduleItem({
         <span className="text-white">
           {format(new Date(startTime), "HH:mm")}{" "}
         </span>{" "}
-        <span>- {format(endTime, "HH:mm")} </span>
+        {/* <span>- {format(endTime, "HH:mm")} </span> */}
       </div>
 
       <div className="text-white">FROM {formattedCurrency}</div>
