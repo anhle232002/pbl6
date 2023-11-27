@@ -25,7 +25,6 @@ export default function ScheduleItem({
 
   const onClickSchedule = () => {
     if (!storage.get("logged_in")) {
-      history.state.prev = window.location.pathname;
       // console.log(window.location.pathname);
       router.push("/login");
       return;

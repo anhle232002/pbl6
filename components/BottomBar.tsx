@@ -5,6 +5,7 @@ import getFilms from "@/services/getFilms";
 import { Cinema } from "@/types/Cinema";
 import { Film } from "@/types/Film";
 import createDays from "@/utils/create-weekdays";
+import { storage } from "@/utils/storage";
 import { format, isSameDay } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -47,6 +48,12 @@ export default function BottomBar() {
 
   const onSubmit = () => {
     if (!selectedSchedule || !selectedFilm) return;
+
+    if (!storage.get("logged_in")) {
+      // console.log(window.location.pathname);
+      router.push("/login");
+      return;
+    }
 
     router.push(`/book-tickets/${selectedFilm}/${selectedSchedule}`);
 
