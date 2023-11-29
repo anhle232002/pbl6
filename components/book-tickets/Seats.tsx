@@ -34,6 +34,8 @@ export function Seats({
   const isSelectedSeat = (seatId: number) =>
     selectedSeats.findIndex((s) => s.id === seatId) !== -1;
 
+  console.log(rows);
+
   return (
     <div className="flex justify-center mt-4 ">
       <div className="px-10 space-y-2">

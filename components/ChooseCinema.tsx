@@ -11,7 +11,9 @@ export default function ChooseCinema({ cinemas }: { cinemas: Cinema[] }) {
   return (
     <div className="flex-1">
       <div role="button" onClick={() => props.setOpenModal("dismissible")}>
-        <div className="border-b-2 border-accent pb-1">CGV Đà Nẵng</div>
+        <div className="border-b-2 border-accent pb-1">
+          Click to choose cinema
+        </div>
       </div>
 
       <Modal
@@ -33,7 +35,7 @@ export default function ChooseCinema({ cinemas }: { cinemas: Cinema[] }) {
                 return (
                   <Link
                     key={cinema.id}
-                    href={`/cinema/${cinema.id}`}
+                    href={`/cinemas?cid=${cinema.id}`}
                     className="block border-b pb-2 border-accent hover:text-primary"
                   >
                     <li role="button">
