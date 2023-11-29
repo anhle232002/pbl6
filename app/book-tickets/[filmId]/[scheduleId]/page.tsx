@@ -1,43 +1,42 @@
+"use client";
 import getFilmById from "@/services/getFilm";
 import getScheduleById from "@/services/getScheduleById";
 import BookSeatSection from "@/components/book-tickets/BookSeatSection";
 import { MoviePreview } from "@/components/book-tickets/MoviePreview";
 import NavBar from "@/components/NavBar";
 import { Roboto_Condensed } from "next/font/google";
+import { useEffect } from "react";
+import { useBookingStore } from "@/store/booking-store";
 const robo = Roboto_Condensed({
   weight: ["300", "400", "700"],
   subsets: ["latin"],
 });
 
-export default async function BookTickets({
+function BookTickets({
   params,
 }: {
   params: { filmId: string; scheduleId: string };
 }) {
-  try {
-    const film = await getFilmById(Number(params.filmId));
-    const schedule = await getScheduleById(Number(params.scheduleId));
+  const { setFilm, setSchedule } = useBookingStore();
+  useEffect(() => {
+    getFilmById(Number(params.filmId)).then((data) => {
+      setFilm(data);
+    });
+    getScheduleById(Number(params.scheduleId)).then((data) => {
+      setSchedule(data);
+    });
+  }, []);
 
-    return (
-      <div
-        className={`${robo.className} min-h-screen bg-background text-accent`}
-      >
-        <NavBar />
-        <div className="bg-white">
-          <MoviePreview film={film} schedule={schedule} />
+  return (
+    <div className={`${robo.className} min-h-screen bg-background text-accent`}>
+      <NavBar />
+      <div className="bg-white">
+        <MoviePreview />
 
-          <BookSeatSection
-            scheduleId={schedule.id}
-            price={schedule.price}
-            seats={schedule.scheduleSeats}
-            roomId={schedule.roomId}
-          />
-        </div>
+        <BookSeatSection />
       </div>
-    );
-  } catch (error) {
-    console.log(error);
-
-    return <div>Something went wrong...</div>;
-  }
+    </div>
+  );
 }
+
+export default BookTickets;

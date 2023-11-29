@@ -18,7 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${robo.className}`}>{children}</body>
+      <body>
+        <div className={`${robo.className} min-h-screen`}>{children}</div>
+      </body>
     </html>
   );
 }

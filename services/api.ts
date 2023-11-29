@@ -5,20 +5,20 @@ const apiClient: AxiosInstance = axios.create({
   timeout: 60 * 60 * 1000,
 });
 
-// apiClient.interceptors.request.use(
-//   (config: InternalAxiosRequestConfig) => {
-//     if (localStorage) {
-//       const accessToken = localStorage.getItem("access-token");
-//       if (accessToken) {
-//         config.headers.Authorization = `Bearer ${accessToken}`;
-//       }
-//     }
-//
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
-//
+apiClient.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    if (typeof window !== "undefined" && localStorage) {
+      const accessToken = localStorage.getItem("access-token");
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
 export default apiClient;
