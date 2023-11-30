@@ -10,41 +10,51 @@ import "./Trailers.style.css";
 import { useEffect, useState } from "react";
 import { Film } from "@/types/Film";
 import getFilms from "@/services/getFilms";
+import { Spinner } from "flowbite-react";
 export default function Trailers() {
   const [films, setFilms] = useState<Film[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     getFilms().then((resp) => {
       setFilms(resp.data);
+      setIsLoading(false);
     });
   }, []);
   return (
     <div>
-      <Swiper
-        modules={[Navigation]}
-        spaceBetween={50}
-        slidesPerView={6}
-        navigation
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper: any) => console.log(swiper)}
-      >
-        <span slot="wrapper-start">
-          <div className="w-72"></div>
-        </span>
+      {isLoading ? (
+        <div className="p-8 justify-center flex items-center">
+          <Spinner></Spinner>
+        </div>
+      ) : (
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={50}
+          slidesPerView={6}
+          navigation
+          onSlideChange={() => console.log("slide change")}
+          onSwiper={(swiper: any) => console.log(swiper)}
+        >
+          <span slot="wrapper-start">
+            <div className="w-72"></div>
+          </span>
 
-        {films.map((film) => {
-          return (
-            <SwiperSlide key={film.id}>
-              <TrailerCard
-                trailer={{
-                  name: film.name,
-                  src: film.trailer,
-                  image: film.image,
-                }}
-              />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+          {films.map((film) => {
+            return (
+              <SwiperSlide key={film.id}>
+                <TrailerCard
+                  trailer={{
+                    name: film.name,
+                    src: film.trailer,
+                    image: film.image,
+                  }}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      )}
     </div>
   );
 }

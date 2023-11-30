@@ -21,7 +21,7 @@ export default function CinemaMovies() {
 
   useEffect(() => {
     setIsLoading(true);
-    getSchedules().then((data) => {
+    getSchedules().then((data: any) => {
       setSchedules(data);
       setIsLoading(false);
     });
@@ -54,10 +54,18 @@ export default function CinemaMovies() {
 
   const films = useMemo(() => {
     if (!schedules || !selectedCinema) return [];
+    console.log(schedules);
 
-    return Object.keys(schedules[selectedCinema].films).map((k) => {
-      return { ...schedules[selectedCinema].films[k], id: k };
-    });
+    const cinema = schedules.find((c: any) => c.cinemaId === selectedCinema);
+
+    if (!cinema) {
+      return;
+    }
+
+    return cinema.films;
+    // return Object.keys(schedules[selectedCinema].films).map((k) => {
+    //   return { ...schedules[selectedCinema].films[k], id: k };
+    // });
   }, [selectedCinema, cinemas, schedules]);
 
   console.log(films);

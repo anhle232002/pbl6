@@ -1,7 +1,7 @@
 "use client";
 import { getCinemas } from "@/services/getCinemas";
-import getSchedules from "@/services/getFilmByCinema";
 import getFilms from "@/services/getFilms";
+import getSchedules from "@/services/getSchedules";
 import { Cinema } from "@/types/Cinema";
 import { Film } from "@/types/Film";
 import createDays from "@/utils/create-weekdays";
