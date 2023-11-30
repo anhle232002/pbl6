@@ -8,6 +8,7 @@ import { Spinner } from "flowbite-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import getSchedules from "@/services/getSchedules";
+import { Film } from "@/types/Film";
 
 export default function CinemaMovies() {
   const [schedules, setSchedules] = useState<any>();
@@ -111,7 +112,7 @@ export default function CinemaMovies() {
             </div>
           )}
           {films.length > 0 &&
-            films.map((film) => {
+            films.map((film: any) => {
               return <MovieDetailsCard key={film.id} film={film} />;
             })}
           {films.length === 0 && (
