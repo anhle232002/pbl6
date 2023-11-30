@@ -4,6 +4,7 @@ import { Button } from "flowbite-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { RiCheckboxCircleLine } from "react-icons/ri";
+import Image from 'next/image';
 
 export default function SuccessPayment() {
   const params = useSearchParams();
@@ -12,6 +13,7 @@ export default function SuccessPayment() {
   const paymentStatus = params.get("PaymentId");
   const paymentMessage = params.get("PaymentId");
   const paymentDate = params.get("PaymentId");
+  const QRCode = params.get("QRCode");
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-200">
@@ -41,6 +43,9 @@ export default function SuccessPayment() {
           </div>
         </div>
 
+        <div>
+          <Image alt="Embedded QR Code" src={`data:image/jpeg;base64,${QRCode}`} width={300} height={300} />
+        </div>
         <p className="mt-8 text-center">
           Your payment was successful, and your seats are now secured. We look
           forward to providing you with an amazing cinematic experience!
