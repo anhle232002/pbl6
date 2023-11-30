@@ -3,4 +3,7 @@ interface Schedule {
   startTime: Date;
   price: number;
   endTime: Date;
+  filmId?: number;
+  roomId?: number;
+  scheduleSeats?: any[];
 }

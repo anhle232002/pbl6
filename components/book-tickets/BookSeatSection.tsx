@@ -10,40 +10,26 @@ import reserveSeats from "@/services/reserveSeats";
 import { useUser } from "@/hooks/useUser";
 import { Button, Modal, Toast } from "flowbite-react";
 import { HiOutlineExclamationCircle, HiX } from "react-icons/hi";
-export default function BookSeatSection({
-  scheduleId,
-  roomId,
-  seats,
-  price,
-}: {
-  scheduleId: number;
-  roomId: number;
-  seats: TSeat[];
-  price: number;
-}) {
+import unlockSeats from "@/services/unlockSeats";
+import { useBookingStore } from "@/store/booking-store";
+
+export default function BookSeatSection({}) {
+  const { schedule, film, step, setStep, selectedSeats, selectSeat } =
+    useBookingStore();
   const [room, setRoom] = useState<Room>();
-  const [step, setStep] = useState(0);
-  const [selectedSeats, setSelectedSeats] = useState<TSeat[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const { user } = useUser();
 
   useEffect(() => {
-    getRoomById(roomId).then((data) => {
+    if (!schedule) return;
+
+    getRoomById(schedule.roomId!).then((data) => {
       setRoom(data);
     });
-  }, [roomId]);
+  }, [schedule]);
 
   const onSelectSeat = (seat: TSeat) => {
-    if (seat.status === 2) {
-      // notify
-      return;
-    }
-
-    if (!isSelectedSeat(seat.id)) {
-      setSelectedSeats([...selectedSeats, seat]);
-    } else {
-      setSelectedSeats(selectedSeats.filter((s) => s.id !== seat.id));
-    }
+    selectSeat(seat);
   };
 
   const onClickReviewAndPay = async () => {
@@ -52,19 +38,37 @@ export default function BookSeatSection({
         return seat.numberSeat;
       });
       await reserveSeats({
-        scheduleId: scheduleId,
+        scheduleId: schedule?.id!,
         customerId: user.userId,
         numberSeats: numberSeats,
       });
 
       setStep(step + 1);
     } catch (error) {
+      setOpenModal(true);
       console.log(error);
     }
   };
 
-  const isSelectedSeat = (seatId: number) =>
-    selectedSeats.findIndex((s) => s.id === seatId) !== -1;
+  const onGoBack = async () => {
+    try {
+      if (step <= 0) return;
+
+      const numberSeats = selectedSeats.map((seat) => {
+        return seat.numberSeat;
+      });
+
+      await unlockSeats({
+        scheduleId: schedule?.id!,
+        customerId: user.userId,
+        numberSeats: numberSeats,
+      });
+
+      setStep(step - 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="lg:grid lg:grid-cols-12 px-4">
       <div className="col-span-9 p-4">
@@ -73,38 +77,40 @@ export default function BookSeatSection({
             step === 1 && "opacity-30 pointer-events-none"
           } `}
         >
-          <div className="max-w-5xl m-auto md:overflow-auto overflow-x-scroll md:px-0">
-            <ScreenSVG />
-            {room && (
-              <>
-                <div className="text-center text-black">{room?.name}</div>
-                <Seats
-                  seats={seats}
-                  nrows={room.numberRow}
-                  ncols={room.numberColumn}
-                  onSelectSeat={onSelectSeat}
-                  selectedSeats={selectedSeats}
-                />
-              </>
-            )}
-          </div>
+          {schedule && room && (
+            <>
+              <div className="max-w-5xl m-auto md:overflow-auto overflow-x-scroll md:px-0">
+                <ScreenSVG />
+                <>
+                  <div className="text-center text-black">{room?.name}</div>
+                  <Seats
+                    seats={schedule?.scheduleSeats!}
+                    nrows={room.numberRow}
+                    ncols={room.numberColumn}
+                    onSelectSeat={onSelectSeat}
+                    selectedSeats={selectedSeats}
+                  />
+                </>
+              </div>
 
-          <SeatStatusNotes price={price} />
+              <SeatStatusNotes price={schedule.price} />
+            </>
+          )}
         </div>
       </div>
       <div className=" col-span-3  text-white min-h-[700px] md:mt-0 mt-20">
-        {step === 0 && (
+        {schedule && step === 0 && (
           <OrderSummary
             nextStep={onClickReviewAndPay}
-            price={price}
+            price={schedule.price}
             selectedSeats={selectedSeats}
           />
         )}
-        {step === 1 && (
+        {schedule && step === 1 && (
           <Payment
-            goBack={() => setStep(step - 1)}
+            goBack={onGoBack}
             selectedSeats={selectedSeats}
-            total={selectedSeats.length * price}
+            total={selectedSeats.length * schedule.price}
           />
         )}
       </div>

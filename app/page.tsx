@@ -8,6 +8,7 @@ import Trailers from "@/components/Trailers";
 import { Roboto_Condensed } from "next/font/google";
 import BottomBar from "@/components/BottomBar";
 import getFilms from "@/services/getFilms";
+import MovieCards from "@/components/MovieCards";
 export default async function Home() {
   return (
     <div className={`relative min-h-screen bg-background text-accent`}>
@@ -28,7 +29,7 @@ export default async function Home() {
           </div>
 
           <div className="mt-10">
-            <MovieCards />{" "}
+            <MovieCards />
           </div>
         </div>
       </div>
@@ -65,27 +66,4 @@ export default async function Home() {
       <BottomBar />
     </div>
   );
-}
-
-async function MovieCards() {
-  try {
-    const { data } = await getFilms();
-
-    console.log(data);
-
-    return (
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-x-10 gap-y-20">
-        {data &&
-          data.map((movie: any) => {
-            return <MovieCard key={movie.id} movie={movie}></MovieCard>;
-          })}
-      </div>
-    );
-  } catch (error) {
-    return (
-      <div className="p-6">
-        <div>Something went wrong...</div>
-      </div>
-    );
-  }
 }

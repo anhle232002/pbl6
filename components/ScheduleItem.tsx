@@ -4,7 +4,7 @@ import { format, getHours, getMinutes } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function ScheduleItem({
+function ScheduleItem({
   startTime,
   endTime,
   price,
@@ -25,13 +25,12 @@ export default function ScheduleItem({
 
   const onClickSchedule = () => {
     if (!storage.get("logged_in")) {
-      history.state.prev = window.location.pathname;
       // console.log(window.location.pathname);
       router.push("/login");
       return;
     }
 
-    router.push(`/book-tickets/${filmId}/${scheduleId}`, {});
+    router.push(`/book-tickets/${filmId}/${scheduleId}`);
   };
   return (
     <div
@@ -51,3 +50,4 @@ export default function ScheduleItem({
     </div>
   );
 }
+export default ScheduleItem;

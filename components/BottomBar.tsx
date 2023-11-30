@@ -1,10 +1,11 @@
 "use client";
 import { getCinemas } from "@/services/getCinemas";
-import getSchedules from "@/services/getFilmByCinema";
 import getFilms from "@/services/getFilms";
+import getSchedules from "@/services/getSchedules";
 import { Cinema } from "@/types/Cinema";
 import { Film } from "@/types/Film";
 import createDays from "@/utils/create-weekdays";
+import { storage } from "@/utils/storage";
 import { format, isSameDay } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -35,18 +36,32 @@ export default function BottomBar() {
 
   useEffect(() => {
     if (!schedules || !selectedCinema || !selectedFilm) return;
-    console.log(schedules[selectedCinema].films[selectedFilm].schedules);
+
+    const cinema = schedules.find((c) => (c.id = selectedCinema));
+
+    if (!cinema) {
+      return;
+    }
+
+    const film = cinema.films.find((f: any) => f.id === selectedFilm);
+
+    if (!film) return;
 
     setAvailableTimes(
-      schedules[selectedCinema].films[selectedFilm].schedules.filter(
-        (schedule: any) =>
-          isSameDay(selectedDate, new Date(schedule.startTime)),
+      film.schedules.filter((schedule: any) =>
+        isSameDay(selectedDate, new Date(schedule.startTime)),
       ),
     );
-  }, [selectedDate]);
+  }, [selectedDate, selectedFilm, selectedCinema, schedules]);
 
   const onSubmit = () => {
     if (!selectedSchedule || !selectedFilm) return;
+
+    if (!storage.get("logged_in")) {
+      // console.log(window.location.pathname);
+      router.push("/login");
+      return;
+    }
 
     router.push(`/book-tickets/${selectedFilm}/${selectedSchedule}`);
 
