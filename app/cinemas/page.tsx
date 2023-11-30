@@ -1,6 +1,5 @@
 "use client";
 import { getCinemas } from "@/services/getCinemas";
-import getSchedules from "@/services/getFilmByCinema";
 import MovieCarousel from "@/components/MovieCarousel";
 import MovieDetailsCard from "@/components/MovieDetailsCard";
 import NavBar from "@/components/NavBar";
@@ -8,6 +7,7 @@ import { Cinema } from "@/types/Cinema";
 import { Spinner } from "flowbite-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import getSchedules from "@/services/getSchedules";
 
 export default function CinemaMovies() {
   const [schedules, setSchedules] = useState<any>();
