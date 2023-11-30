@@ -22,7 +22,7 @@ export default function MovieInfo({
   schedules: any;
 }) {
   const [showTrailer, setShowTrailer] = useState(false);
-  const [selectedCinema, setSelectedCinema] = useState(cinemas[0].id);
+  const [selectedCinemaId, setSelectedCinemaId] = useState(cinemas[0].id);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const onSelectDate = (date: Date) => {
@@ -30,7 +30,7 @@ export default function MovieInfo({
   };
 
   const availableSchedules = useMemo(() => {
-    const cinema = cinemas.find((c) => c.id === selectedCinema);
+    const cinema = cinemas.find((c) => c.id === selectedCinemaId);
 
     if (!cinema) return;
 
@@ -38,14 +38,18 @@ export default function MovieInfo({
       return [];
     }
 
-    if (!Object.hasOwn(schedules[cinema.city], selectedCinema)) {
+    if (!Object.hasOwn(schedules[cinema.city], selectedCinemaId)) {
       return [];
     }
 
-    return schedules[cinema.city][selectedCinema].filter((schedule: any) => {
+    return schedules[cinema.city][selectedCinemaId].filter((schedule: any) => {
       return isSameDay(new Date(schedule.startTime), selectedDate);
     });
-  }, [selectedCinema, selectedDate, schedules]);
+  }, [selectedCinemaId, selectedDate, schedules, cinemas]);
+
+  const selectedCinema = useMemo(() => {
+    return cinemas.find((c) => c.id === selectedCinemaId);
+  }, [selectedCinemaId, cinemas]);
 
   console.log(schedules);
 
@@ -122,9 +126,9 @@ export default function MovieInfo({
 
               <div className="mt-10 border-b border-accent">
                 <select
-                  value={selectedCinema}
+                  value={selectedCinemaId}
                   onChange={(e) => {
-                    setSelectedCinema(Number(e.target.value));
+                    setSelectedCinemaId(Number(e.target.value));
                   }}
                   className="text-white font-semibold border-none  text-sm rounded-lg  block w-full p-2.5  bg-transparent focus:outline-none focus:ring-0 "
                 >
@@ -177,9 +181,7 @@ export default function MovieInfo({
         </div>
       </div>
       <div className="mt-10 max-w-6xl m-auto ">
-        <RecommendedFilms
-          cinema={cinemas.find((c) => c.id === selectedCinema)}
-        />
+        {selectedCinema && <RecommendedFilms cinema={selectedCinema} />}
       </div>
     </div>
   );
