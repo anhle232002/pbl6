@@ -5,7 +5,7 @@ import BookSeatSection from "@/components/book-tickets/BookSeatSection";
 import { MoviePreview } from "@/components/book-tickets/MoviePreview";
 import NavBar from "@/components/NavBar";
 import { Roboto_Condensed } from "next/font/google";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useBookingStore } from "@/store/booking-store";
 const robo = Roboto_Condensed({
   weight: ["300", "400", "700"],
@@ -17,7 +17,11 @@ function BookTickets({
 }: {
   params: { filmId: string; scheduleId: string };
 }) {
-  const { setFilm, setSchedule } = useBookingStore();
+  const { setFilm, setSchedule, setInitialState } = useBookingStore();
+  useLayoutEffect(() => {
+    setInitialState();
+  }, []);
+
   useEffect(() => {
     getFilmById(Number(params.filmId)).then((data) => {
       setFilm(data);
