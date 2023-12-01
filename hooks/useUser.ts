@@ -1,10 +1,10 @@
 import { storage } from "@/utils/storage";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 
 export const useUser = () => {
   const [user, setUser] = useState<any>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (localStorage) {
       setUser(JSON.parse(storage.get("user") || "{}"));
     }
