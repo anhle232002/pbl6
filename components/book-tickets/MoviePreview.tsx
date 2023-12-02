@@ -15,7 +15,7 @@ export function MoviePreview({}: {}) {
         <>
           <div
             style={{
-              backgroundImage: `url(${film.image[1].replace(/\\/g, "/")})`,
+              backgroundImage: `url(${film.poster.replace(/\\/g, "/")})`,
             }}
             className="absolute left-0 top-0 w-full h-full  bg-no-repeat bg-center bg-cover blur-lg "
           >

@@ -9,6 +9,7 @@ interface State {
   schedule: Schedule | null;
   film: Film | null;
 
+  setInitialState: () => void;
   setFilm: (film: Film) => void;
   setSchedule: (schedule: Schedule) => void;
   setStep: (step: number) => void;
@@ -23,6 +24,17 @@ export const useBookingStore = create<State>((set, get) => ({
   selectedPaymentMethod: "VNPAY",
   schedule: null,
   film: null,
+
+  setInitialState() {
+    set((state) => ({
+      ...state,
+      step: 0,
+      selectedSeats: [],
+      selectedPaymentMethod: "VNPAY",
+      schedule: null,
+      film: null,
+    }));
+  },
 
   setFilm(film: Film) {
     set((state) => ({ ...state, film: film }));

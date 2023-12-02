@@ -42,10 +42,8 @@ export default function Payment({
         paymentDestinationId: selectedPaymentMethod,
       });
 
-      console.log(data.messages[0]);
-
       setIsLoading(false);
-      window.open(data.messages[0]);
+      window.open(data.messages[0], "_self");
     } catch (error) {
       setIsLoading(false);
       setOpenModal(true);

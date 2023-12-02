@@ -24,6 +24,7 @@ const schema = Joi.object({
   dateOfBirth: Joi.date().required(),
 });
 
+
 export default function AccountSetting() {
   const router = useRouter();
   const { user } = useUser();
