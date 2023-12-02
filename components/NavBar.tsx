@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { RiSearch2Line, RiUser3Line } from "react-icons/ri";
 import SearchModal from "./SearchModal";
 import { storage } from "@/utils/storage";
+import { Dropdown } from "flowbite-react";
 
 export default function NavBar() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -45,7 +46,25 @@ export default function NavBar() {
               </Link>
             )}
             {isLoggedIn && (
-              <div className="text-white">Hello {user?.employeeNo}</div>
+              <Dropdown
+                label=""
+                dismissOnClick={false}
+                renderTrigger={() => (
+                  <span
+                    role="button"
+                    className="text-white px-4 py-1 bg-primary rounded-md"
+                  >
+                    Hello {user.employeeNo.split("@")[0]}
+                  </span>
+                )}
+              >
+                <Dropdown.Item as="a" href="/profile">
+                  Account
+                </Dropdown.Item>
+                <Dropdown.Item as="a" target="_blank">
+                  Logout
+                </Dropdown.Item>
+              </Dropdown>
             )}
             <div role="button" onClick={() => setShowNavbar(true)}>
               <RiSearch2Line className="text-accent text-3xl" />

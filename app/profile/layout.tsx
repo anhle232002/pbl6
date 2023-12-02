@@ -14,8 +14,6 @@ export default function ProfileLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = useUser();
-
   return (
     <section className="bg-black min-h-screen">
       <NavBar />
@@ -37,9 +35,9 @@ function SideBar() {
           <Link
             href={"/profile"}
             role="button"
-            className="relative block text-lg font-medium hover:bg-slate-700 duration-200 p-4 bg-slate-900 shadow rounded"
+            className="relative block text-lg font-medium hover:bg-slate-700 duration-200 p-4 bg-[#1a1a1a] shadow rounded"
           >
-            <span className="absolute left-0 top-0 w-3 rounded-l bg-slate-600 h-full"></span>
+            <span className="absolute left-0 top-0 w-3 rounded-l bg-primary h-full"></span>
             <div className="ml-6">Your Account</div>
           </Link>{" "}
         </li>
@@ -47,18 +45,11 @@ function SideBar() {
           <Link
             href={"/profile/history"}
             role="button"
-            className="relative block text-lg font-medium hover:bg-slate-700 duration-200 p-4 bg-slate-900 shadow rounded"
+            className="relative block text-lg font-medium hover:bg-slate-700 duration-200 p-4 bg-[#1a1a1a] shadow rounded"
           >
             {/* <span className="absolute left-0 top-0 w-3 rounded-l bg-slate-600 h-full"></span> */}
-            <div className="ml-6">Booking History </div>
+            <div className="ml-6">Booking History</div>
           </Link>
-        </li>
-        <li
-          role="button"
-          className="relative text-lg font-medium hover:bg-slate-700 duration-200 p-4 bg-slate-900 shadow rounded"
-        >
-          {/* <span className="absolute left-0 top-0 w-3 rounded-l bg-slate-600 h-full"></span> */}
-          <div className="ml-6">Reminders</div>
         </li>
       </ul>
     </div>
