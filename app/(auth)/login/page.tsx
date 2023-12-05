@@ -92,7 +92,11 @@ export default function LoginPage() {
               Sign in
             </button>
 
-            {err && <div className="mt-2 text-red-500 text-center">{err}</div>}
+            {err && (
+              <div id="err-message" className="mt-2 text-red-500 text-center">
+                {err}
+              </div>
+            )}
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?{" "}

@@ -13,16 +13,24 @@ import { login } from "@/services/login";
 
 const schema = Joi.object({
   email: Joi.string().email({ tlds: false }).required(),
-  name: Joi.string().min(5).required(),
+  name: Joi.string()
+    .min(5)
+    .max(50)
+    .regex(/^[a-zA-Z\s]+$/)
+    .message("Name must contain only alphabetic characters")
+    .required(),
   phoneNumber: Joi.string()
     .regex(/^[0-9]{10}$/)
-    .messages({ "string.pattern.base": `Phone number must have 10 digits.` })
+    .messages({ "string.pattern.base": `Invalid Phone number` })
     .required(),
   address: Joi.string().required(),
-  dateOfBirth: Joi.date().required(),
+  dateOfBirth: Joi.date()
+    .max("now")
+    .message("Date of birth must be in the past or today")
+    .required(),
   password: Joi.string()
-    .min(6)
-    .message("Password must be atleast 6 characters long")
+    .min(8)
+    .message("Password must be atleast 8 characters long")
     .required(),
   repassword: Joi.any()
     .equal(Joi.ref("password"))
@@ -59,9 +67,11 @@ export default function Signup() {
       router.push("/");
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error);
-
-        setErr(error.response?.data.messages[0] as string);
+        if (Array.isArray(error.response?.data.messages)) {
+          setErr(error.response?.data.messages[0] as string);
+        } else {
+          setErr("Some thing went wrong");
+        }
       }
     }
   };
@@ -100,7 +110,7 @@ export default function Signup() {
                 placeholder="name@company.com"
               />
 
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.email && (errors.email.message as string)}
               </p>
             </div>
@@ -116,7 +126,7 @@ export default function Signup() {
                 placeholder="John Doe"
               />
 
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.name && (errors.name.message as string)}
               </p>
             </div>
@@ -131,7 +141,7 @@ export default function Signup() {
                 placeholder="name@company.com"
               />
 
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.address && (errors.address.message as string)}
               </p>
             </div>
@@ -147,7 +157,7 @@ export default function Signup() {
                 placeholder="0905123123"
               />
 
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.phoneNumber && (errors.phoneNumber.message as string)}
               </p>
             </div>
@@ -162,7 +172,7 @@ export default function Signup() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Da Nang"
               />
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.dateOfBirth && (errors.dateOfBirth.message as string)}
               </p>
             </div>
@@ -175,7 +185,7 @@ export default function Signup() {
                 type="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.password && (errors.password.message as string)}
               </p>
             </div>
@@ -189,19 +199,24 @@ export default function Signup() {
                 type="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-              <p className="text-sm text-red-700 mt-2">
+              <p className="text-sm text-red-700 mt-2 field-err">
                 {errors.repassword && (errors.repassword.message as string)}
               </p>
             </div>
             <div className="flex items-start"></div>
             <button
+              id="signup-btn"
               type="submit"
               className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Create an account
             </button>
 
-            {err && <div className="mt-2 text-red-500 text-center">{err}</div>}
+            {err && (
+              <div id="err-msg" className="mt-2 text-red-500 text-center">
+                {err}
+              </div>
+            )}
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Already have an account?{" "}
