@@ -31,7 +31,7 @@ export default function MovieCards() {
           })}
       </div>
       {loading && (
-        <div className="p-4 flex items-center justify-center">
+        <div className="p-4 flex items-center justify-center min-h-[600px]">
           <Spinner></Spinner>
         </div>
       )}

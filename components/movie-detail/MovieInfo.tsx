@@ -158,23 +158,32 @@ export default function MovieInfo({
                   UPCOMING SHOWINGS FOR
                   <span className="text-primary ml-4 text-xl">
                     {format(selectedDate, "iiii, dd MMM")}
-                  </span>{" "}
+                  </span>
                 </div>
 
                 <div className="flex mt-4 gap-6">
-                  {availableSchedules.map((schedule: any) => {
-                    return (
-                      <ScheduleItem
-                        scheduleId={schedule.id}
-                        filmId={film.id}
-                        startTime={new Date(schedule.startTime)}
-                        price={schedule.price}
-                        endTime={new Date(schedule.endTime)}
-                        key={schedule.id}
-                      />
-                    );
-                  })}
+                  {availableSchedules.length > 0 &&
+                    availableSchedules.map((schedule: any) => {
+                      return (
+                        <ScheduleItem
+                          scheduleId={schedule.id}
+                          filmId={film.id}
+                          startTime={new Date(schedule.startTime)}
+                          price={schedule.price}
+                          endTime={new Date(schedule.endTime)}
+                          key={schedule.id}
+                        />
+                      );
+                    })}
                 </div>
+
+                {availableSchedules.length <= 0 && (
+                  <div className="min-h-[300px] flex items-center justify-center">
+                    <p className="text-white text-center">
+                      There are no schedules currently showing...
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
