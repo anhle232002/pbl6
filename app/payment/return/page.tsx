@@ -1,6 +1,7 @@
 "use client";
 
 import { getBookingById } from "@/services/getBookingById";
+import { AxiosError } from "axios";
 import { format } from "date-fns";
 import { Button, Spinner } from "flowbite-react";
 import Image from "next/image";
@@ -18,13 +19,21 @@ export default function SuccessPayment() {
 
   const [booking, setBooking] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     if (!paymentId) return;
     setIsLoading(true);
-    getBookingById(Number(paymentId))
+    getBookingById(paymentId)
       .then((data) => {
         setBooking(data);
+      })
+      .catch((error) => {
+        if (error instanceof AxiosError) {
+          console.log(error);
+
+          setErr(error.response?.data.messages[0] as string);
+        }
       })
       .finally(() => setIsLoading(false));
   }, [paymentId]);
@@ -41,6 +50,10 @@ export default function SuccessPayment() {
         <div className="min-h-screen flex items-center justify-center">
           <Spinner></Spinner>
         </div>
+      )}
+
+      {!isLoading && err !== "" && (
+        <div className="text-center">Something went wrong.</div>
       )}
 
       {!isLoading && booking && (
