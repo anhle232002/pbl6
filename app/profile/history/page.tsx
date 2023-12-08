@@ -1,5 +1,6 @@
 "use client";
 
+import DetailModal from "@/components/history/DetailModal";
 import { useUser } from "@/hooks/useUser";
 import { getBookings } from "@/services/getBookings";
 import { Booking } from "@/types/Booking";
@@ -11,15 +12,23 @@ export default function History() {
   const { user } = useUser();
   const [bookings, setBookings] = useState<Booking[]>();
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     if (user) {
       getBookings(user.userId)
         .then((data) => setBookings(data))
-        .catch((err) => {})
+        .catch((err) => {
+          setErr(err.response?.data.messages[0] as string);
+        })
         .finally(() => setIsLoading(false));
     }
   }, [user]);
+
+  const onClickShowDetail = (id: string) => {
+    setSelectedPayment(id);
+  };
 
   return (
     <div>
@@ -38,26 +47,30 @@ export default function History() {
           <div className="overflow-x-auto">
             <Table hoverable>
               <Table.Head>
-                <Table.HeadCell>ID</Table.HeadCell>
                 <Table.HeadCell>Booking Date</Table.HeadCell>
+                <Table.HeadCell>Movie</Table.HeadCell>
+                <Table.HeadCell>Cinema</Table.HeadCell>
                 <Table.HeadCell>Price</Table.HeadCell>
               </Table.Head>
               <Table.Body className="divide-y">
                 {bookings.map((bk) => {
                   return (
                     <Table.Row
+                      role="button"
                       key={bk.id}
                       className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      onClick={() => onClickShowDetail(bk.bookingRefId)}
                     >
-                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        {bk.id}
-                      </Table.Cell>
                       <Table.Cell>
                         {format(
                           new Date(bk.bookingDate),
                           "MMMM d, yyyy h:mm a",
                         )}
                       </Table.Cell>
+                      <Table.Cell>{bk.filmName} </Table.Cell>
+
+                      <Table.Cell>{bk.cinemaName}</Table.Cell>
+
                       <Table.Cell>
                         {new Intl.NumberFormat("vi-VN", {
                           style: "currency",
@@ -69,6 +82,11 @@ export default function History() {
                 })}
               </Table.Body>
             </Table>
+
+            <DetailModal
+              payment={selectedPayment}
+              setPayment={setSelectedPayment}
+            ></DetailModal>
           </div>
         )}
       </div>

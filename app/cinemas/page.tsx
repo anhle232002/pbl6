@@ -9,12 +9,16 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import getSchedules from "@/services/getSchedules";
 import { Film } from "@/types/Film";
+import AppFooter from "@/components/Footer";
+import BottomBar from "@/components/BottomBar";
+import WeekDayTabs from "@/components/WeekDayTabs";
 
 export default function CinemaMovies() {
   const [schedules, setSchedules] = useState<any>();
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
   const [selectedCinema, setSelectedCinema] = useState<number>();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const router = useRouter();
   const pathname = usePathname();
@@ -55,7 +59,6 @@ export default function CinemaMovies() {
 
   const films = useMemo(() => {
     if (!schedules || !selectedCinema) return [];
-    console.log(schedules);
 
     const cinema = schedules.find((c: any) => c.cinemaId === selectedCinema);
 
@@ -69,10 +72,8 @@ export default function CinemaMovies() {
     // });
   }, [selectedCinema, cinemas, schedules]);
 
-  console.log(films);
-
   return (
-    <div className="bg-background text-accent">
+    <div className="bg-background text-accent pb-36">
       <NavBar />
 
       <MovieCarousel />
@@ -101,11 +102,16 @@ export default function CinemaMovies() {
               })}
             </select>
           </div>
-
-          {/* <WeekDayTabs /> */}
         </div>
 
-        <div className="mt-10 space-y-16">
+        <div className="mt-8 ">
+          <WeekDayTabs
+            onSelectDate={setSelectedDate}
+            selectedDate={selectedDate}
+          />
+        </div>
+
+        <div className="mt-10 space-y-16 py-20">
           {isLoading && (
             <div className="flex items-center justify-center min-h-[300px]">
               <Spinner />
@@ -113,10 +119,16 @@ export default function CinemaMovies() {
           )}
           {films.length > 0 &&
             films.map((film: any) => {
-              return <MovieDetailsCard key={film.id} film={film} />;
+              return (
+                <MovieDetailsCard
+                  key={film.id}
+                  film={film}
+                  filterDate={selectedDate}
+                />
+              );
             })}
           {films.length === 0 && (
-            <div className="mt-4 text-center py-10">
+            <div className="mt-4 text-center py-10 min-h-[500px] flex items-center justify-center">
               <p className="text-lg text-white max-w-4xl m-auto">
                 We apologize, but there are currently no movies scheduled for
                 screening at this cinema. Please check back later for updates on
@@ -126,6 +138,9 @@ export default function CinemaMovies() {
           )}
         </div>
       </div>
+
+      <AppFooter />
+      <BottomBar />
     </div>
   );
 }

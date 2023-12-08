@@ -3,7 +3,7 @@ import MovieCard, { Movie } from "@/components/MovieCard";
 import MovieCarousel from "@/components/MovieCarousel";
 import NavigateToWhatsOn from "@/components/NavigateToCinema";
 import TrailerCard, { Trailer } from "@/components/TrailerCard";
-import Footer from "@/components/Footer";
+import AppFooter from "@/components/Footer";
 import Trailers from "@/components/Trailers";
 import { Roboto_Condensed } from "next/font/google";
 import BottomBar from "@/components/BottomBar";
@@ -11,7 +11,7 @@ import getFilms from "@/services/getFilms";
 import MovieCards from "@/components/MovieCards";
 export default async function Home() {
   return (
-    <div className={`relative min-h-screen bg-background text-accent`}>
+    <div className={`relative min-h-screen bg-background text-accent pb-36`}>
       <NavBar />
 
       <MovieCarousel />
@@ -61,7 +61,7 @@ export default async function Home() {
         </p>
       </div>
 
-      <Footer></Footer>
+      <AppFooter></AppFooter>
 
       <BottomBar />
     </div>

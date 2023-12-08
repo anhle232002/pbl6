@@ -5,8 +5,10 @@ import { RiSearch2Line, RiUser3Line } from "react-icons/ri";
 import SearchModal from "./SearchModal";
 import { storage } from "@/utils/storage";
 import { Dropdown } from "flowbite-react";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
+  const router = useRouter();
   const [showNavbar, setShowNavbar] = useState(false);
   const [user, setUser] = useState<any>();
   const isLoggedIn = !!user;
@@ -16,6 +18,12 @@ export default function NavBar() {
       setUser(JSON.parse(storage.get("user") || "null"));
     }
   }, []);
+
+  const onClickLogOut = () => {
+    localStorage.clear();
+
+    router.replace("/login");
+  };
 
   return (
     <nav className="bg-background">
@@ -61,9 +69,7 @@ export default function NavBar() {
                 <Dropdown.Item as="a" href="/profile">
                   Account
                 </Dropdown.Item>
-                <Dropdown.Item as="a" target="_blank">
-                  Logout
-                </Dropdown.Item>
+                <Dropdown.Item onClick={onClickLogOut}>Logout</Dropdown.Item>
               </Dropdown>
             )}
             <div role="button" onClick={() => setShowNavbar(true)}>

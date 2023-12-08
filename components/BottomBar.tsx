@@ -18,7 +18,7 @@ export default function BottomBar() {
   const [selectedCinema, setSelectedCinema] = useState<number>();
   const [selectedFilm, setSelectedFilm] = useState<number>();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [selectedSchedule, setSelectedSchedule] = useState<number>();
+  const [selectedSchedule, setSelectedSchedule] = useState<number>(-1);
   const [availableTimes, setAvailableTimes] = useState<any[]>([]);
   const router = useRouter();
 
@@ -52,10 +52,12 @@ export default function BottomBar() {
         isSameDay(selectedDate, new Date(schedule.startTime)),
       ),
     );
+
+    setSelectedSchedule(-1);
   }, [selectedDate, selectedFilm, selectedCinema, schedules]);
 
   const onSubmit = () => {
-    if (!selectedSchedule || !selectedFilm) return;
+    if (!selectedSchedule || selectedSchedule === -1 || !selectedFilm) return;
 
     if (!storage.get("logged_in")) {
       // console.log(window.location.pathname);
@@ -70,8 +72,7 @@ export default function BottomBar() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 w-full bg-white h-24 z-30
-      tracking-widest 
+      className="fixed bottom-0 left-0 w-full bg-white h-24 z-30 tracking-widest 
       "
     >
       <div
@@ -84,7 +85,7 @@ export default function BottomBar() {
         <div className="flex items-center  gap-10">
           <div>
             <label
-              htmlFor="countries"
+              htmlFor="venue"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Venue
@@ -92,7 +93,7 @@ export default function BottomBar() {
             <select
               value={selectedCinema}
               onChange={(e) => setSelectedCinema(Number(e.target.value))}
-              id="countries"
+              id="venue"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value={-1} disabled>
@@ -110,7 +111,7 @@ export default function BottomBar() {
           </div>
           <div>
             <label
-              htmlFor="countries"
+              htmlFor="film"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Film
@@ -118,7 +119,7 @@ export default function BottomBar() {
             <select
               value={selectedFilm}
               onChange={(e) => setSelectedFilm(Number(e.target.value))}
-              id="countries"
+              id="film"
               disabled={!selectedCinema}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
@@ -138,7 +139,7 @@ export default function BottomBar() {
 
           <div>
             <label
-              htmlFor="countries"
+              htmlFor="date"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Date
@@ -148,7 +149,7 @@ export default function BottomBar() {
               onChange={(e) => {
                 setSelectedDate(new Date(Number(e.target.value)));
               }}
-              id="countries"
+              id="date"
               disabled={!selectedCinema || !selectedFilm}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
@@ -164,7 +165,7 @@ export default function BottomBar() {
 
           <div>
             <label
-              htmlFor="countries"
+              htmlFor="time"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Time
@@ -173,11 +174,10 @@ export default function BottomBar() {
               disabled={!selectedCinema || !selectedFilm || !selectedDate}
               value={selectedSchedule}
               onChange={(e) => setSelectedSchedule(Number(e.target.value))}
-              id="countries"
+              id="time"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={""}
             >
-              <option value={""} disabled>
+              <option value={-1} disabled>
                 Choose a time
               </option>
 
@@ -194,9 +194,10 @@ export default function BottomBar() {
 
         <button
           onClick={onSubmit}
-          className="uppercase border-2 rounded px-4 py-4 text-black font-semibold border-primary tracking-widest"
+          disabled={selectedSchedule === -1}
+          className="uppercase border-2 rounded px-4 py-4 text-black font-semibold border-primary tracking-widest disabled:opacity-60"
         >
-          {selectedSchedule ? "Book" : "Search"}
+          Book
         </button>
       </div>
     </div>

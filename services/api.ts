@@ -21,4 +21,11 @@ apiClient.interceptors.request.use(
   },
 );
 
+// apiClient.interceptors.response.use(null, (error) => {
+//   if (error.response.status === 401) {
+//     localStorage.clear();
+//     apiClient(error.config);
+//   }
+// });
+//
 export default apiClient;
