@@ -3,11 +3,11 @@ import { useBookingStore } from "@/store/booking-store";
 import { Film } from "@/types/Film";
 import { format, getHours, getMinutes } from "date-fns";
 import { Spinner } from "flowbite-react";
+import { vi } from "date-fns/locale";
 
 export function MoviePreview({}: {}) {
   const { film, schedule } = useBookingStore();
-
-  console.log(schedule);
+  console.log(film);
 
   return (
     <div className="relative bg-slate-700/40 overflow-hidden py-4 ">
@@ -33,21 +33,26 @@ export function MoviePreview({}: {}) {
               />
             </div>
             <div>
-              <div className="tracking-wider text-red-600">NOW BOOKING</div>
+              <div className="tracking-wider text-red-600 uppercase">
+                Đang đặt
+              </div>
 
               <h3 className="text-xl">{film.name}</h3>
 
               <div className="mt-4 text-sm">
-                <span>CGV Đà Nẵng</span>, <span>SCREEN 4</span>
+                <span>CGV Đà Nẵng</span>
+                {/* , <span>SCREEN 4</span> */}
               </div>
 
               <p className="text-sm mt-2">
-                {format(new Date(schedule.startTime), "iiii, dd MMM")},{" "}
-                {format(new Date(schedule.startTime), "HH:mm")} - 11:50PM
+                {format(new Date(schedule.startTime), "iiii, dd MMM", {
+                  locale: vi,
+                })}
+                , {format(new Date(schedule.startTime), "HH:mm")}
               </p>
 
               <button className="mt-2 text-xs  bg-slate-900 px-4 py-1 rounded-md font-semibold uppercase">
-                Change Time
+                Quay lại
               </button>
             </div>
           </div>
