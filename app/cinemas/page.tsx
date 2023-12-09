@@ -130,9 +130,9 @@ export default function CinemaMovies() {
           {films.length === 0 && (
             <div className="mt-4 text-center py-10 min-h-[500px] flex items-center justify-center">
               <p className="text-lg text-white max-w-4xl m-auto">
-                We apologize, but there are currently no movies scheduled for
-                screening at this cinema. Please check back later for updates on
-                upcoming showtimes.
+                Chúng tôi xin lỗi, hiện tại không có bộ phim nào được lên lịch
+                chiếu tại rạp này. Vui lòng kiểm tra lại sau để cập nhật thông
+                tin về các suất chiếu sắp tới.
               </p>
             </div>
           )}
