@@ -5,6 +5,7 @@ import { useUser } from "@/hooks/useUser";
 import { getBookings } from "@/services/getBookings";
 import { Booking } from "@/types/Booking";
 import { format } from "date-fns";
+import { vi } from "date-fns/locale";
 import { Spinner, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 
@@ -32,7 +33,7 @@ export default function History() {
 
   return (
     <div>
-      <div className="text-xl font-semibold">Booking History</div>
+      <div className="text-xl font-semibold">Lịch sử đặt vé</div>
 
       <hr className="mt-2" />
 
@@ -47,10 +48,10 @@ export default function History() {
           <div className="overflow-x-auto">
             <Table hoverable>
               <Table.Head>
-                <Table.HeadCell>Booking Date</Table.HeadCell>
-                <Table.HeadCell>Movie</Table.HeadCell>
-                <Table.HeadCell>Cinema</Table.HeadCell>
-                <Table.HeadCell>Price</Table.HeadCell>
+                <Table.HeadCell>Ngày đặt</Table.HeadCell>
+                <Table.HeadCell>Phim</Table.HeadCell>
+                <Table.HeadCell>Rạp chiếu</Table.HeadCell>
+                <Table.HeadCell>Tổng</Table.HeadCell>
               </Table.Head>
               <Table.Body className="divide-y">
                 {bookings.map((bk) => {
@@ -64,7 +65,8 @@ export default function History() {
                       <Table.Cell>
                         {format(
                           new Date(bk.bookingDate),
-                          "MMMM d, yyyy h:mm a",
+                          "dd MMMM, yyyy h:mm a",
+                          { locale: vi },
                         )}
                       </Table.Cell>
                       <Table.Cell>{bk.filmName} </Table.Cell>

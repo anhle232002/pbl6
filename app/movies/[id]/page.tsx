@@ -7,6 +7,7 @@ import MovieInfo from "@/components/movie-detail/MovieInfo";
 import { Cinema } from "@/types/Cinema";
 import { Spinner } from "flowbite-react";
 import NavBar from "@/components/NavBar";
+import AppFooter from "@/components/Footer";
 
 export default function MovieDetail({ params }: { params: { id: string } }) {
   const [film, setFilm] = useState();
@@ -29,7 +30,7 @@ export default function MovieDetail({ params }: { params: { id: string } }) {
   }, [film, cinemas, schedules]);
 
   return (
-    <div>
+    <div className="pb-4 bg-background">
       <NavBar />
 
       <div className="relative bg-background text-accent pb-4 min-h-screen">
@@ -41,6 +42,8 @@ export default function MovieDetail({ params }: { params: { id: string } }) {
           </div>
         )}
       </div>
+
+      <AppFooter />
     </div>
   );
 }

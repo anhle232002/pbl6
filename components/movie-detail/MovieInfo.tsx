@@ -11,6 +11,7 @@ import TrailerModal from "../TrailerModal";
 import getSchedules from "@/services/getSchedules";
 import { Spinner } from "flowbite-react";
 import MovieCard from "../MovieCard";
+import { vi } from "date-fns/locale";
 
 export default function MovieInfo({
   film,
@@ -102,27 +103,25 @@ export default function MovieInfo({
 
                 <div className="grid grid-cols-2 text-white mt-10 gap-10">
                   <div>
-                    <div>Release date</div>
-                    <div className="text-accent">
+                    <div className="font-semibold">Ngày ra mắt</div>
+                    <div className="text-white">
                       {formatDate(new Date(film.startDate))}
                     </div>
                   </div>
                   <div>
-                    <div>Director</div>
-                    <div className="text-accent">{film.director}</div>
+                    <div className="font-semibold">Đạo diễn</div>
+                    <div className="text-white">{film.director}</div>
                   </div>
                   <div>
-                    <div>Running time</div>
-                    <div className="text-accent">{film.duration} minutes</div>
+                    <div className="font-semibold">Thời lượng</div>
+                    <div className="text-white">{film.duration} phút</div>
                   </div>
                   <div>
-                    <div>Cast</div>
-                    <div className="text-accent">{film.actor}</div>
+                    <div className="font-semibold">Dàn diễn viên</div>
+                    <div className="text-white">{film.actor}</div>
                   </div>
                 </div>
               </div>
-
-              <div className="mt-10">Full film details</div>
 
               <div className="mt-10 border-b border-accent">
                 <select
@@ -154,10 +153,10 @@ export default function MovieInfo({
               </div>
 
               <div className="mt-10">
-                <div className="text-white tracking-wider">
-                  UPCOMING SHOWINGS FOR
+                <div className="text-white tracking-wider uppercase">
+                  Lịch chiếu sắp tới vào
                   <span className="text-primary ml-4 text-xl">
-                    {format(selectedDate, "iiii, dd MMM")}
+                    {format(selectedDate, "iiii, dd MMM", { locale: vi })}
                   </span>
                 </div>
 
@@ -180,7 +179,8 @@ export default function MovieInfo({
                 {availableSchedules.length <= 0 && (
                   <div className="min-h-[300px] flex items-center justify-center">
                     <p className="text-white text-center">
-                      There are no schedules currently showing...
+                      Hiện tại chưa có thông tin lịch chiếu nào sẵn có. Xin vui
+                      lòng quay lại sau
                     </p>
                   </div>
                 )}
@@ -203,8 +203,6 @@ function RecommendedFilms({ cinema }: { cinema: Cinema }) {
   useEffect(() => {
     setIsLoading(true);
     getSchedules({ cinemaId: cinema.id }).then((data) => {
-      console.log(data);
-
       setFilms(data[0].films);
       setIsLoading(false);
     });
@@ -214,7 +212,7 @@ function RecommendedFilms({ cinema }: { cinema: Cinema }) {
     <div className="mt-20 text-2xl">
       <div className="relative text-2xl text-white before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">
         <span className="ml-4">
-          ALSO SHOWINGS AT
+          Các phim đang chiếu tại
           <span className="text-primary ml-4">{cinema.name}</span>
         </span>
       </div>
@@ -233,8 +231,9 @@ function RecommendedFilms({ cinema }: { cinema: Cinema }) {
                 })}
               </div>
             ) : (
-              <div className="p-8 text-white text-center">
-                Currently not showing
+              <div className="p-8 text-white text-center min-h-[300px] flex items-center justify-center">
+                Hiện tại không có phim nào đang chiếu. Xin vui lòng quay lại
+                sau.
               </div>
             )}
           </div>

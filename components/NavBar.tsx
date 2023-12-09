@@ -34,15 +34,15 @@ export default function NavBar() {
           </Link>
 
           <div className="flex-1">
-            <ul className="text-accent flex gap-4">
-              <li className="hover:bg-primary-linear bg-transparent bg-clip-text hover:text-transparent">
-                <Link href={"/"}>WHAT&#39;S ON</Link>
+            <ul className="text-accent flex gap-8">
+              <li className="hover:bg-primary-linear bg-transparent bg-clip-text hover:text-transparent uppercase">
+                <Link href={"/"}>Đang chiếu</Link>
               </li>
               <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent">
                 <Link href={"/"}>TRAILERS</Link>
               </li>
-              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent ">
-                <Link href={"/"}>COMING SOON</Link>
+              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent uppercase">
+                <Link href={"/"}>Sắp chiếu </Link>
               </li>
             </ul>
           </div>
@@ -62,14 +62,14 @@ export default function NavBar() {
                     role="button"
                     className="text-white px-4 py-1 bg-primary rounded-md"
                   >
-                    Hello {user.employeeNo.split("@")[0]}
+                    Chào {user.employeeNo.split("@")[0]}
                   </span>
                 )}
               >
                 <Dropdown.Item as="a" href="/profile">
-                  Account
+                  Tài khoản
                 </Dropdown.Item>
-                <Dropdown.Item onClick={onClickLogOut}>Logout</Dropdown.Item>
+                <Dropdown.Item onClick={onClickLogOut}>Đăng xuất</Dropdown.Item>
               </Dropdown>
             )}
             <div role="button" onClick={() => setShowNavbar(true)}>

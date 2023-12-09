@@ -42,11 +42,11 @@ export default function DetailModal({
         setShow(false);
       }}
     >
-      <Modal.Header>Booking Detail</Modal.Header>
+      <Modal.Header>Thông tin đặt vé</Modal.Header>
       <Modal.Body>
         {!isLoading && err !== "" && (
           <div className="min-h-[300px]">
-            <p>Something went wrong... Please try again later.</p>
+            <p>Đã xảy ra lỗi... Vui lòng thử lại sau.</p>
           </div>
         )}
 
@@ -61,31 +61,34 @@ export default function DetailModal({
             <div>
               <h2 className="text-2xl font-bold mb-4">{booking.filmName}</h2>
               <p>
-                <strong>Customer Name:</strong> {booking.customerName}
+                <strong>Tên người đặt:</strong> {booking.customerName}
               </p>
               <p>
-                <strong>Phone Number:</strong> {booking.phoneNumber}
+                <strong>Số điện thoại:</strong> {booking.phoneNumber}
               </p>
               <p>
-                <strong>Total Price:</strong> {booking.totalPrice}{" "}
+                <strong>Số tiền đã thanh toán:</strong> {booking.totalPrice}{" "}
                 {booking.bookingCurrency}
               </p>
               <p>
-                <strong>Booking Date:</strong>{" "}
+                <strong>Ngày đặt:</strong>{" "}
                 {new Date(booking.bookingDate).toLocaleString()}
               </p>
               <p>
-                <strong>Start Time:</strong>{" "}
+                <strong>Phim:</strong> {booking.filmName}
+              </p>
+              <p>
+                <strong>Giờ chiếu:</strong>{" "}
                 {new Date(booking.startTime!).toLocaleString()}
               </p>
               <p>
-                <strong>Cinema Name:</strong> {booking.cinemaName}
+                <strong>Rạp chiếu phim:</strong> {booking.cinemaName}
               </p>
               <p>
-                <strong>Room Name:</strong> {booking.roomName}
+                <strong>Phòng:</strong> {booking.roomName}
               </p>
               <p>
-                <strong>Seats:</strong>{" "}
+                <strong>Ghế:</strong>{" "}
                 {booking.tickets &&
                   booking.tickets.map((ticket) => (
                     <span key={ticket.id}>{ticket.seatCode}, </span>
