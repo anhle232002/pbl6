@@ -1,5 +1,6 @@
 import getFilms from "@/services/getFilms";
 import { Film } from "@/types/Film";
+import { Spinner } from "flowbite-react";
 import Link from "next/link";
 import { useState } from "react";
 import { RiSearch2Line, RiTicketLine } from "react-icons/ri";
@@ -7,6 +8,7 @@ import { RiSearch2Line, RiTicketLine } from "react-icons/ri";
 export default function SearchModal({ onClose }: { onClose: () => void }) {
   const [results, setResults] = useState([]);
   const [searchStr, setSearchStr] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
 
   const onClickSearch = async () => {
@@ -14,11 +16,16 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
       if (!searchStr) {
         return;
       }
+
+      setIsLoading(true);
+      setResults([]);
       const resp = await getFilms({ Keyword: searchStr });
 
       setResults(resp.data);
+      setIsLoading(false);
     } catch (error: any) {
       setErr(error.response.message[0]);
+      setIsLoading(false);
     }
   };
 
@@ -36,7 +43,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           className="relative h-full p-14 w-[550px]"
         >
           <h3 className="text-3xl underline font-[isonorm] tracking-widest bg-primary-linear bg-clip-text text-transparent uppercase">
-            Search
+            Tìm kiếm phim
           </h3>
 
           <div className="mt-10 flex gap-4 border-b-accent border-b pb-2">
@@ -56,6 +63,12 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           </div>
 
           {err && <div className="text-red-500 mt-4">{err}</div>}
+
+          {isLoading && (
+            <div className="min-h-[200px] flex justify-center items-center mt-8">
+              <Spinner />
+            </div>
+          )}
 
           <div className="py-6 space-y-4">
             {results &&

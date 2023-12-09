@@ -45,17 +45,17 @@ export default function MovieDetailsCard({
         </h3>
 
         <div className="mt-6">
-          <span className="text-white mr-4">Starring</span>
+          <span className="text-white mr-4">Dàn diễn viên</span>
           <span>{film.actor} </span>
         </div>
 
         <div className="mt-6">
-          <span className="text-white mr-4">Start Date</span>
+          <span className="text-white mr-4">Ngày ra mắt</span>
           <span>{formatDate(new Date(film.startDate))} </span>
         </div>
 
         <div className="mt-6">
-          <span className="text-white mr-4">Running time</span>
+          <span className="text-white mr-4">Thời lượng</span>
 
           <span>{formatHourMinute(film.duration)}</span>
         </div>
