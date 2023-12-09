@@ -18,18 +18,18 @@ export default function AppFooter() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
             <div>
-              <Footer.Title title="about" className="text-white" />
+              <Footer.Title title="Về chúng tôi" className="text-white" />
               <Footer.LinkGroup col>
                 <Footer.Link className="text-white" href="#">
                   Cinephile
                 </Footer.Link>
                 <Footer.Link className="text-white" href="#">
-                  Cinemas
+                  Rạp chiếu
                 </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Follow us" className="text-white" />
+              <Footer.Title title="Theo dõi" className="text-white" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#" className="text-white">
                   Facebook
@@ -40,13 +40,13 @@ export default function AppFooter() {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" className="text-white" />
+              <Footer.Title title="Quy định" className="text-white" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#" className="text-white">
-                  Privacy Policy
+                  Chính sách riêng tư
                 </Footer.Link>
                 <Footer.Link href="#" className="text-white">
-                  Terms &amp; Conditions
+                  Điều khoản và điều kiện
                 </Footer.Link>
               </Footer.LinkGroup>
             </div>

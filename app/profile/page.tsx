@@ -58,12 +58,12 @@ export default function AccountSetting() {
     <div className="bg-white p-10 text-black rounded-lg overflow-hidden">
       <div className="flex items-center justify-between">
         <h3 className="text-2xl font-semibold tracking-wide font-[isonorm]">
-          Account Details
+          Thông tin tài khoản
         </h3>
         <div onClick={onClickEdit} role="button">
           <button className="text-sm px-4 py-2 bg-primary text-white rounded-lg font-semibold flex items-center">
             <RiEdit2Line className="mr-2 text-lg" />
-            {!editting ? <span>Edit</span> : <span>Back</span>}
+            {!editting ? <span>Chỉnh sửa</span> : <span>Quay lại</span>}
           </button>
         </div>
       </div>
@@ -87,19 +87,19 @@ export default function AccountSetting() {
                   </div>
                 </div>
                 <div className="flex items-center gap-10">
-                  <div className="opacity-60 min-w-[150px]">Full Name</div>
+                  <div className="opacity-60 min-w-[150px]">Tên đầy đủ</div>
                   <div>
                     <p>{customerInfo.customerName}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-10">
-                  <div className="opacity-60 min-w-[150px]">Phone number</div>
+                  <div className="opacity-60 min-w-[150px]">Số điện thoại</div>
                   <div>
                     <p>{customerInfo.phoneNumber}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-10">
-                  <div className="opacity-60 min-w-[150px]">Address</div>
+                  <div className="opacity-60 min-w-[150px]">Địa chỉ</div>
                   <div>
                     <p>{customerInfo.address}</p>
                   </div>
@@ -125,7 +125,8 @@ export default function AccountSetting() {
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to stop editting? All changes will be lost.
+              Bạn có chắc chắn muốn dừng việc chỉnh sửa không? Tất cả các thay
+              đổi sẽ bị mất.
             </h3>
             <div className="flex justify-center gap-4">
               <Button
@@ -135,13 +136,13 @@ export default function AccountSetting() {
                   setEditting(false);
                 }}
               >
-                {"Yes, I'm sure"}
+                {"Chắc chắn"}
               </Button>
               <Button
                 color="gray"
                 onClick={() => setOpenBeforeExitModal(false)}
               >
-                No, cancel
+                Không{" "}
               </Button>
             </div>
           </div>

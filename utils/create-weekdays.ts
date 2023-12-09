@@ -1,16 +1,17 @@
 import { addDays, format, isToday, isTomorrow, sub, subDays } from "date-fns";
+import { vi } from "date-fns/locale";
 
 export default function createDays() {
   const days = [];
 
   const getDayTitle = (index: number) => {
     if (index === 0) {
-      return "Today";
+      return "Hôm nay";
     } else if (index === 1) {
-      return "Tomorrow";
+      return "Ngày mai";
     } else {
       const currentDate = addDays(new Date(), index);
-      return format(currentDate, "iiii");
+      return format(currentDate, "iiii", { locale: vi });
     }
   };
 

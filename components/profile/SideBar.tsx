@@ -17,7 +17,7 @@ export default function SideBar() {
             {path === "/profile" && (
               <span className="absolute left-0 top-0 w-3 rounded-l bg-primary h-full"></span>
             )}
-            <div className="ml-6">Your Account</div>
+            <div className="ml-6">Tài khoản của bạn</div>
           </Link>
         </li>
         <li>
@@ -30,7 +30,7 @@ export default function SideBar() {
               <span className="absolute left-0 top-0 w-3 rounded-l bg-primary h-full"></span>
             )}
 
-            <div className="ml-6">Booking History</div>
+            <div className="ml-6">Lịch sử đặt vé</div>
           </Link>
         </li>
       </ul>

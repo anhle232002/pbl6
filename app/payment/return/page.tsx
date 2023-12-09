@@ -31,6 +31,10 @@ export default function SuccessPayment() {
       .catch((error) => {
         if (error instanceof AxiosError) {
           console.log(error);
+          if (error.response?.status === 401) {
+            setErr("Bạn không có quyền truy cập");
+            return;
+          }
 
           setErr(error.response?.data.messages[0] as string);
         }
@@ -53,7 +57,7 @@ export default function SuccessPayment() {
       )}
 
       {!isLoading && err !== "" && (
-        <div className="text-center">Something went wrong.</div>
+        <div className="text-center">Đã xảy ra lỗi. Vui lòng quay lại sau.</div>
       )}
 
       {!isLoading && booking && (

@@ -46,7 +46,7 @@ function ScheduleItem({
         {/* <span>- {format(endTime, "HH:mm")} </span> */}
       </div>
 
-      <div className="text-white">FROM {formattedCurrency}</div>
+      <div className="text-white">Giá từ {formattedCurrency}</div>
     </div>
   );
 }

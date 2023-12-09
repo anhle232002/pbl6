@@ -12,7 +12,7 @@ export default function ChooseCinema({ cinemas }: { cinemas: Cinema[] }) {
     <div className="flex-1">
       <div role="button" onClick={() => props.setOpenModal("dismissible")}>
         <div className="border-b-2 border-accent pb-1">
-          Click to choose cinema
+          Nhấp để chọn rạp chiếu bạn muốn tìm
         </div>
       </div>
 
@@ -26,7 +26,7 @@ export default function ChooseCinema({ cinemas }: { cinemas: Cinema[] }) {
         <div className="border-2 border-black/60 rounded-md">
           <Modal.Header className="bg-black border-b-0">
             <div className="bg-primary-linear bg-clip-text text-transparent">
-              CHOOSE CINEMA YOU WANT TO GO
+              Chọn rạp chiếu bạn muốn đi đến
             </div>
           </Modal.Header>
           <Modal.Body className="bg-black text-accent ">

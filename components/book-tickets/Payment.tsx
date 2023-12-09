@@ -58,11 +58,8 @@ export default function Payment({
         className="relative text-black h-full p-4 shadow-lg rounded-md bg-white/10 "
       >
         <div>
-          <h3
-            style={{ fontFamily: "isonorm" }}
-            className="text-3xl tracking-wider py-2  uppercase text-primary "
-          >
-            Review & pay
+          <h3 className="text-2xl py-2  uppercase text-primary ">
+            Kiểm tra & thanh toán
           </h3>
 
           <hr className="border-primary"></hr>
@@ -70,9 +67,7 @@ export default function Payment({
 
         <div className="mt-6">
           <div className="flex justify-between items-center">
-            <div className="uppercase text-primary font-[isonorm] text-lg">
-              Your seats
-            </div>
+            <div className="uppercase text-primary text-lg">Ghế của bạn</div>
 
             <div
               role="button"
@@ -80,7 +75,7 @@ export default function Payment({
               className="flex opacity-70 items-center gap-2"
             >
               <RiEdit2Line />
-              EDIT
+              Sửa
             </div>
           </div>
 
@@ -101,22 +96,20 @@ export default function Payment({
 
         <div className="mt-6">
           <div className="flex justify-between items-center">
-            <div className="uppercase text-primary font-[isonorm] text-lg tracking-widest">
-              Your Email
-            </div>
+            <div className="uppercase text-primary text-lg ">Email của bạn</div>
 
-            <div
-              role="button"
-              onClick={goBack}
-              className="flex opacity-70 items-center gap-2"
-            >
-              <RiEdit2Line />
-              EDIT
-            </div>
+            {/* <div */}
+            {/*   role="button" */}
+            {/*   onClick={goBack} */}
+            {/*   className="flex opacity-70 items-center gap-2" */}
+            {/* > */}
+            {/*   <RiEdit2Line /> */}
+            {/*   EDIT */}
+            {/* </div> */}
           </div>
 
           <div className="mt-2">
-            <p>Your ticket will be sent to your email address at</p>
+            {/* <p>Your ticket will be sent to your email address at</p> */}
             <div className="font-semibold tracking-wider">
               {user.employeeNo}
             </div>
@@ -126,8 +119,8 @@ export default function Payment({
         </div>
 
         <div className="mt-6">
-          <h3 className="uppercase text-primary tracking-widest font-[isonorm] text-2xl">
-            select payment method
+          <h3 className="uppercase text-primary  text-xl">
+            Phương thức thanh toán
           </h3>
 
           <div className="space-y-4 mt-4">
@@ -142,7 +135,7 @@ export default function Payment({
                 value="credit-card"
                 onChange={(e) => setPaymentMethod(e.target.value)}
               />
-              <div className="text-lg">Credit Card</div>
+              <div className="text-lg">Thẻ tín dụng</div>
             </Label>
 
             <Label
@@ -179,32 +172,32 @@ export default function Payment({
             <div className="flex items-center gap-2">
               <Checkbox id="accept" defaultChecked />
               <Label htmlFor="accept" className="flex">
-                I agree with the&nbsp;
+                Tôi đồng ý với
                 <a
                   href="#"
-                  className=" hover:underline font-semibold text-black"
+                  className=" hover:underline font-semibold text-black ml-2"
                 >
-                  terms and conditions
+                  các điều khoản và điều kiện
                 </a>
               </Label>
             </div>
           </div>
 
           <p className="text-sm mt-4 text-accent">
-            Please be advised that we may ask for valid photographic ID on
-            arrival.
+            Hãy lưu ý rằng chúng tôi có thể yêu cầu bạn cung cấp chứng minh nhận
+            dạng hình ảnh hợp lệ hoặc mã QR code khi bạn đến.{" "}
           </p>
 
           <hr className="mt-3"></hr>
 
           <div className="py-4">
             <div className="flex justify-between items-center text-accent">
-              <div>Tickets</div>
+              <div>Vé</div>
               <div>{totalPrice}</div>
             </div>
 
             <div className="flex justify-between items-center font-semibold text-lg mt-2">
-              <div>Total</div>
+              <div>Tổng</div>
               <div>{totalPrice}</div>
             </div>
 
@@ -217,7 +210,7 @@ export default function Payment({
           hover:border-primary   focus:z-10 focus:ring-4 focus:ring-gray-200  tracking-widest  duration-200"
             >
               {isLoading && <Spinner className="mr-4" />}
-              <span className="font-[isonorm]">checkout</span>
+              <span className="font-[isonorm]">Thanh toán</span>
             </button>
           </div>
         </div>

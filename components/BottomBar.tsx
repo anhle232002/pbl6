@@ -71,16 +71,13 @@ export default function BottomBar() {
   };
 
   return (
-    <div
-      className="fixed bottom-0 left-0 w-full bg-white h-24 z-30 tracking-widest 
-      "
-    >
+    <div className="fixed lg:block hidden bottom-0 left-0 w-full bg-white h-24 z-30 tracking-widest">
       <div
         className="relative max-w-6xl m-auto  h-full flex gap-10 items-center before:absolute before:bg-primary-linear-reverse
         before:right-[90%] before:h-full before:w-1/2"
       >
         <div className="flex flex-col text-white text-xl font-[isonorm] tracking-widest  justify-center px-6 h-full z-50 font-semibold">
-          <span>QUICK</span> <span>BOOK</span>
+          <span className="w-32">Đặt Vé</span> <span>Nhanh</span>
         </div>
         <div className="flex items-center  gap-10">
           <div>
@@ -88,7 +85,7 @@ export default function BottomBar() {
               htmlFor="venue"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Venue
+              Rạp chiếu
             </label>
             <select
               value={selectedCinema}
@@ -97,7 +94,7 @@ export default function BottomBar() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value={-1} disabled>
-                Choose a venue
+                Chọn rạp chiếu
               </option>
               {cinemas.length === 0 && "loading..."}
               {cinemas.map((cinema) => {
@@ -114,7 +111,7 @@ export default function BottomBar() {
               htmlFor="film"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Film
+              Phim
             </label>
             <select
               value={selectedFilm}
@@ -124,7 +121,7 @@ export default function BottomBar() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="-1" disabled>
-                Choose a film
+                Chọn phim
               </option>
               {films.length === 0 && "loading..."}
               {films.map((film) => {
@@ -142,7 +139,7 @@ export default function BottomBar() {
               htmlFor="date"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Date
+              Ngày
             </label>
             <select
               value={selectedDate.getTime()}
@@ -168,7 +165,7 @@ export default function BottomBar() {
               htmlFor="time"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Time
+              Lịch chiếu
             </label>
             <select
               disabled={!selectedCinema || !selectedFilm || !selectedDate}
@@ -178,7 +175,7 @@ export default function BottomBar() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value={-1} disabled>
-                Choose a time
+                Chọn lịch chiếu
               </option>
 
               {availableTimes.map((schedule) => {
@@ -197,7 +194,7 @@ export default function BottomBar() {
           disabled={selectedSchedule === -1}
           className="uppercase border-2 rounded px-4 py-4 text-black font-semibold border-primary tracking-widest disabled:opacity-60"
         >
-          Book
+          Đặt
         </button>
       </div>
     </div>

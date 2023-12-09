@@ -99,21 +99,27 @@ export function SeatStatusNotes({ price }: { price: number }) {
         <div className="flex gap-3">
           <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2"></div>
           <div>
-            Standard <strong>{price}đ</strong>
+            Tiêu chuẩn{" "}
+            <strong>
+              {new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(price)}
+            </strong>
           </div>
         </div>
 
         <div className="flex gap-3">
           <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2"></div>
-          <div>Available</div>
+          <div>Ghế trống</div>
         </div>
         <div className="flex gap-3">
           <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2 bg-red-600 border-red-600"></div>
-          <div>Reserved</div>
+          <div>Ghế đã đặt</div>
         </div>
         <div className="flex gap-3">
           <div className="w-[20px] h-[20px] rounded-b-xl rounded-t border-2 bg-green-600 border-green-600"></div>
-          <div>Selected</div>
+          <div>Ghế đã chọn</div>
         </div>
       </div>
     </div>
