@@ -22,7 +22,7 @@ function App() {
     },
   ];
   return (
-    <div className="h-[700px] relative">
+    <div className="h-[500px] relative">
       <Swiper
         modules={[Navigation, Autoplay]}
         navigation
@@ -30,6 +30,7 @@ function App() {
         autoplay={{
           delay: 3000,
         }}
+        spaceBetween={500}
         slidesPerView={1}
       >
         {slides.map((slide) => {

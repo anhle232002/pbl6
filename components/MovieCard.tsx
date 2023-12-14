@@ -17,7 +17,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
             alt="movie-image"
           />
         </div>
-        <p className="text-center mt-4 text-xl text-white uppercase font-normal tracking-wider">
+        <p className="text-center mt-4  text-black   tracking-wider">
           {movie.name}
         </p>
       </Link>

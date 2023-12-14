@@ -11,9 +11,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#f7941e",
-        background: "#000000",
+        background: "#ffffff",
         secondary: "#007700",
-        accent: "#777",
+        accent: "#4a4a4a",
       },
       backgroundImage: {
         "primary-linear":
