@@ -50,7 +50,7 @@ function App() {
 }
 export default App;
 
-const PrevArrow = (props) => {
+const PrevArrow = (props: any) => {
   const { className, style, onClick } = props;
   return (
     <button
