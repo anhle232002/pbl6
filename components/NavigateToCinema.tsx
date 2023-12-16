@@ -16,11 +16,11 @@ export default function NavigateToWhatsOn() {
 
   return (
     <div className="flex gap-10 items-center">
-      <p className="text-white text-3xl font-[isonorm]">Xem lịch chiếu tại</p>
+      <p className="text-black text-2xl">Xem lịch chiếu tại</p>
 
       <ChooseCinema cinemas={cinemas} />
 
-      <button className="font-semibold border-2 border-accent w-24 rounded text-white py-2 hover:shadow-[0px_0px_100px_10px_#777] duration-200">
+      <button className="font-semibold border-2 border-accent w-24 rounded text-black py-2 hover:shadow-[0px_0px_100px_10px_#777] duration-200">
         Tìm
       </button>
     </div>

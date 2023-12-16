@@ -10,7 +10,7 @@ import { Footer } from "flowbite-react";
 
 export default function AppFooter() {
   return (
-    <Footer container className="bg-black  p-0 border-t border-accent pt-6">
+    <Footer container className="bg-[#333]  p-4  pt-6 rounded-none">
       <div className="w-full m-0">
         <div className="grid max-w-7xl m-auto justify-between sm:flex sm:justify-between md:flex md:grid-cols-1 py-10 ">
           <div>
