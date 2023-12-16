@@ -41,30 +41,44 @@ export default function MovieInfo({
 }) {
   const [selectedCinemaId, setSelectedCinemaId] = useState(-1);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [city, setCity] = useState("Toàn quốc");
   const days = createDays();
 
   const availableSchedules = useMemo(() => {
     const schedulesByCinema: any[] = [];
 
     Object.keys(schedules).forEach((k1) => {
-      Object.keys(schedules[k1]).forEach((k2) => {
-        const canBookSchedules = schedules[k1][k2].filter((s: any) => {
-          return (
-            isSameDay(new Date(s.startTime), selectedDate) &&
-            isAfter(new Date(s.startTime), new Date())
-          );
+      if (city === "Toàn quốc") {
+        Object.keys(schedules[k1]).forEach((k2) => {
+          const canBookSchedules = schedules[k1][k2].filter((s: any) => {
+            return (
+              isSameDay(new Date(s.startTime), selectedDate) &&
+              isAfter(new Date(s.startTime), new Date())
+            );
+          });
+          schedulesByCinema.push({
+            id: k2,
+            name: cinemas.find((c) => c.id === Number(k2))?.name || "",
+            schedules: canBookSchedules,
+          });
         });
-        schedulesByCinema.push({
-          id: k2,
-          name: cinemas.find((c) => c.id === Number(k2))?.name || "",
-          schedules: canBookSchedules,
-        });
-      });
+      }
     });
 
     return schedulesByCinema;
   }, [cinemas, selectedDate, schedules]);
 
+  const cities =
+    cinemas && cinemas.length > 0
+      ? [
+          "Toàn quốc",
+          ...Array.from(new Set(cinemas.map((cinema) => cinema.city))),
+        ]
+      : ["Toàn quốc"];
+
+  const filterCinema = cinemas.filter((cinema) => {
+    return city === "Toàn quốc" || cinema.city === city;
+  });
   const selectedCinema = useMemo(() => {
     return cinemas.find((c) => c.id === selectedCinemaId);
   }, [selectedCinemaId, cinemas]);
@@ -290,9 +304,14 @@ export default function MovieInfo({
 
                 <div className="filter__location order-1 sm:order-2 sm:col-span-3 md:col-span-3 xl:col-span-5 lg:col-span-2 flex ml-2 gap-4">
                   <div className="col-span-1">
-                    <Dropdown label="Toàn quốc">
-                      <Dropdown.Item onClick={() => {}}>Đà Nẵng</Dropdown.Item>
-                      <Dropdown.Item>Hà Nội</Dropdown.Item>
+                    <Dropdown label={city}>
+                      {cities.map((c) => {
+                        return (
+                          <Dropdown.Item key={c} onClick={() => setCity(c)}>
+                            {c}
+                          </Dropdown.Item>
+                        );
+                      })}
                     </Dropdown>
                   </div>
                   <Dropdown label={getCinemaName()}>
@@ -300,7 +319,7 @@ export default function MovieInfo({
                       Tất cả rạp
                     </Dropdown.Item>
 
-                    {cinemas.map((c) => {
+                    {filterCinema.map((c) => {
                       return (
                         <Dropdown.Item
                           key={c.id}

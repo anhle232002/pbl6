@@ -1,3 +1,4 @@
+"use client";
 import NavBar from "@/components/NavBar";
 import MovieCarousel from "@/components/MovieCarousel";
 import NavigateToWhatsOn from "@/components/NavigateToCinema";
@@ -5,7 +6,8 @@ import AppFooter from "@/components/Footer";
 import Trailers from "@/components/Trailers";
 import BottomBar from "@/components/BottomBar";
 import MovieCards from "@/components/MovieCards";
-export default async function Home() {
+import { Tabs } from "flowbite-react";
+export default function Home() {
   return (
     <div className={`relative min-h-screen bg-background text-accent pb-36`}>
       <NavBar />
@@ -16,17 +18,11 @@ export default async function Home() {
         <NavigateToWhatsOn />
 
         <div className="h-[2px] bg-primary-linear mt-8 rounded-full"></div>
+      </div>
 
-        <div className="mt-8 mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div>
-            <h4 className="relative text-2xl text-black before:absolute before:w-1 before:h-full before:bg-primary before:rounded-full">
-              <span className="ml-4  uppercase">Top phim</span>
-            </h4>
-          </div>
-
-          <div className="mt-10">
-            <MovieCards />
-          </div>
+      <div className="mt-8 mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="mt-10">
+          <MovieCards />
         </div>
       </div>
 

@@ -5,7 +5,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 import { Navigation, Autoplay } from "swiper/modules";
+import { RiArrowLeftCircleFill } from "react-icons/ri";
+import Image from "next/image";
 function App() {
   const slides = [
     {
@@ -21,54 +26,39 @@ function App() {
       url: "/images/lovereset.webp",
     },
   ];
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 3,
+    prevArrow: <PrevArrow />,
+  };
   return (
-    <div className="h-[500px] relative">
-      <Swiper
-        modules={[Navigation, Autoplay]}
-        navigation
-        className="h-full relative"
-        autoplay={{
-          delay: 3000,
-        }}
-        spaceBetween={500}
-        slidesPerView={1}
-      >
-        {slides.map((slide) => {
-          return (
-            <SwiperSlide key={slide.url}>
-              <div className="relative w-full h-full  bg-no-repeat bg-cover">
-                <img
-                  className="relative w-full h-full object-cover"
-                  src={slide.url}
-                  alt="poster"
-                ></img>
-                <div className="absolute top-0 left-0 z-10  w-full h-full bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
-                {/* <div className="absolute w-full py-6 bottom-0 text-white  z-50"> */}
-                {/*   <div className="max-w-5xl m-auto flex justify-between items-center"> */}
-                {/*     <div className="flex gap-4 items-center"> */}
-                {/*       <button> */}
-                {/*         <RiPlayCircleLine className="text-6xl" /> */}
-                {/*       </button> */}
-                {/*       <div> */}
-                {/*         <div className="text-white text-3xl font-[isonorm]"> */}
-                {/*           TIGER 3 */}
-                {/*         </div> */}
-                {/*       </div> */}
-                {/*     </div> */}
-                {/*     <div> */}
-                {/*       <button className="tracking-widest border border-primary px-6 py-3 rounded hover:shadow-[0px_0px_100px_5px_#777] duration-200 "> */}
-                {/*         BOOK NOW */}
-                {/*       </button> */}
-                {/*     </div> */}
-                {/*   </div> */}
-                {/* </div> */}
-              </div>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+    <div className="h-[500px] ">
+      <Slider {...settings}>
+        <div className="h-[500px]">
+          <img
+            className="z-0 px-64 w-full h-full object-cover"
+            src={slides[0].url}
+            alt="slide"
+          />
+        </div>
+      </Slider>
     </div>
   );
 }
-
 export default App;
+
+const PrevArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <button
+      className={`${className} text-3xl bg-black`}
+      style={{ left: 0, zIndex: 1000 }}
+      onClick={onClick}
+    >
+      <RiArrowLeftCircleFill className="text-4xl z-[10000]" />
+    </button>
+  );
+};

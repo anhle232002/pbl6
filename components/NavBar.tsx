@@ -35,14 +35,14 @@ export default function NavBar() {
 
           <div className="flex-1">
             <ul className="text-accent flex gap-8">
-              <li className="hover:bg-primary-linear bg-transparent bg-clip-text hover:text-transparent uppercase">
+              <li className="hover:bg-primary-linear bg-transparent bg-clip-text hover:text-transparent ">
                 <Link href={"/"}>Đang chiếu</Link>
               </li>
-              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent">
-                <Link href={"/"}>TRAILERS</Link>
-              </li>
-              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent uppercase">
+              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent ">
                 <Link href={"/"}>Sắp chiếu </Link>
+              </li>
+              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent ">
+                <Link href={"/"}>Rạp phim</Link>
               </li>
             </ul>
           </div>
