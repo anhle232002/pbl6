@@ -67,7 +67,7 @@ export default function DetailModal({
                 <strong>Số điện thoại:</strong> {booking.phoneNumber}
               </p>
               <p>
-                <strong>Số tiền đã thanh toán:</strong> {booking.totalPrice}{" "}
+                <strong>Số tiền đã thanh toán:</strong> {booking.totalPrice}
                 {booking.bookingCurrency}
               </p>
               <p>

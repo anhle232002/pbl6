@@ -10,8 +10,14 @@ export default function TrailerModal({
   src: string;
 }) {
   return (
-    <Modal dismissible style={{ padding: 0 }} show={isShow} onClose={onClose}>
-      <Modal.Body className="bg-black border-none outline-none">
+    <Modal
+      dismissible
+      style={{ padding: 0 }}
+      show={isShow}
+      onClose={onClose}
+      className="z-[600]"
+    >
+      <Modal.Body className="bg-black border-none outline-none ">
         <iframe
           className="w-full h-96"
           src={src}

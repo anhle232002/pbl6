@@ -30,7 +30,7 @@ export default function MovieDetail({ params }: { params: { id: string } }) {
   }, [film, cinemas, schedules]);
 
   return (
-    <div className="pb-4 bg-background">
+    <div className=" bg-background">
       <NavBar />
 
       <div className="relative bg-background text-accent pb-4 min-h-screen">
