@@ -121,7 +121,7 @@ export default function MovieInfo({
       <div className="max-w-7xl m-auto">
         <div className="grid grid-cols-12">
           <div className="col-span-9">
-            <div className="movie__info relative md:grid hidden grid-cols-3 md:gap-5 gap-3 lg:items-end ">
+            <div className=" ml-5 movie__info relative md:grid hidden grid-cols-3 md:gap-5 gap-3 lg:items-end ">
               <div className="movie__thumbnail lg:-translate-y-20 md:-translate-y-16 -translate-y-0 col-span-1 drop-shadow-2xl z-[500]">
                 <img
                   loading="lazy"
@@ -190,7 +190,7 @@ export default function MovieInfo({
                     </span>
                   </div>
                   <div className="text-sm group-hover:text-primary duration-200">
-                    {film.score ? film.score : "chưa có đánh giá"}
+                    {film.score ? film.score : "Chưa có đánh giá"}
                   </div>
                 </div>
                 <Modal
@@ -270,7 +270,7 @@ export default function MovieInfo({
                       Quốc gia:
                     </span>
                     <span className="inline-block h-8 ml-4 py-[6px] capitalize not-italic">
-                      Việt Nam
+                      {film.country}
                     </span>
                   </div>
                   <div className="flex flex-nowrap items-center text-sm">
@@ -278,7 +278,7 @@ export default function MovieInfo({
                       Nhà sản xuất:
                     </span>
                     <span className="inline-block h-8 ml-4 py-[6px] not-italic mr-2 text-grey-40">
-                      Đang cập nhật
+                      {film.producer}
                     </span>
                   </div>
                   <div className="flex flex-nowrap items-center text-sm">
@@ -315,13 +315,13 @@ export default function MovieInfo({
               </div>
             </div>
 
-            <div className="movie__content mt-3 lg:mt-0">
+            <div className="movie__content mt-3 lg:mt-0 mx-5">
               <span className="border-l-4 border-solid border-primary mr-2"></span>
               <h1 className="mb-4 text-base inline-block capitalize font-bold">
                 Nội dung phim
               </h1>
               <div className="text-black-10 text-sm font-normal not-italic content-text content__data">
-                <p>
+                <p className="text-justify">
                   <span
                     style={{
                       fontFamily: "Arial, Helvetica, sans-serif",
@@ -336,23 +336,11 @@ export default function MovieInfo({
                     </span>
                   </span>
                 </p>
-                <p>
-                  <span style={{ fontSize: "14px" }}>
-                    <a href="https://www.galaxycine.vn/phim-dang-chieu">
-                      Phim mới
-                    </a>{" "}
-                    <b>Người Mặt Trời</b> dự kiến ra mắt tại các{" "}
-                    <em>
-                      <a href="https://www.galaxycine.vn/">rạp chiếu phim</a>
-                    </em>{" "}
-                    toàn quốc từ 08.12.2023.
-                  </span>
-                </p>
               </div>
             </div>
 
             {/* Schedules */}
-            <div>
+            <div className="mx-5">
               <div className=" mt-8 lg:mt-8">
                 <span className="border-l-4 border-solid border-primary mr-2"></span>
                 <h1 className="mb-4 text-base inline-block capitalize font-bold">

@@ -20,9 +20,9 @@ export default function TrailerCard({ trailer }: { trailer: Trailer }) {
         onClick={() => props.setOpenModal("dismissible")}
         className="group"
       >
-        <div className="relative">
+        <div className="">
           <img
-            className="rounded h-32 w-full object-cover"
+            className="rounded h-[280px] w-full object-cover"
             src={trailer.image}
             alt="trailer-preview"
           />
@@ -30,10 +30,8 @@ export default function TrailerCard({ trailer }: { trailer: Trailer }) {
             <RiPlayCircleLine className="text-5xl group-hover:opacity-100 opacity-0 duration-200" />
           </div>
         </div>
-        <p className="mt-4 text-xl text-white uppercase font-normal tracking-wider">
-          {trailer.name}
-        </p>
-        <div>Official Trailer</div>
+
+        <div className="text-center">{trailer.name}</div>
       </div>
 
       <Modal
