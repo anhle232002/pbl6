@@ -72,7 +72,7 @@ export default function MovieInfo({
     cinemas && cinemas.length > 0
       ? [
           "Toàn quốc",
-          ...Array.from(new Set(cinemas.map((cinema) => cinema.city))),
+          ...Array.from(new Set(cinemas.map((cinema) => cinema.city.trim()))),
         ]
       : ["Toàn quốc"];
 
@@ -205,7 +205,7 @@ export default function MovieInfo({
             </div>
 
             <div className="movie__content mt-3 lg:mt-0">
-              <span className="border-l-4 border-solid border-blue-500 mr-2"></span>
+              <span className="border-l-4 border-solid border-primary mr-2"></span>
               <h1 className="mb-4 text-base inline-block capitalize font-bold">
                 Nội dung phim
               </h1>
@@ -243,7 +243,7 @@ export default function MovieInfo({
             {/* Schedules */}
             <div>
               <div className=" mt-8 lg:mt-8">
-                <span className="border-l-4 border-solid border-blue-500 mr-2"></span>
+                <span className="border-l-4 border-solid border-primary mr-2"></span>
                 <h1 className="mb-4 text-base inline-block capitalize font-bold">
                   Lịch chiếu
                 </h1>
@@ -265,7 +265,6 @@ export default function MovieInfo({
                           key={d.title}
                         >
                           <div
-                            data-index="0"
                             className="slick-slide slick-active slick-current"
                             aria-hidden="false"
                             style={{ outline: "none" }}
@@ -423,12 +422,10 @@ const MovieBanner = ({ film }: { film: Film }) => {
           <Image
             alt="Img Movie"
             loading="lazy"
-            width="1440"
-            height="440"
             decoding="async"
             data-nimg="1"
             className="w-[860px] h-full md:h-full lg:h-[500px]  object-fill object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0)"
-            src={film.image[1]}
+            src={film.image.length > 0 ? film.image[1] : ""}
             style={{ color: "transparent" }}
           />
           <button
