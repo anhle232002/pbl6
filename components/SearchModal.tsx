@@ -30,7 +30,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed w-full h-full top-0 left-0 z-50">
+    <div className="fixed w-full h-full top-0 left-0 z-[1000]">
       <div className="relative h-full flex justify-end">
         <div
           onClick={onClose}
@@ -42,7 +42,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
           }}
           className="relative h-full p-14 w-[550px]"
         >
-          <h3 className="text-3xl underline font-[isonorm] tracking-widest bg-primary-linear bg-clip-text text-transparent uppercase">
+          <h3 className="text-3xl underline  bg-primary-linear bg-clip-text text-transparent">
             Tìm kiếm phim
           </h3>
 
@@ -53,7 +53,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
               type="text"
               name=""
               className="bg-transparent border-none outline-none flex-1 text-white focus:ring-0"
-              placeholder="Start typing the name you want to watch..."
+              placeholder="Nhập tên phim bạn muốn tìm"
               id=""
             />
 

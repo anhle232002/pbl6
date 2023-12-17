@@ -1,3 +1,4 @@
+import { Film } from "@/types/Film";
 import Image from "next/image";
 import Link from "next/link";
 import { RiStarFill, RiTicketFill } from "react-icons/ri";
@@ -6,9 +7,10 @@ export interface Movie {
   id: number;
   name: string;
   image: string;
+  limitAge: number;
 }
 
-export default function MovieCard({ movie }: { movie: Movie }) {
+export default function MovieCard({ movie }: { movie: Film }) {
   return (
     <div className="Card_card__wrapper__RUTBs">
       <div role="button" className="relative ">
@@ -24,12 +26,14 @@ export default function MovieCard({ movie }: { movie: Movie }) {
                 <RiStarFill className="text-primary" />
               </span>
 
-              <span className="text-sm font-bold text-white">9.3</span>
+              <span className="text-sm font-bold text-white">
+                {movie.score ? movie.score : "Chưa có đánh giá"}
+              </span>
             </p>
           </div>
           <div className="age__limit absolute bottom-[6px] right-[6px]">
             <span className="inline-flex items-center justify-center w-[38px] h-7 bg-primary rounded text-sm text-center text-white font-bold not-italic">
-              T18
+              T{movie.limitAge}
             </span>
           </div>
         </div>

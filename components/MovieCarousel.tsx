@@ -34,6 +34,7 @@ function App() {
     slidesToScroll: 3,
     prevArrow: <PrevArrow />,
   };
+
   return (
     <div className="h-[500px] ">
       <Slider {...settings}>
