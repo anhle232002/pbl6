@@ -16,11 +16,12 @@ import { format, isAfter, isSameDay } from "date-fns";
 import {
   RiPlayCircleFill,
   RiPlayCircleLine,
+  RiStarFill,
   RiTicket2Line,
 } from "react-icons/ri";
 import TrailerModal from "../TrailerModal";
 import getSchedules from "@/services/getSchedules";
-import { Dropdown, Spinner } from "flowbite-react";
+import { Button, Dropdown, Modal, Rating, Spinner } from "flowbite-react";
 import MovieCard from "../MovieCard";
 import { vi } from "date-fns/locale";
 import createDays from "@/utils/create-weekdays";
@@ -29,6 +30,7 @@ import Link from "next/link";
 import getFilms from "@/services/getFilms";
 import { storage } from "@/utils/storage";
 import { useRouter } from "next/navigation";
+import addRating from "@/services/addRating";
 
 export default function MovieInfo({
   film,
@@ -42,31 +44,36 @@ export default function MovieInfo({
   const [selectedCinemaId, setSelectedCinemaId] = useState(-1);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [city, setCity] = useState("Toàn quốc");
+  const [openVoteModal, setOpenVoteModal] = useState(false);
+  const [rating, setRating] = useState(0);
+  const router = useRouter();
   const days = createDays();
 
   const availableSchedules = useMemo(() => {
     const schedulesByCinema: any[] = [];
 
     Object.keys(schedules).forEach((k1) => {
-      if (city === "Toàn quốc") {
+      if (city === "Toàn quốc" || city === k1.trim()) {
         Object.keys(schedules[k1]).forEach((k2) => {
-          const canBookSchedules = schedules[k1][k2].filter((s: any) => {
-            return (
-              isSameDay(new Date(s.startTime), selectedDate) &&
-              isAfter(new Date(s.startTime), new Date())
-            );
-          });
-          schedulesByCinema.push({
-            id: k2,
-            name: cinemas.find((c) => c.id === Number(k2))?.name || "",
-            schedules: canBookSchedules,
-          });
+          if (selectedCinemaId === -1 || selectedCinemaId === Number(k2)) {
+            const canBookSchedules = schedules[k1][k2].filter((s: any) => {
+              return (
+                isSameDay(new Date(s.startTime), selectedDate) &&
+                isAfter(new Date(s.startTime), new Date())
+              );
+            });
+            schedulesByCinema.push({
+              id: k2,
+              name: cinemas.find((c) => c.id === Number(k2))?.name || "",
+              schedules: canBookSchedules,
+            });
+          }
         });
       }
     });
 
     return schedulesByCinema;
-  }, [cinemas, selectedDate, schedules]);
+  }, [cinemas, selectedDate, schedules, city, selectedCinemaId]);
 
   const cities =
     cinemas && cinemas.length > 0
@@ -88,6 +95,25 @@ export default function MovieInfo({
     return cinemas.find((c) => c.id === selectedCinemaId)?.name;
   };
 
+  const onConfirmAddRating = async () => {
+    try {
+      await addRating({ filmId: film.id, score: rating });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setOpenVoteModal(false);
+  };
+
+  const onOpenVoteModal = () => {
+    if (!storage.get("logged_in")) {
+      // console.log(window.location.pathname);
+      router.push("/login");
+      return;
+    }
+
+    setOpenVoteModal(true);
+  };
   return (
     <div>
       <MovieBanner film={film} />
@@ -152,6 +178,91 @@ export default function MovieInfo({
                     </span>
                   </div>
                 </div>
+
+                <div
+                  onClick={onOpenVoteModal}
+                  role="button"
+                  className="mt-4 flex items-center gap-3 group"
+                >
+                  <div>
+                    <span>
+                      <RiStarFill className="text-primary text-2xl" />
+                    </span>
+                  </div>
+                  <div className="text-sm group-hover:text-primary duration-200">
+                    {film.score ? film.score : "chưa có đánh giá"}
+                  </div>
+                </div>
+                <Modal
+                  dismissible
+                  className="z-[500]"
+                  show={openVoteModal}
+                  size={"sm"}
+                  onClose={() => setOpenVoteModal(false)}
+                >
+                  <Modal.Body className="p-0">
+                    <div className="generic__modal-wrapper z-[500]">
+                      <div className="mb-2 text-center">
+                        <img
+                          className="w-full h-[200px]  block object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
+                          src={film.image[0]}
+                          style={{ color: "transparent" }}
+                        />
+                        <h1 className="text-lg mt-2 font-bold">{film.name}</h1>
+                        <p className="text-base mt-2 font-bold text-red"></p>
+                      </div>
+                      <div className="mx-auto w-[113px] h-[113px] rounded-full border border-primary flex justify-center flex-col items-center col-span-1 mt-5">
+                        <div className="text-[20px] text-center">
+                          <span className=" mr-1 flex items-center gap-2">
+                            <span className="">
+                              <RiStarFill className="text-primary text-2xl" />
+                            </span>
+                            {film.score ? film.score : 0}
+                          </span>
+                          <span className="inline-block text-[12px] text-[#777777]">
+                            {0} đánh giá
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-center mt-4">
+                        <Rating>
+                          {new Array(10).fill(0).map((s, index) => {
+                            return (
+                              <Rating.Star
+                                role="button"
+                                key={index + 1}
+                                onClick={() => setRating(index + 1)}
+                                filled={index + 1 <= rating}
+                              />
+                            );
+                          })}
+                        </Rating>
+                      </div>
+                      <div className="">
+                        <div className="star-rating transition-all duration-300 ease-in-out block">
+                          <div className="mt-5 pt-5 flex">
+                            <button
+                              onClick={() => {
+                                setOpenVoteModal(false);
+                              }}
+                              className="block   text-sm px-[14px] py-[7px] border-primary bg-gray-100 text-black-10 capitalize cursor-pointer transition duration-500 ease-in-out flex-1 z-[10000]"
+                            >
+                              Đóng
+                            </button>
+                            <button
+                              onClick={onConfirmAddRating}
+                              disabled={rating === 0}
+                              className="block text-sm px-[14px] py-[7px] border border-primary bg-primary text-white capitalize cursor-pointer transition duration-500 ease-in-out flex-1 disabled:opacity-50"
+                            >
+                              Xác nhận
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>{" "}
+                  </Modal.Body>
+                </Modal>
 
                 <div className="flex flex-col gap-1">
                   <div className="flex flex-nowrap text-sm">
@@ -419,7 +530,7 @@ const MovieBanner = ({ film }: { film: Film }) => {
           />
         </div>
         <div className="relative">
-          <Image
+          <img
             alt="Img Movie"
             loading="lazy"
             decoding="async"

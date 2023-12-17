@@ -282,7 +282,81 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
                 </li>
               </ul>
             </div>
-            <div></div>
+            <div className="bg-white p-4">
+              <div className="mb-4">
+                <span className="border-l-4 border-solid border-blue-10 mr-2"></span>
+                <h1 className="text-xl inline-block uppercase font-bold m-0">
+                  Thông tin chi tiết
+                </h1>
+              </div>
+              <div className="cinema__info">
+                <ul>
+                  <li>
+                    <strong className="text-grey-80">Địa chỉ: </strong>
+                    <strong>
+                      Lầu 3, TTTM CoopMart Foodcosa số 304A, Quang Trung, P.11,
+                      Q. Gò Vấp, Tp.HCM
+                    </strong>
+                  </li>
+                  <li>
+                    <strong className="text-grey-80">Số điện thoại: </strong>
+                    <strong>1900 2224</strong>
+                  </li>
+                </ul>
+                <div className="cinema__map-embed my-4">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.6873878127094!2d106.66212379999999!3d10.835218200000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529a79d4793eb%3A0x8d8c6caff9fccc4f!2sGalaxy+Cinema!5e0!3m2!1svi!2s!4v1442045531959"
+                    className="w-full h-[250px]"
+                  ></iframe>
+                </div>
+                <div className="cinema__description content__data__full">
+                  <p style={{ margin: "0in 0in 8pt" }}>
+                    <span style={{ fontSize: "11pt", lineHeight: "107%" }}>
+                      <span style={{ fontFamily: '"Calibri","sans-serif"' }}>
+                        <span style={{ fontFamily: '"Tahoma","sans-serif"' }}>
+                          Đây là cụm{" "}
+                          <a href="https://www.galaxycine.vn/">
+                            <i>rạp chiếu phim</i>
+                          </a>{" "}
+                          thứ 5 của Galaxy Cinema nằm tại con đường trung tâm
+                          nhộn nhịp nhất của quận Gò Vấp, kết hợp cùng khu ăn
+                          uống và mua sắm của Co.opmart FoodCosa, tạo nên một
+                          địa điểm giải trí phức hợp tiện lợi và đầy sôi động.
+                        </span>
+                      </span>
+                    </span>
+                  </p>
+
+                  <p style={{ margin: "0in 0in 8pt" }}>&nbsp;</p>
+
+                  <p style={{ margin: "0in 0in 8pt" }}>
+                    <span style={{ fontSize: "11pt", lineHeight: "107%" }}>
+                      <span style={{ fontFamily: '"Calibri","sans-serif"' }}>
+                        <span style={{ fontFamily: '"Tahoma","sans-serif"' }}>
+                          Galaxy Quang Trung mang đến một không gian điện ảnh
+                          mới với công nghệ chiếu phim đạt tiêu chuẩn Hollywood.
+                          Hệ thống âm thanh Dolby 7.1 sống động kết hợp cùng
+                          hiệu ứng hình ảnh Digital sắc nét sẽ mang đến những
+                          trải nghiệm điện ảnh trọn vẹn nhất. Ngoài ra, với 7
+                          phòng chiếu gồm hơn 1.000 chỗ ngồi sẽ luôn phục vụ
+                          khán giả với mức giá vô cùng hợp lý bởi đội ngũ nhân
+                          viên chuyên nghiệp và tận tình. Galaxy Quang Trung
+                          luôn cập nhật nhanh chóng những bom tấn{" "}
+                          <a href="https://www.galaxycine.vn/phim-dang-chieu/">
+                            <i>phim mới </i>
+                          </a>
+                          ,
+                          <a href="https://www.galaxycine.vn/phim-dang-chieu/">
+                            <i> phim hay</i>
+                          </a>{" "}
+                          nhất&nbsp;để phục vụ cho các mọt phim Việt Nam.
+                        </span>
+                      </span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>{" "}
           </div>
         </div>
       </div>
