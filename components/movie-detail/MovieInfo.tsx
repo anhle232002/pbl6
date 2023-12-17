@@ -500,7 +500,7 @@ const SchedulesByCinema = ({
                 key={s.id}
                 className="py-2 md:px-8 px-6 border rounded text-sm font-normal text-black hover:bg-blue-500 active:bg-blue-500 transition-all duration-300 ease-in-out hover:text-white"
               >
-                {format(new Date(s.startTime), "hh:mm")}
+                {format(new Date(s.startTime), "HH:mm")}
               </span>
             );
           })}
