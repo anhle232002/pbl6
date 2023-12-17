@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React from "react";
 import { SwiperSlide, Swiper } from "swiper/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -8,17 +8,7 @@ import "./MovieCarousel.css";
 // import { Navigation, Autoplay } from "swiper/modules";
 import { RiArrowLeftCircleFill, RiArrowRightCircleFill } from "react-icons/ri";
 import Image from "next/image";
-import { getPoster } from "@/services/getPoster";
-import { Poster } from "@/types/Poster";
-import Link from "next/link";
-function App() {
-  const [poster, setPoster] = useState<Poster[]>([]);
-  useEffect(() => {
-    getPoster().then((data) => {
-      setPoster(data);
-    });
-  }, []);
-
+const CinemaCarousel: React.FC<{ slides: string[] }> = ({ slides }) => {
   const settings = {
     infinite: true,
     speed: 500,
@@ -27,27 +17,27 @@ function App() {
     centerMode: true,
     centerPadding: "200px",
     variableWidth: true,
+    autoplay: true,
+    autoplaySpeed: 1000,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <div className="bg-white h-[400px]">
-      <Slider {...settings} className="h-[400px] overflow-hidden">
-        {poster.map((slide) => (
-          <div key={slide.linkUrl} style={{ width: 880 }}>
-            <Link href={slide.linkUrl}>
-              <img
-                src={slide.pathImage}
-                className="px-6 w-full h-full object-fill min-h-[370px]  max-h-[390px]"
-              />
-            </Link>
+    <div className="bg-white h-[350px]">
+      <Slider {...settings} className="h-[350px] overflow-hidden">
+        {slides.map((slide) => (
+          <div key={slide} style={{ width: 880 }}>
+            <img
+              src={slide}
+              className="px-6 w-full h-full object-cover max-h-[330px]"
+            />
           </div>
         ))}
       </Slider>
     </div>
   );
-}
-export default App;
+};
+export default CinemaCarousel;
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;

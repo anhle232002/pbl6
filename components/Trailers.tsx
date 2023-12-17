@@ -22,7 +22,7 @@ export default function Trailers() {
     });
   }, []);
   return (
-    <div>
+    <div className="ml-10">
       {isLoading ? (
         <div className="p-8 justify-center flex items-center">
           <Spinner></Spinner>
@@ -36,10 +36,6 @@ export default function Trailers() {
           onSlideChange={() => console.log("slide change")}
           onSwiper={(swiper: any) => console.log(swiper)}
         >
-          <span slot="wrapper-start">
-            <div className="w-72"></div>
-          </span>
-
           {films.map((film) => {
             return (
               <SwiperSlide key={film.id}>
