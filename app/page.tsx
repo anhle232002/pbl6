@@ -14,12 +14,6 @@ export default function Home() {
 
       <MovieCarousel />
 
-      <div className="max-w-6xl m-auto mt-4 lg:px-0 px-8">
-        <NavigateToWhatsOn />
-
-        <div className="h-[2px] bg-primary-linear mt-8 rounded-full"></div>
-      </div>
-
       <div className="mt-8 mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mt-10">
           <MovieCards />
@@ -34,12 +28,6 @@ export default function Home() {
         </div>
 
         <div className="mt-10 ">
-          {/* <div className="grid grid-cols-7 gap-4 px-10">
-            {trailers.map((trailer) => {
-              return <TrailerCard trailer={trailer} key={trailer.name} />;
-            })}
-          </div> */}
-
           <Trailers />
         </div>
       </div>

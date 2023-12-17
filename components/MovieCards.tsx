@@ -80,8 +80,8 @@ md:mr-8   last:mr-0 flex-auto text-center hover:text-primary/80 transition-all d
       <div className="mt-10">
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-x-6 gap-y-10">
           {filterFilms &&
-            filterFilms.map((movie: any) => {
-              return <MovieCard key={movie.id} movie={movie}></MovieCard>;
+            filterFilms.map((film: any) => {
+              return <MovieCard key={film.id} movie={film}></MovieCard>;
             })}
         </div>
 

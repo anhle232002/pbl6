@@ -3,11 +3,11 @@ export interface Film {
   name: string;
   actor: string;
   director: string;
-  duration: 0;
+  duration: number;
   description: string;
   year: 0;
   country: string;
-  limitAge: 0;
+  limitAge: number;
   trailer: string;
   startDate: Date;
   endDate: Date;
@@ -17,4 +17,5 @@ export interface Film {
   createdOn: Date;
   lastModifiedOn: Date;
   schedules?: Schedule[];
+  score: number;
 }

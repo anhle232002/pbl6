@@ -71,7 +71,7 @@ export default function BottomBar() {
   };
 
   return (
-    <div className="fixed lg:block hidden bottom-0 left-0 w-full bg-white h-24 z-30 tracking-widest">
+    <div className="fixed lg:block hidden bottom-0 left-0 w-full bg-white h-24 z-40 tracking-widest shadow-[0px_0px_10px_1px_rgba(0,0,0,0.3)]">
       <div
         className="relative max-w-6xl m-auto  h-full flex gap-10 items-center before:absolute before:bg-primary-linear-reverse
         before:right-[90%] before:h-full before:w-1/2"
