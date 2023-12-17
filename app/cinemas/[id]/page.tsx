@@ -198,7 +198,6 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
                     <div
                       onClick={() => setSelectedDate(d.value)}
                       key={d.title}
-                      className="slick-slide slick-active slick-current"
                       aria-hidden="false"
                       style={{ outline: "none" }}
                     >

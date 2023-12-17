@@ -348,13 +348,12 @@ export default function MovieInfo({
                 </h1>
               </div>
 
-              <div className="movie__filter grid  grid-cols-1 sm:grid-cols-6 lg:grid-cols-5 xl:grid-cols-12 items-center">
+              <div className="movie__filter grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-5 xl:grid-cols-12 items-center">
                 <div className="filter__date order-2 sm:order-1 sm:col-span-3 md:col-span-3 xl:col-span-7 lg:col-span-3 px-7 mt-6 md:mt-0">
                   <Swiper
                     modules={[Navigation, Autoplay]}
-                    navigation
+                    navigation={false}
                     className="h-full relative"
-                    scrollbar={{ draggable: true, dragSize: 24 }}
                     slidesPerView={5}
                   >
                     {days.map((d) => {
@@ -364,7 +363,7 @@ export default function MovieInfo({
                           key={d.title}
                         >
                           <div
-                            className="slick-slide slick-active slick-current"
+                            className=""
                             aria-hidden="false"
                             style={{ outline: "none" }}
                           >
