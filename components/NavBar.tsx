@@ -100,6 +100,7 @@ export default function NavBar() {
             )}
             {isLoggedIn && (
               <Dropdown
+                className="z-[1000]"
                 label=""
                 dismissOnClick={false}
                 renderTrigger={() => (
