@@ -79,7 +79,7 @@ export default function SuccessPayment() {
             <div className="flex items-center justify-between text-lg">
               <div className="text-accent">Ngày chiếu</div>
               <div>
-                {format(new Date(booking.startTime), "MM-dd-yyyy hh:mm")}
+                {format(new Date(booking.startTime), "MM-dd-yyyy HH:mm")}
               </div>
             </div>
 
@@ -100,7 +100,7 @@ export default function SuccessPayment() {
             <div className="flex items-center justify-between text-lg">
               <div className="text-accent">Ngày thanh toán</div>
               <div>
-                {format(new Date(booking.bookingDate), "MM-dd-yyyy hh:mm")}
+                {format(new Date(booking.bookingDate), "MM-dd-yyyy HH:mm")}
               </div>
             </div>
 
