@@ -605,13 +605,10 @@ function RecommendedFilms({ cinema }: { cinema?: Cinema }) {
                           </div>
                         </div>
                         <div>
-                          <Image
-                            loading="lazy"
+                          <img
                             alt={film.name}
                             width="300"
                             height="150"
-                            decoding="async"
-                            data-nimg="1"
                             className=" object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0)"
                             src={film.image}
                             style={{ color: "transparent" }}
