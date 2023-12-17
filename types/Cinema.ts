@@ -7,4 +7,5 @@ export interface Cinema {
   hotline: string;
   longitude: number;
   latitude: number;
+  listImage: string[];
 }

@@ -18,6 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHUq7rXW6gtVCss6HHxDGK9Su14uwkdU0&libraries=places&callback=initMap"
+          async
+          defer
+        ></script>
+      </head>
       <body>
         <div className={`${robo.className} min-h-screen`}>{children}</div>
       </body>

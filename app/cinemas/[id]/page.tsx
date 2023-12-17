@@ -27,12 +27,14 @@ import {
   RiStarFill,
 } from "react-icons/ri";
 import { storage } from "@/utils/storage";
+import { getCinemaById } from "@/services/getCinemaById";
+import CinemaCarousel from "@/components/CinemaCarousel";
 
 export default function CinemaMovies({ params }: { params: { id: string } }) {
   const cinemaId = Number(params.id);
   const [schedules, setSchedules] = useState<any>();
   const [cinemas, setCinemas] = useState<Cinema[]>([]);
-  const [selectedCinema, setSelectedCinema] = useState<number>();
+  const [selectedCinema, setSelectedCinema] = useState<Cinema>();
   const [city, setCity] = useState("Toàn quốc");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -56,9 +58,26 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
       setCinemas(data);
     });
 
-    const cinemaId = searchParams.get("cid");
-    if (cinemaId && !Number.isNaN(Number(cinemaId))) {
-      setSelectedCinema(Number(cinemaId));
+    const cinemaId = Number(params.id);
+    console.log("id ", cinemaId);
+    if (cinemaId) {
+      getCinemaById(cinemaId).then((data) => {
+        setSelectedCinema(data);
+        const mapElement = document.getElementById("map");
+        if (mapElement) {
+          const map = new google.maps.Map(mapElement, {
+            center: { lat: data.latitude ?? 0, lng: data.longitude ?? 0 },
+            zoom: 13,
+          });
+          const marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+          });
+
+          let position = new google.maps.LatLng(data.latitude, data.longitude);
+          marker.setPosition(position);
+        }
+      });
     }
   }, []);
 
@@ -94,7 +113,7 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
       return f.schedules?.some(
         (s) =>
           isSameDay(new Date(s.startTime), selectedDate) &&
-          isAfter(new Date(s.startTime), new Date()),
+          isAfter(new Date(s.startTime), new Date())
       );
     });
     return films;
@@ -121,31 +140,7 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
     <div className="bg-background text-accent pb-[96px]">
       <NavBar />
 
-      <div className="h-[400px] relative">
-        <Swiper
-          modules={[Navigation, Autoplay]}
-          navigation
-          className="h-full relative"
-          autoplay={{
-            delay: 3000,
-          }}
-          slidesPerView={1}
-        >
-          {slides.map((slide) => {
-            return (
-              <SwiperSlide key={slide.url}>
-                <div className="relative w-full h-full bg-no-repeat flex items-center justify-center">
-                  <img
-                    className="relative w-full px-10 h-full  object-cover"
-                    src={slide.url}
-                    alt="poster"
-                  ></img>
-                </div>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </div>
+      <CinemaCarousel slides={selectedCinema?.listImage ?? []} />
 
       {cinema ? (
         <div className="grid lg:grid-cols-3 grid-cols-1 grid-flow-row gap-y-6 my-0 mx-auto md:items-center  lg:max-w-6xl md:max-w-4xl md:px-4 sm:px-[45px] px-[16px] py-6 mt-10">
@@ -264,24 +259,7 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
         </div>
 
         <div className="max-w-6xl m-auto bg-white mt-10">
-          <div className="grid md:grid-cols-2 grid-cols-1 mt-8">
-            <div className="p-4">
-              <div className="mb-4">
-                <span className="border-l-4 border-solid border-primary mr-2"></span>
-                <h1 className="text-xl inline-block uppercase font-bold m-0">
-                  Giá vé
-                </h1>
-              </div>
-              <ul className="cinema__tickets-pricing">
-                <li className="mb-4 text-center">
-                  <img
-                    className="inline object-cover object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0)"
-                    src="https://www.galaxycine.vn/_next/image/?url=https%3A%2F%2Fcdn.galaxycine.vn%2Fmedia%2F2023%2F8%2F25%2Fbanggiave-09-2023-nguyen-du_1692936159184.jpg&amp;w=3840&amp;q=75"
-                    style={{ color: "transparent" }}
-                  />
-                </li>
-              </ul>
-            </div>
+          <div className="flex justify-center">
             <div className="bg-white p-4">
               <div className="mb-4">
                 <span className="border-l-4 border-solid border-blue-10 mr-2"></span>
@@ -293,67 +271,29 @@ export default function CinemaMovies({ params }: { params: { id: string } }) {
                 <ul>
                   <li>
                     <strong className="text-grey-80">Địa chỉ: </strong>
-                    <strong>
-                      Lầu 3, TTTM CoopMart Foodcosa số 304A, Quang Trung, P.11,
-                      Q. Gò Vấp, Tp.HCM
-                    </strong>
+                    <strong>{cinema?.address}</strong>
                   </li>
                   <li>
                     <strong className="text-grey-80">Số điện thoại: </strong>
-                    <strong>1900 2224</strong>
+                    <strong>{cinema?.hotline}</strong>
                   </li>
                 </ul>
-                <div className="cinema__map-embed my-4">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.6873878127094!2d106.66212379999999!3d10.835218200000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529a79d4793eb%3A0x8d8c6caff9fccc4f!2sGalaxy+Cinema!5e0!3m2!1svi!2s!4v1442045531959"
-                    className="w-full h-[250px]"
-                  ></iframe>
-                </div>
+                <div
+                  id="map"
+                  className="cinema__map-embed my-4 h-[400px]"
+                ></div>
                 <div className="cinema__description content__data__full">
-                  <p style={{ margin: "0in 0in 8pt" }}>
+                  <p className="text-justify" style={{ margin: "0in 0in 8pt" }}>
                     <span style={{ fontSize: "11pt", lineHeight: "107%" }}>
                       <span style={{ fontFamily: '"Calibri","sans-serif"' }}>
                         <span style={{ fontFamily: '"Tahoma","sans-serif"' }}>
-                          Đây là cụm{" "}
-                          <a href="https://www.galaxycine.vn/">
-                            <i>rạp chiếu phim</i>
-                          </a>{" "}
-                          thứ 5 của Galaxy Cinema nằm tại con đường trung tâm
-                          nhộn nhịp nhất của quận Gò Vấp, kết hợp cùng khu ăn
-                          uống và mua sắm của Co.opmart FoodCosa, tạo nên một
-                          địa điểm giải trí phức hợp tiện lợi và đầy sôi động.
+                          {cinema?.description}
                         </span>
                       </span>
                     </span>
                   </p>
 
                   <p style={{ margin: "0in 0in 8pt" }}>&nbsp;</p>
-
-                  <p style={{ margin: "0in 0in 8pt" }}>
-                    <span style={{ fontSize: "11pt", lineHeight: "107%" }}>
-                      <span style={{ fontFamily: '"Calibri","sans-serif"' }}>
-                        <span style={{ fontFamily: '"Tahoma","sans-serif"' }}>
-                          Galaxy Quang Trung mang đến một không gian điện ảnh
-                          mới với công nghệ chiếu phim đạt tiêu chuẩn Hollywood.
-                          Hệ thống âm thanh Dolby 7.1 sống động kết hợp cùng
-                          hiệu ứng hình ảnh Digital sắc nét sẽ mang đến những
-                          trải nghiệm điện ảnh trọn vẹn nhất. Ngoài ra, với 7
-                          phòng chiếu gồm hơn 1.000 chỗ ngồi sẽ luôn phục vụ
-                          khán giả với mức giá vô cùng hợp lý bởi đội ngũ nhân
-                          viên chuyên nghiệp và tận tình. Galaxy Quang Trung
-                          luôn cập nhật nhanh chóng những bom tấn{" "}
-                          <a href="https://www.galaxycine.vn/phim-dang-chieu/">
-                            <i>phim mới </i>
-                          </a>
-                          ,
-                          <a href="https://www.galaxycine.vn/phim-dang-chieu/">
-                            <i> phim hay</i>
-                          </a>{" "}
-                          nhất&nbsp;để phục vụ cho các mọt phim Việt Nam.
-                        </span>
-                      </span>
-                    </span>
-                  </p>
                 </div>
               </div>
             </div>{" "}

@@ -1,4 +1,5 @@
 export interface Film {
+  producer?: string;
   id: number;
   name: string;
   actor: string;

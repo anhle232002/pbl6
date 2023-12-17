@@ -30,7 +30,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed w-full h-full top-0 left-0 z-[1000]">
+    <div className="fixed w-full h-full top-0 left-0 z-[99999999]">
       <div className="relative h-full flex justify-end">
         <div
           onClick={onClose}
