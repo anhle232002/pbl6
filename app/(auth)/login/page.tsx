@@ -39,13 +39,13 @@ export default function LoginPage() {
       >
         <PiFilmReelBold className="h-10 w-10" />
         <span className="self-center whitespace-nowrap pl-3 text-xl font-semibold ">
-          Cinema
+          Cinephile
         </span>
       </Link>
       <div className="w-full bg-white rounded-lg  dark:border md:mt-0 sm:max-w-md shadow-[0px_0px_100px_10px_#777]  xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            Login to your account
+            Đăng nhập
           </h1>
           <form
             onSubmit={(e) => onSubmit(e)}
@@ -54,7 +54,7 @@ export default function LoginPage() {
           >
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Your email
+                Email
               </label>
               <input
                 type="email"
@@ -69,7 +69,7 @@ export default function LoginPage() {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Password
+                Mật khẩu
               </label>
               <input
                 type="password"
@@ -89,18 +89,18 @@ export default function LoginPage() {
               type="submit"
               className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
             >
-              Sign in
+              Đăng nhập
             </button>
 
             {err && <div className="mt-2 text-red-500 text-center">{err}</div>}
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              Don’t have an account yet?{" "}
+              Chưa có tài khoản ?{" "}
               <Link
                 href="/signup"
                 className="font-medium text-primary-600 hover:underline dark:text-primary-500"
               >
-                Sign up
+                Đăng ký ngay
               </Link>
             </p>
           </form>

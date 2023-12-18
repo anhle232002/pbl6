@@ -35,6 +35,7 @@ export function Seats({
     selectedSeats.findIndex((s) => s.id === seatId) !== -1;
 
   console.log(rows);
+  console.log("avcbcv ", Array(Object.keys(rows).length));
 
   return (
     <div className="flex justify-center mt-4 ">
@@ -43,7 +44,7 @@ export function Seats({
           <span className="text-black w-[20px] h-[20px]"></span>
 
           <div className="flex gap-4">
-            {Array(Object.keys(rows).length)
+            {Array(rows[Object.keys(rows)[0]].length)
               .fill(0)
               .map((v, index) => {
                 return (
