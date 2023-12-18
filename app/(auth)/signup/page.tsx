@@ -198,7 +198,7 @@ export default function Signup() {
               type="submit"
               className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Tạo tài khaonr
+              Tạo tài khoản
             </button>
 
             {err && <div className="mt-2 text-red-500 text-center">{err}</div>}
