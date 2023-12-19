@@ -75,7 +75,7 @@ export function OrderSummary({
         </div>
         <hr className="mt-2 border-primary" />
 
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <h4 style={{ fontFamily: "isonorm" }}>
             <span className="bg-primary-linear bg-clip-text text-lg text-transparent ">
               Thêm mã giảm giá
@@ -91,7 +91,7 @@ export function OrderSummary({
             </div>
             <button className="border px-4 rounded">Thêm</button>
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-6">
           <h4 style={{ fontFamily: "isonorm" }}>

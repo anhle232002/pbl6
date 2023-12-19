@@ -172,13 +172,7 @@ export default function Payment({
             <div className="flex items-center gap-2">
               <Checkbox id="accept" defaultChecked />
               <Label htmlFor="accept" className="flex">
-                Tôi đồng ý với
-                <a
-                  href="#"
-                  className=" hover:underline font-semibold text-black ml-2"
-                >
-                  các điều khoản và điều kiện
-                </a>
+                Tôi đồng ý với các điều khoản và điều kiện
               </Label>
             </div>
           </div>

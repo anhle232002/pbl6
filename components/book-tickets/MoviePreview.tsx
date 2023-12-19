@@ -4,13 +4,17 @@ import { Film } from "@/types/Film";
 import { format, getHours, getMinutes } from "date-fns";
 import { Spinner } from "flowbite-react";
 import { vi } from "date-fns/locale";
-
+import { useRouter } from "next/navigation";
 export function MoviePreview({}: {}) {
   const { film, schedule } = useBookingStore();
+  const router = useRouter();
   console.log(film);
 
+  const backHandler = () => {
+    router.back();
+  };
   return (
-    <div className="relative bg-slate-700/40 overflow-hidden py-4 ">
+    <div className="relative bg-white overflow-hidden py-4 ">
       {film && schedule ? (
         <>
           <div
@@ -51,7 +55,10 @@ export function MoviePreview({}: {}) {
                 , {format(new Date(schedule.startTime), "HH:mm")}
               </p>
 
-              <button className="mt-2 text-xs  bg-slate-900 px-4 py-1 rounded-md font-semibold uppercase">
+              <button
+                onClick={backHandler}
+                className="mt-2 text-xs  bg-slate-900 px-4 py-1 rounded-md font-semibold uppercase"
+              >
                 Quay lại
               </button>
             </div>
