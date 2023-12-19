@@ -24,7 +24,7 @@ export function MoviePreview({}: {}) {
 
           <div className="relative max-w-7xl m-auto flex  text-white gap-10 p-4">
             <div>
-              <Image
+              <img
                 width={150}
                 height={200}
                 className=" object-cover"
