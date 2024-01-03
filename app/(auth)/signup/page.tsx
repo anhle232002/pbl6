@@ -10,6 +10,7 @@ import { AxiosError } from "axios";
 import { signup } from "@/services/signup";
 import { useRouter } from "next/navigation";
 import { login } from "@/services/login";
+import { storage } from "@/utils/storage";
 
 const schema = Joi.object({
   email: Joi.string().email({ tlds: false }).required(),
@@ -55,6 +56,10 @@ export default function Signup() {
       });
 
       const userData = await login(data.email, data.password);
+
+      storage.set("user", JSON.stringify(userData.data));
+      storage.set("access-token", userData.data.token);
+      storage.set("logged_in", "true");
 
       router.push("/");
     } catch (error) {
