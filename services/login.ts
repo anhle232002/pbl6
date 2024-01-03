@@ -7,9 +7,5 @@ export async function login(username: string, password: string) {
     password: password,
   });
 
-  storage.set("user", JSON.stringify(resp.data.data));
-  storage.set("access-token", resp.data.data.token);
-  storage.set("logged_in", "true");
-
   return resp.data;
 }

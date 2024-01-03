@@ -19,6 +19,8 @@ function App() {
     });
   }, []);
 
+  console.log(poster);
+
   const settings = {
     infinite: true,
     speed: 500,

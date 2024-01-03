@@ -1,5 +1,6 @@
 "use client";
 import { login } from "@/services/login";
+import { storage } from "@/utils/storage";
 import { AxiosError } from "axios";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -16,9 +17,15 @@ export default function LoginPage() {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await login(username, password);
+      const resp = await login(username, password);
+      if (resp.data.role !== "Customer") {
+        setErr("You are not allow to login");
+        return;
+      }
 
-      console.log(history.state.prev);
+      storage.set("user", JSON.stringify(resp.data));
+      storage.set("access-token", resp.data.token);
+      storage.set("logged_in", "true");
 
       router.replace("/");
     } catch (error) {
