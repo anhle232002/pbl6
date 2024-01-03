@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { PiFilmReelBold } from "react-icons/pi";
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function ConfirmEmailpage() {
   return (
@@ -28,17 +28,20 @@ export default function ConfirmEmailpage() {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
             Kiểm tra email của bạn
           </h1>
-          <h3 className="text-center">Vui lòng kiểm tra email và nhấn nút xác nhận được gửi trong email để xác thực email của bạn</h3>
+          <h3 className="text-center">
+            Vui lòng kiểm tra email và nhấn nút xác nhận được gửi trong email để
+            xác thực email của bạn
+          </h3>
           {/* <h3 className="text-center">Nếu đã xác thực email thành công, giờ bạn có thể đăng nhập: </h3> */}
           <p className="text-center">
-            Nếu đã xác thực email thành công, giờ bạn có thể {" "}
+            Nếu đã xác thực email thành công, giờ bạn có thể{" "}
             <Link
               href="/login"
               className="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >
-              Đăng nhập 
+              Đăng nhập
             </Link>
-            {" "} hoặc trở về {" "} 
+            hoặc trở về
             <Link
               href="/"
               className="font-medium text-primary-600 hover:underline dark:text-primary-500"
