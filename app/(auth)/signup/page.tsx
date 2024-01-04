@@ -57,13 +57,7 @@ export default function Signup() {
         phoneNumber: data.phoneNumber,
       });
 
-      const userData = await login(data.email, data.password);
-
-      storage.set("user", JSON.stringify(userData.data));
-      storage.set("access-token", userData.data.token);
-      storage.set("logged_in", "true");
-
-      router.push("/");
+      router.push("/require-confirm-email");
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);

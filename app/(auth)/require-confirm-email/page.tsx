@@ -37,14 +37,14 @@ export default function ConfirmEmailpage() {
             Nếu đã xác thực email thành công, giờ bạn có thể{" "}
             <Link
               href="/login"
-              className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              className="font-medium text-primary-600 hover:underline dark:text-primary-500 text-blue-600"
             >
-              Đăng nhập
+              Đăng nhập{" "}
             </Link>
-            hoặc trở về
+            hoặc trở về{" "}
             <Link
               href="/"
-              className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              className="font-medium text-primary-600 hover:underline dark:text-primary-500 text-blue-600"
             >
               Trang chủ
             </Link>
