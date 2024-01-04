@@ -14,6 +14,7 @@ import { storage } from "@/utils/storage";
 
 const schema = Joi.object({
   email: Joi.string().email({ tlds: false }).required(),
+  username: Joi.string().min(1).required(),
   name: Joi.string().min(5).required(),
   phoneNumber: Joi.string()
     .regex(/^[0-9]{10}$/)
@@ -50,18 +51,13 @@ export default function Signup() {
         address: data.address,
         customerName: data.name,
         dateOfBirth: data.dateOfBirth,
-        username: data.email,
+        email: data.email,
+        username: data.username,
         password: data.password,
         phoneNumber: data.phoneNumber,
       });
 
-      const userData = await login(data.email, data.password);
-
-      storage.set("user", JSON.stringify(userData.data));
-      storage.set("access-token", userData.data.token);
-      storage.set("logged_in", "true");
-
-      router.push("/");
+      router.push("/require-confirm-email");
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
@@ -109,6 +105,24 @@ export default function Signup() {
                 {errors.email && (errors.email.message as string)}
               </p>
             </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Username
+              </label>
+              <input
+                {...register("username")}
+                type="text"
+                id="username"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Nhập username"
+              />
+
+              <p className="text-sm text-red-700 mt-2">
+                {errors.username && (errors.username.message as string)}
+              </p>
+            </div>
+
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Họ và tên
