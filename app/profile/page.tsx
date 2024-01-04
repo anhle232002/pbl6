@@ -83,13 +83,21 @@ export default function AccountSetting() {
                 <div className="flex items-center gap-10">
                   <div className="opacity-60 min-w-[150px]">Email</div>
                   <div>
-                    <p>{user.employeeNo}</p>
+                    <p>{customerInfo.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-10">
                   <div className="opacity-60 min-w-[150px]">Tên đầy đủ</div>
                   <div>
                     <p>{customerInfo.customerName}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-10">
+                  <div className="opacity-60 min-w-[150px]">Ngày sinh</div>
+                  <div>
+                    <p>
+                      {new Date(customerInfo.dateOfBirth).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-10">
@@ -164,11 +172,12 @@ const schema = Joi.object({
     .required(),
   address: Joi.string().required(),
   dateOfBirth: Joi.date().required(),
+  email: Joi.required(),
 });
 
 const EditingInformation = forwardRef(function EditComponent(
   { userInfo }: { userInfo: Customer },
-  ref,
+  ref
 ) {
   const formRef = useRef(null);
   const [err, setErr] = useState("");
@@ -182,6 +191,7 @@ const EditingInformation = forwardRef(function EditComponent(
   } = useForm({
     resolver: joiResolver(schema),
     defaultValues: {
+      email: userInfo.email,
       name: userInfo.customerName,
       phoneNumber: userInfo.phoneNumber,
       address: userInfo.address,
@@ -201,6 +211,7 @@ const EditingInformation = forwardRef(function EditComponent(
         customerName: data.name,
         dateOfBirth: data.dateOfBirth,
         phoneNumber: data.phoneNumber,
+        email: userInfo.email,
       });
 
       setIsUpdating(false);
@@ -225,7 +236,7 @@ const EditingInformation = forwardRef(function EditComponent(
         },
       };
     },
-    [isDirty],
+    [isDirty]
   );
 
   return (
