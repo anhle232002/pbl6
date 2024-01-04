@@ -6,7 +6,10 @@ export interface GetFilmsParams {
 
 export default async function getFilms(params?: GetFilmsParams) {
   const resp = await apiClient.get("/v1/film", {
-    params,
+    params: {
+      ...params,
+      Enable: true,
+    },
   });
 
   return resp.data;
