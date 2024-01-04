@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form";
 import { PiFilmReelBold } from "react-icons/pi";
 
 const schema = Joi.object({
-  email: Joi.string().email({ tlds: false }).required(),
   password: Joi.string()
     .min(6)
     .message("Password must be atleast 6 characters long")
@@ -35,14 +34,15 @@ export default function ResetPassword() {
   });
 
   const [err, setErr] = useState<string | null>(null);
-  const token = params.get("Token");
+  const token = params.get("token");
+  const email = params.get("email");
 
-  if (!token) return <div>NOT FOUND</div>;
+  if (!token || !email) return <div>NOT FOUND</div>;
 
   const onSubmit = async (data: any) => {
     try {
       await resetPassword({
-        email: data.email,
+        email: email,
         password: data.password,
         confirmPassword: data.repassword,
         token: token,
@@ -80,22 +80,6 @@ export default function ResetPassword() {
             className="space-y-4 md:space-y-6"
             action="#"
           >
-            <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Email
-              </label>
-              <input
-                {...register("email")}
-                type="email"
-                id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Nhập email"
-              />
-
-              <p className="text-sm text-red-700 mt-2">
-                {errors.email && (errors.email.message as string)}
-              </p>
-            </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Mật khẩu

@@ -98,9 +98,7 @@ export default function LoginPage() {
             >
               Đăng nhập
             </button>
-
             {err && <div className="mt-2 text-red-500 text-center">{err}</div>}
-
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Chưa có tài khoản ?{" "}
               <Link
@@ -110,6 +108,9 @@ export default function LoginPage() {
                 Đăng ký ngay
               </Link>
             </p>
+            <Link href={"/forgot-password"} className="text-sm">
+              Quên mật khẩu
+            </Link>
           </form>
         </div>
       </div>
