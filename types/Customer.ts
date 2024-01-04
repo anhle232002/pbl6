@@ -3,4 +3,5 @@ export interface Customer {
   phoneNumber: string;
   address: string;
   dateOfBirth: string;
+  email?: string;
 }

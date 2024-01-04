@@ -6,6 +6,7 @@ export interface UpdateCustomerParams {
   address: string;
   dateOfBirth: Date;
   phoneNumber: string;
+  email: string | undefined;
 }
 
 export default async function updateCustomer(params: UpdateCustomerParams) {
