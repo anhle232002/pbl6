@@ -177,7 +177,7 @@ const schema = Joi.object({
 
 const EditingInformation = forwardRef(function EditComponent(
   { userInfo }: { userInfo: Customer },
-  ref
+  ref,
 ) {
   const formRef = useRef(null);
   const [err, setErr] = useState("");
@@ -236,7 +236,7 @@ const EditingInformation = forwardRef(function EditComponent(
         },
       };
     },
-    [isDirty]
+    [isDirty],
   );
 
   return (

@@ -33,6 +33,20 @@ export default function SideBar() {
             <div className="ml-6">Lịch sử đặt vé</div>
           </Link>
         </li>
+
+        <li>
+          <Link
+            href={"/profile/change-password"}
+            role="button"
+            className="relative block text-lg font-medium hover:bg-slate-700 duration-200 p-4 bg-[#1a1a1a] shadow rounded"
+          >
+            {path === "/profile/change-password" && (
+              <span className="absolute left-0 top-0 w-3 rounded-l bg-primary h-full"></span>
+            )}
+
+            <div className="ml-6">Đổi mật khẩu</div>
+          </Link>
+        </li>
       </ul>
     </div>
   );
