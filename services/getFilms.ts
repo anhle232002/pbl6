@@ -9,6 +9,7 @@ export default async function getFilms(params?: GetFilmsParams) {
     params: {
       ...params,
       Enable: true,
+      IsExport: true,
     },
   });
 
