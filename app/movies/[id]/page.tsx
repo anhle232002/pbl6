@@ -29,13 +29,22 @@ export default function MovieDetail({ params }: { params: { id: string } }) {
     }
   }, [film, cinemas, schedules]);
 
+  const refetchFilm = async () => {
+    getFilmById(Number(params.id)).then((data) => setFilm(data));
+  };
+
   return (
     <div className=" bg-background">
       <NavBar />
 
       <div className="relative bg-background text-accent pb-4 min-h-screen">
         {!isLoading && film && cinemas && schedules ? (
-          <MovieInfo film={film} cinemas={cinemas} schedules={schedules} />
+          <MovieInfo
+            film={film}
+            cinemas={cinemas}
+            schedules={schedules}
+            refetchFilm={refetchFilm}
+          />
         ) : (
           <div className="min-h-[500px] flex items-center justify-center">
             <Spinner />
