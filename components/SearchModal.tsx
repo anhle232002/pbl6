@@ -11,7 +11,8 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  const onClickSearch = async () => {
+  const onClickSearch = async (e: any) => {
+    e.preventDefault();
     try {
       if (!searchStr) {
         return;
@@ -31,7 +32,10 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed w-full h-full top-0 left-0 z-[99999999]">
-      <div className="relative h-full flex justify-end">
+      <form
+        onSubmit={onClickSearch}
+        className="relative h-full flex justify-end"
+      >
         <div
           onClick={onClose}
           className="absolute top-0 left-0 w-full h-full bg-black/50"
@@ -57,7 +61,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
               id=""
             />
 
-            <button onClick={onClickSearch}>
+            <button type="submit">
               <RiSearch2Line className="text-accent text-3xl" />
             </button>
           </div>
@@ -89,7 +93,7 @@ export default function SearchModal({ onClose }: { onClose: () => void }) {
               })}
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

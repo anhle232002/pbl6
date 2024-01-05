@@ -36,8 +36,8 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="bg-background">
-      <div className="max-w-5xl m-auto ">
+    <nav className="bg-background  px-10 xs:px-0 ">
+      <div className="max-w-5xl m-auto">
         <div className="flex items-center gap-12">
           <Link href={"/"} className="text-primary font-semibold text-xl">
             Cinephile
@@ -45,12 +45,10 @@ export default function NavBar() {
 
           <div className="flex-1">
             <ul className="text-accent flex gap-8">
-              <li className="hover:bg-primary-linear bg-transparent bg-clip-text hover:text-transparent py-8">
-                <Link href={"/"}>Đang chiếu</Link>
+              <li className="py-8 hover:text-primary">
+                <Link href={"/"}>Trang chủ</Link>
               </li>
-              <li className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent  py-8">
-                <Link href={"/"}>Sắp chiếu </Link>
-              </li>
+
               <li role="button" className="group relative py-8 ">
                 <span className="flex items-center gap-2">
                   <span className="hover:bg-primary-linear hover:bg-clip-text hover:text-transparent ">
@@ -92,10 +90,15 @@ export default function NavBar() {
             </ul>
           </div>
 
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-6 items-center">
             {!isLoggedIn && (
-              <Link href={"/login"} className="block" role="button">
-                <RiUser3Line className="text-accent text-3xl" />
+              <Link
+                href={"/login"}
+                className="flex items-center gap-2 hover:text-primary group"
+                role="button"
+              >
+                <span>Đăng nhập</span>
+                <RiUser3Line className="text-accent text-3xl group-hover:text-primary" />
               </Link>
             )}
             {isLoggedIn && (
@@ -118,8 +121,13 @@ export default function NavBar() {
                 <Dropdown.Item onClick={onClickLogOut}>Đăng xuất</Dropdown.Item>
               </Dropdown>
             )}
-            <div role="button" onClick={() => setShowNavbar(true)}>
-              <RiSearch2Line className="text-accent text-3xl" />
+            <div
+              role="button"
+              className="flex items-center gap-2 hover:text-primary group"
+              onClick={() => setShowNavbar(true)}
+            >
+              <span>Tìm kiếm</span>
+              <RiSearch2Line className="text-accent text-3xl group-hover:text-primary" />
             </div>
 
             {showNavbar && <SearchModal onClose={() => setShowNavbar(false)} />}
