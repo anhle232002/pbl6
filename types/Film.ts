@@ -19,4 +19,5 @@ export interface Film {
   lastModifiedOn: Date;
   schedules?: Schedule[];
   score: number;
+  numberOfVotes?: number;
 }

@@ -36,10 +36,12 @@ export default function MovieInfo({
   film,
   cinemas,
   schedules,
+  refetchFilm,
 }: {
   film: Film;
   cinemas: Cinema[];
   schedules: any;
+  refetchFilm: () => Promise<void>;
 }) {
   const [selectedCinemaId, setSelectedCinemaId] = useState(-1);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -98,6 +100,7 @@ export default function MovieInfo({
   const onConfirmAddRating = async () => {
     try {
       await addRating({ filmId: film.id, score: rating });
+      await refetchFilm();
     } catch (error) {
       console.log(error);
     }
@@ -220,7 +223,7 @@ export default function MovieInfo({
                             {film.score ? film.score : 0}
                           </span>
                           <span className="inline-block text-[12px] text-[#777777]">
-                            {0} đánh giá
+                            {film.numberOfVotes} đánh giá
                           </span>
                         </div>
                       </div>
