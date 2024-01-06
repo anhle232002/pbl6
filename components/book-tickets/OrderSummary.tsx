@@ -105,7 +105,7 @@ export function OrderSummary({
               <input
                 required
                 type="text"
-                value={user && user.employeeNo}
+                value={user && user.email}
                 className="bg-transparent w-full py-3 rounded text-black "
                 placeholder="Your email address"
               />
