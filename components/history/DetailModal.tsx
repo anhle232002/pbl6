@@ -94,6 +94,9 @@ export default function DetailModal({
                     <span key={ticket.id}>{ticket.seatCode}, </span>
                   ))}
               </p>
+              <p>
+                <strong>Trạng thái:</strong> {booking.usageStatus}
+              </p>
             </div>
 
             <div className="mt-8 flex justify-center">

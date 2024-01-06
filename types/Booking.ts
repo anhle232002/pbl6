@@ -14,4 +14,5 @@ export interface Booking {
   bookingCurrency?: string;
   tickets?: TSeat[];
   qrCode?: string;
+  usageStatus?: string;
 }
